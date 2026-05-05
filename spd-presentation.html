@@ -1,0 +1,2708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SPD Website Redesign — Client Presentation</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Oswald:wght@500;600;700&family=DM+Serif+Display&display=swap">
+
+<style>
+  /* ============================================================
+     SPD WEBSITE REDESIGN — CLIENT DEMO
+     14 slides · ~10 min · grounded in real research
+     ============================================================ */
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --bg: #FBF8F8;
+    --bg-soft: #F2EEEE;
+    --bg-deep: #ECE7E7;
+    --surface: #ffffff;
+    --text: #1a191c;
+    --text-mid: #363537;
+    --text-muted: #6c6a6e;
+    --text-faint: #a09ea1;
+    --border: rgba(54, 53, 55, 0.14);
+    --border-strong: rgba(54, 53, 55, 0.32);
+    --accent: #EF4022;
+    --accent-soft: rgba(239, 64, 34, 0.08);
+
+    --font-display: "Oswald", "Archivo Narrow", "Archivo", sans-serif;
+    --font-body: "Archivo", -apple-system, sans-serif;
+    --font-serif: "DM Serif Display", "Times New Roman", serif;
+  }
+
+  html {
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+  }
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    color: var(--text-mid);
+    background: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.5;
+  }
+  ::selection { background: var(--accent); color: #fff; }
+
+  /* ============================================================
+     REVEAL ANIMATION — graceful, replays on slide re-entry
+     ============================================================ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(6px);
+    transition:
+      opacity 650ms cubic-bezier(0.16, 1, 0.3, 1),
+      transform 650ms cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity, transform;
+  }
+  .slide.in-view .reveal {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal.delay-1 { transition-delay: 100ms; }
+  .reveal.delay-2 { transition-delay: 200ms; }
+  .reveal.delay-3 { transition-delay: 300ms; }
+  .reveal.delay-4 { transition-delay: 400ms; }
+  .reveal.delay-5 { transition-delay: 500ms; }
+  .reveal.delay-6 { transition-delay: 600ms; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal {
+      opacity: 1 !important;
+      transform: none !important;
+      transition: none !important;
+    }
+  }
+
+  /* ---------- Slide base ---------- */
+  .slide {
+    width: 100vw;
+    min-height: 100vh;
+    height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    position: relative;
+    overflow: hidden;
+    padding: 56px 88px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+  }
+  .slide.bleed { background: var(--accent); color: #fff; }
+  .slide.dark { background: var(--text); color: #fff; }
+  .slide.soft { background: var(--bg-soft); }
+
+  .slide-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+  .slide.bleed .slide-head,
+  .slide.dark .slide-head { border-bottom-color: rgba(255,255,255,0.25); }
+
+  .slide-mark {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 600;
+  }
+  .slide-mark .logo {
+    width: 28px; height: 28px;
+    background: var(--accent);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0;
+  }
+  .slide.bleed .slide-mark .logo { background: #fff; color: var(--accent); }
+  .slide-mark .meta { color: var(--text-muted); font-weight: 500; }
+  .slide.bleed .slide-mark .meta,
+  .slide.dark .slide-mark .meta { color: rgba(255,255,255,0.7); }
+
+  .slide-step {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--accent);
+  }
+  .slide.bleed .slide-step { color: #fff; }
+  .slide.dark .slide-step { color: var(--accent); }
+
+  .slide-foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-weight: 600;
+  }
+  .slide.bleed .slide-foot { border-top-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.7); }
+  .slide.dark .slide-foot { border-top-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.7); }
+
+  .slide-body {
+    padding: 24px 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+  }
+  .slide-body.middle { justify-content: center; }
+  .slide-body.top { justify-content: flex-start; padding-top: 20px; }
+
+  /* ---------- Type ---------- */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 28px; height: 2px;
+    background: var(--accent);
+  }
+  .slide.bleed .eyebrow,
+  .slide.dark .eyebrow { color: #fff; }
+  .slide.bleed .eyebrow::before,
+  .slide.dark .eyebrow::before { background: #fff; }
+
+  .display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 0.96;
+    letter-spacing: -0.01em;
+    margin: 0;
+  }
+  .display.xl { font-size: clamp(56px, 7.4vw, 124px); }
+  .display.lg { font-size: clamp(40px, 5.4vw, 88px); }
+  .display.md { font-size: clamp(30px, 3.8vw, 56px); }
+  .display em { font-style: normal; color: var(--accent); }
+  .slide.bleed .display em,
+  .slide.dark .display em { color: var(--accent); }
+
+  /* ============================================================
+     MEDIA CONTAINERS — drag-and-drop, no distortion
+     ============================================================ */
+  .media-box {
+    position: relative;
+    background: var(--bg-soft);
+    border: 1px dashed var(--border-strong);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: border-color 200ms ease, background 200ms ease;
+  }
+  .media-box.drag-over {
+    border-color: var(--accent);
+    border-style: solid;
+    background: var(--accent-soft);
+  }
+  .media-box .placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+    padding: 18px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .media-box .placeholder .tag {
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: #fff;
+    padding: 3px 8px;
+    border: 1px solid var(--accent);
+    font-weight: 700;
+  }
+  .media-box .placeholder .name {
+    font-family: var(--font-display);
+    font-size: 11.5px;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .media-box .placeholder .path {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 10px;
+    color: var(--text-faint);
+  }
+  .media-box .placeholder .hint {
+    margin-top: 4px;
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-weight: 600;
+  }
+  .media-box .media-img {
+    position: relative;
+    z-index: 1;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+  }
+  .media-box.cover .media-img,
+  .media-box.cover video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .media-box video {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    background: #000;
+  }
+
+  /* ---------- Image / Frame helpers ---------- */
+  .figma-frame {
+    position: relative;
+    background: var(--bg-soft);
+    border: 1px dashed var(--border-strong);
+    overflow: hidden;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .figma-frame .frame-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 6px;
+    text-align: center;
+    padding: 14px;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .figma-frame .frame-label .tag {
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: #fff;
+    padding: 3px 8px;
+    border: 1px solid var(--accent);
+    font-weight: 700;
+  }
+  .figma-frame .frame-label .name {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .figma-frame .frame-label .path {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 10px;
+    color: var(--text-faint);
+  }
+  .figma-screen {
+    position: relative;
+    z-index: 1;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    display: block;
+    object-fit: contain;
+  }
+
+  /* ---------- 01 Title ---------- */
+  .title-mark {
+    color: rgba(255,255,255,0.85);
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 600;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .title-mark .dot { width: 8px; height: 8px; background: #fff; border-radius: 50%; }
+  .title-stack {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 0.86;
+    letter-spacing: -0.012em;
+    color: #fff;
+    font-size: clamp(80px, 12vw, 200px);
+  }
+  .title-stack span { display: block; }
+  .title-stack .punct { color: rgba(255,255,255,0.55); }
+  .title-team {
+    margin-top: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px 20px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(14px, 1.2vw, 20px);
+    line-height: 1.25;
+    color: rgba(255,255,255,0.78);
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+  }
+  .title-team span { white-space: nowrap; }
+
+  /* Cover slide chrome reset */
+  .slide.cover .slide-head,
+  .slide.cover .slide-foot { display: none; }
+  .slide.cover { grid-template-rows: 1fr; }
+  body.is-cover .deck-counter { display: none; }
+
+  /* Full-bleed title (slide 1) */
+  .slide.cover {
+    position: relative;
+    overflow: hidden;
+  }
+  .slide.cover::before {
+    content: "SPD";
+    position: absolute;
+    right: -2vw;
+    bottom: -6vw;
+    font-family: var(--font-display);
+    font-size: clamp(260px, 36vw, 620px);
+    font-weight: 700;
+    color: #fff;
+    opacity: 0.1;
+    line-height: 0.8;
+    letter-spacing: -0.04em;
+    z-index: 0;
+    pointer-events: none;
+    user-select: none;
+  }
+  .cover-text-half {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    height: 100%;
+    padding: 64px 88px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: transparent;
+  }
+  .cover-text-half .title-stack {
+    font-size: clamp(80px, 11vw, 190px);
+    line-height: 0.86;
+  }
+
+  /* Side-by-side video on problem (slide 2) */
+  .problem-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.1fr;
+    gap: 56px;
+    flex: 1;
+    align-items: center;
+    min-height: 0;
+  }
+  .problem-grid .problem-statement {
+    font-size: clamp(40px, 5.4vw, 84px);
+    max-width: 14ch;
+  }
+  .problem-grid .problem-lede {
+    margin-top: 24px;
+    max-width: 36ch;
+  }
+  .problem-video {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    border: 1px solid var(--border);
+    background: var(--bg-soft);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .problem-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* ---------- 02 Problem ---------- */
+  .problem-statement {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.0;
+    letter-spacing: -0.012em;
+    margin: 0;
+    color: var(--text);
+    font-size: clamp(56px, 7.2vw, 112px);
+    max-width: 18ch;
+  }
+  .problem-statement em { font-style: normal; color: var(--accent); }
+  .problem-lede {
+    margin-top: 28px;
+    font-size: clamp(17px, 1.4vw, 22px);
+    line-height: 1.5;
+    color: var(--text-muted);
+    max-width: 56ch;
+  }
+
+  /* ---------- 03 What we did ---------- */
+  .did-grid {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: 0.85fr 1.6fr;
+    gap: 36px;
+    flex: 1;
+    min-height: 0;
+    align-items: stretch;
+  }
+  .did-text {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border-top: 1px solid var(--border-strong);
+    border-bottom: 1px solid var(--border-strong);
+    padding: 4px 0;
+    align-self: stretch;
+  }
+  .did-text .row {
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: 18px;
+    align-items: start;
+    padding: 18px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .did-text .row:last-child { border-bottom: none; }
+  .did-text .num {
+    font-family: var(--font-display);
+    font-size: clamp(20px, 1.8vw, 28px);
+    color: var(--accent);
+    font-weight: 700;
+    line-height: 1;
+    padding-top: 4px;
+  }
+  .did-text .lab {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .did-text .body {
+    font-size: clamp(17px, 1.55vw, 22px);
+    line-height: 1.55;
+    color: var(--text);
+    max-width: 42ch;
+  }
+  .did-text .body strong { font-weight: 600; }
+  .did-text .lab {
+    font-size: 12px;
+  }
+
+  .did-video {
+    align-self: stretch;
+    width: 100%;
+    height: 100%;
+    min-height: 0;
+  }
+  .did-video.media-box.cover {
+    border-radius: 0;
+  }
+
+  /* ---------- 04 Insights ---------- */
+  .ins-grid {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    gap: 48px;
+    flex: 1;
+    min-height: 0;
+    align-items: center;
+  }
+  .ins-list {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    justify-content: center;
+  }
+  .ins-list .row {
+    padding-top: 16px;
+    border-top: 1px solid rgba(255,255,255,0.22);
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: 20px;
+  }
+  .ins-list .row:first-child {
+    border-top: none;
+    padding-top: 0;
+  }
+  .ins-list .row .num {
+    font-family: var(--font-display);
+    font-size: clamp(18px, 1.5vw, 24px);
+    color: var(--accent);
+    font-weight: 700;
+    line-height: 1;
+    padding-top: 4px;
+  }
+  .ins-list .row h4 {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 2vw, 30px);
+    line-height: 1.18;
+    color: #fff;
+    font-weight: 600;
+    margin: 0 0 10px;
+    max-width: 26ch;
+    letter-spacing: -0.005em;
+  }
+  .ins-list .row p {
+    margin: 0;
+    font-size: 16.5px;
+    line-height: 1.45;
+    color: rgba(255,255,255,0.72);
+    font-style: italic;
+    max-width: 38ch;
+  }
+  .ins-quotes {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    justify-content: center;
+  }
+  .ins-quote {
+    background: rgba(255,255,255,0.05);
+    border-left: 3px solid var(--accent);
+    padding: 22px 24px;
+  }
+  .ins-quote blockquote {
+    margin: 0 0 12px;
+    font-family: var(--font-display);
+    font-size: clamp(20px, 1.85vw, 28px);
+    line-height: 1.2;
+    color: #fff;
+    font-weight: 500;
+  }
+  .ins-quote cite {
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    font-weight: 600;
+    font-style: normal;
+  }
+
+  /* ---------- 05 Personas (image + text) ---------- */
+  .persona-grid {
+    margin-top: 18px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    flex: 1;
+    min-height: 0;
+  }
+  .persona-slot {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    min-height: 0;
+  }
+  .persona-slot .label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .persona-slot .media-box {
+    background: var(--surface);
+    aspect-ratio: 4/3;
+    width: 100%;
+    flex: 0 0 auto;
+  }
+  .persona-text {
+    margin-top: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    min-width: 0;
+  }
+  .persona-text .p-name {
+    font-family: var(--font-display);
+    font-size: clamp(18px, 1.55vw, 22px);
+    line-height: 1.05;
+    color: var(--text);
+    font-weight: 700;
+    letter-spacing: -0.005em;
+  }
+  .persona-text .p-desc {
+    font-family: var(--font-body);
+    font-size: 11.5px;
+    line-height: 1.35;
+    color: var(--text-muted);
+    font-weight: 500;
+    letter-spacing: 0.01em;
+  }
+  .persona-text .p-who {
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: var(--text);
+    margin-top: 4px;
+  }
+  .persona-text .p-goal {
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    line-height: 1.45;
+    color: var(--text);
+  }
+  .persona-text .p-goal b {
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    font-size: 10px;
+    display: inline-block;
+    margin-right: 6px;
+    transform: translateY(-1px);
+  }
+  .persona-text .p-needs {
+    list-style: none;
+    padding: 0;
+    margin: 4px 0 0;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .persona-text .p-needs li {
+    font-family: var(--font-body);
+    font-size: 12px;
+    line-height: 1.4;
+    color: var(--text);
+    padding-left: 14px;
+    position: relative;
+  }
+  .persona-text .p-needs li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.55em;
+    width: 6px;
+    height: 1.5px;
+    background: var(--accent);
+  }
+  .persona-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--accent);
+    padding: 22px 22px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+  }
+  .persona-card .head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .persona-card .name {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 1.95vw, 28px);
+    line-height: 1;
+    color: var(--text);
+    font-weight: 700;
+  }
+  .persona-card .age {
+    font-family: var(--font-display);
+    font-size: 11.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .persona-card .role {
+    font-family: var(--font-display);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    font-weight: 500;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    margin-bottom: 4px;
+  }
+  .persona-card .row {
+    border-top: 1px solid var(--border);
+    padding-top: 10px;
+  }
+  .persona-card .row:first-of-type { border-top: none; padding-top: 0; }
+  .persona-card .row .lab {
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+  .persona-card .row .txt {
+    font-size: 15px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .persona-card .quote {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-display);
+    font-size: 15.5px;
+    line-height: 1.3;
+    color: var(--accent);
+    font-weight: 600;
+    font-style: italic;
+  }
+  .persona-card .quote::before { content: "\201C"; }
+  .persona-card .quote::after { content: "\201D"; }
+
+  /* ---------- 06 Personas → Flows (user-story rows) ---------- */
+  .story-stack {
+    flex: 1;
+    margin-top: 28px;
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--border-strong);
+    border-bottom: 1px solid var(--border-strong);
+    min-height: 0;
+  }
+  .story-row {
+    display: grid;
+    grid-template-columns: 132px 240px 1fr;
+    gap: 48px;
+    align-items: center;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+    flex: 1;
+  }
+  .story-row:last-child { border-bottom: none; }
+  .story-row .meta {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    min-width: 0;
+  }
+  .story-row .meta .name {
+    font-family: var(--font-display);
+    font-size: clamp(19px, 1.7vw, 26px);
+    font-weight: 700;
+    line-height: 1.1;
+    color: var(--text);
+    letter-spacing: -0.005em;
+  }
+  .story-row .meta .flow {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .story-row .story {
+    font-family: var(--font-display);
+    font-size: clamp(17px, 1.55vw, 23px);
+    line-height: 1.35;
+    color: var(--text);
+    font-weight: 500;
+    letter-spacing: -0.005em;
+    max-width: 70ch;
+  }
+  .story-row .story em { font-style: normal; color: var(--accent); }
+  .story-row .visual {
+    width: 128px;
+    height: 128px;
+    display: grid;
+    place-items: center;
+    color: var(--accent);
+  }
+  .story-row .visual svg { width: 100%; height: 100%; display: block; }
+  .story-row .visual svg .stroke {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+
+  /* Mike: scattered marks resolve into a forward path */
+  .story-row.r-mike .visual .scatter circle { fill: currentColor; opacity: 0.7; }
+  .story-row.r-mike .visual .trail {
+    stroke-dasharray: 86;
+    stroke-dashoffset: 86;
+    opacity: 0;
+  }
+  .story-row.r-mike .visual .head { opacity: 0; }
+  .slide.in-view .story-row.r-mike .visual .scatter circle {
+    animation: mike-scatter 5.2s ease-in-out infinite;
+  }
+  .story-row.r-mike .visual .scatter circle:nth-child(2) { animation-delay: 0.06s; }
+  .story-row.r-mike .visual .scatter circle:nth-child(3) { animation-delay: 0.12s; }
+  .story-row.r-mike .visual .scatter circle:nth-child(4) { animation-delay: 0.18s; }
+  .slide.in-view .story-row.r-mike .visual .trail {
+    animation: mike-trail 5.2s ease-in-out infinite;
+  }
+  .slide.in-view .story-row.r-mike .visual .head {
+    animation: mike-head 5.2s ease-in-out infinite;
+  }
+  @keyframes mike-scatter {
+    0%, 18% { opacity: 0.7; }
+    32%, 78% { opacity: 0; }
+    92%, 100% { opacity: 0.7; }
+  }
+  @keyframes mike-trail {
+    0%, 22% { opacity: 0; stroke-dashoffset: 86; }
+    34% { opacity: 1; stroke-dashoffset: 86; }
+    56%, 78% { opacity: 1; stroke-dashoffset: 0; }
+    88%, 100% { opacity: 0; stroke-dashoffset: 86; }
+  }
+  @keyframes mike-head {
+    0%, 50% { opacity: 0; }
+    62%, 78% { opacity: 1; }
+    88%, 100% { opacity: 0; }
+  }
+
+  /* Alex: loose blocks organize into clean rows */
+  .story-row.r-alex .visual .loose rect { fill: currentColor; opacity: 0.55; }
+  .story-row.r-alex .visual .organized rect { fill: currentColor; opacity: 0; }
+  .slide.in-view .story-row.r-alex .visual .loose rect {
+    animation: alex-loose 5.4s ease-in-out infinite;
+  }
+  .story-row.r-alex .visual .loose rect:nth-child(2) { animation-delay: 0.08s; }
+  .story-row.r-alex .visual .loose rect:nth-child(3) { animation-delay: 0.16s; }
+  .slide.in-view .story-row.r-alex .visual .organized rect {
+    animation: alex-org 5.4s ease-in-out infinite;
+  }
+  .story-row.r-alex .visual .organized rect:nth-child(2) { animation-delay: 0.12s; }
+  .story-row.r-alex .visual .organized rect:nth-child(3) { animation-delay: 0.24s; }
+  @keyframes alex-loose {
+    0%, 22% { opacity: 0.55; }
+    40%, 80% { opacity: 0; }
+    95%, 100% { opacity: 0.55; }
+  }
+  @keyframes alex-org {
+    0%, 28% { opacity: 0; }
+    44%, 80% { opacity: 1; }
+    95%, 100% { opacity: 0; }
+  }
+
+  /* Maya: filter narrows to the highlighted card */
+  .slide.in-view .story-row.r-maya .visual .c-edge {
+    animation: maya-fade 5s ease-in-out infinite;
+  }
+  .slide.in-view .story-row.r-maya .visual .c-hi {
+    animation: maya-hi 5s ease-in-out infinite;
+  }
+  @keyframes maya-fade {
+    0%, 18% { opacity: 1; }
+    42%, 78% { opacity: 0.18; }
+    95%, 100% { opacity: 1; }
+  }
+  @keyframes maya-hi {
+    0%, 18% { opacity: 0.32; }
+    42%, 78% { opacity: 1; }
+    95%, 100% { opacity: 0.32; }
+  }
+  .flows-table {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--border-strong);
+    border-bottom: 1px solid var(--border-strong);
+  }
+  .flows-table .row {
+    display: grid;
+    grid-template-columns: 1fr auto 0.9fr 1.5fr;
+    gap: 18px;
+    align-items: center;
+    padding: 14px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .flows-table .row:last-child { border-bottom: none; }
+  .flows-table .persona {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .flows-table .persona b {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 1.95vw, 28px);
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1;
+  }
+  .flows-table .persona small {
+    font-family: var(--font-display);
+    font-size: 11.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .flows-table .arrow {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 2.2vw, 36px);
+    color: var(--accent);
+    font-weight: 400;
+    line-height: 1;
+  }
+  .flows-table .flow {
+    font-family: var(--font-display);
+    font-size: clamp(17px, 1.5vw, 22px);
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+  .flows-table .why {
+    font-size: 16.5px;
+    color: var(--text-muted);
+    line-height: 1.5;
+    max-width: 40ch;
+  }
+
+  /* Sitemap diagram for slide 6 */
+  .sitemap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 26px 18px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .sitemap .root {
+    background: var(--accent);
+    color: #fff;
+    padding: 8px 14px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    font-weight: 700;
+  }
+  .sitemap .conn {
+    width: 1.5px;
+    height: 18px;
+    background: var(--border-strong);
+  }
+  .sitemap .branch {
+    height: 1.5px;
+    width: 78%;
+    background: var(--border-strong);
+  }
+  .sitemap .row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    width: 100%;
+  }
+  .sitemap .row.leaves {
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin-top: 0;
+  }
+  .sitemap .nd {
+    border: 1.5px solid var(--text);
+    padding: 7px 8px;
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 600;
+    background: #fff;
+    color: var(--text);
+    text-align: center;
+  }
+  .sitemap .nd.flow {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .sitemap .nd.leaf {
+    border: 1px solid var(--border-strong);
+    color: var(--text-muted);
+    font-size: 9px;
+    text-transform: none;
+    letter-spacing: 0;
+    background: var(--bg-soft);
+    font-weight: 500;
+    padding: 6px 6px;
+  }
+  .sitemap .nd.leaf.hot {
+    border-color: var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .sitemap-cap {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+    text-align: center;
+    width: 100%;
+  }
+
+  /* ---------- 07 Site scan / SWOT ---------- */
+  .scan-grid {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    flex: 1;
+    min-height: 0;
+  }
+  .scan-image {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .scan-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  .scan-bullets {
+    display: flex;
+    flex-direction: column;
+    border-top: 1px solid var(--border-strong);
+  }
+  .scan-bullets .row {
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 110px 1fr;
+    gap: 18px;
+    align-items: baseline;
+  }
+  .scan-bullets .row:last-child { border-bottom: none; }
+  .scan-bullets .lab {
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+  .scan-bullets .row.opp .lab,
+  .scan-bullets .row.strength .lab { color: var(--accent); }
+  .scan-bullets h4 {
+    font-family: var(--font-display);
+    font-size: clamp(18px, 1.55vw, 22px);
+    line-height: 1.2;
+    margin: 0 0 4px;
+    font-weight: 600;
+    color: var(--text);
+    max-width: 26ch;
+  }
+  .scan-bullets p {
+    margin: 0;
+    font-size: 13.5px;
+    line-height: 1.45;
+    color: var(--text-muted);
+    max-width: 38ch;
+  }
+
+  /* ---------- 08 Shift ---------- */
+  .shift-grid {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    gap: 56px;
+    align-items: stretch;
+    flex: 1;
+  }
+  .shift-side {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+  }
+  .shift-side .lab {
+    font-family: var(--font-display);
+    font-size: 13px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.65);
+    font-weight: 700;
+    padding-bottom: 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.32);
+    margin-bottom: 4px;
+  }
+  .shift-side h3 {
+    font-family: var(--font-display);
+    font-size: clamp(40px, 5.6vw, 88px);
+    line-height: 0.96;
+    margin: 0;
+    font-weight: 700;
+    color: #fff;
+    max-width: 12ch;
+    letter-spacing: -0.012em;
+  }
+  .shift-side h3 em { font-style: normal; color: rgba(255,255,255,0.55); }
+  .shift-side ul {
+    list-style: none;
+    margin: 22px 0 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .shift-side ul li {
+    font-size: clamp(17px, 1.5vw, 22px);
+    color: rgba(255,255,255,0.92);
+    line-height: 1.45;
+    padding-left: 20px;
+    position: relative;
+    max-width: 32ch;
+  }
+  .shift-side ul li::before {
+    content: "—";
+    position: absolute;
+    left: 0;
+    color: rgba(255,255,255,0.55);
+  }
+  .shift-arrow {
+    font-family: var(--font-display);
+    font-size: clamp(72px, 9vw, 144px);
+    color: rgba(255,255,255,0.6);
+    font-weight: 400;
+    line-height: 1;
+    text-align: center;
+    align-self: center;
+  }
+
+  /* ---------- 09 Nav ---------- */
+  .nav-grid {
+    margin-top: 24px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 36px;
+    flex: 1;
+    min-height: 0;
+  }
+  .nav-image {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 0;
+    overflow: hidden;
+  }
+  .nav-image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  .nav-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 22px;
+  }
+  .nav-text .lead {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 2vw, 30px);
+    line-height: 1.2;
+    color: var(--text);
+    font-weight: 600;
+    margin: 0;
+    max-width: 26ch;
+  }
+  .nav-text .nav-bullets {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .nav-text .nav-bullets li {
+    font-family: var(--font-body);
+    font-size: clamp(14px, 1.05vw, 17px);
+    line-height: 1.5;
+    color: var(--text);
+    padding-left: 20px;
+    position: relative;
+    max-width: 44ch;
+  }
+  .nav-text .nav-bullets li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 9px;
+    height: 2px;
+    background: var(--accent);
+  }
+  .nav-text .quote {
+    border-left: 2px solid var(--accent);
+    padding: 6px 0 6px 16px;
+    font-family: var(--font-display);
+    font-size: clamp(15px, 1.3vw, 19px);
+    line-height: 1.35;
+    color: var(--text);
+    font-weight: 500;
+    font-style: italic;
+    max-width: 36ch;
+  }
+  .nav-text .quote cite {
+    display: block;
+    margin-top: 6px;
+    font-style: normal;
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  /* ---------- 10–12 Demo ---------- */
+  .demo-stage {
+    margin-top: 22px;
+    flex: 1;
+    display: grid;
+    grid-template-columns: 1.4fr 1fr;
+    gap: 32px;
+    min-height: 0;
+  }
+  .demo-canvas {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    position: relative;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .demo-canvas .corner {
+    position: absolute;
+    top: 14px; left: 14px;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    font-weight: 600;
+    z-index: 2;
+  }
+  .demo-canvas .figma-frame {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: transparent;
+  }
+  .demo-video {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    background: #0e0e10;
+    border-radius: 10px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 12px 32px rgba(0,0,0,0.10);
+  }
+  .demo-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+    background: #0e0e10;
+  }
+  .process-hint {
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    width: 130px;
+    aspect-ratio: 4/5;
+    background: #fff;
+    border: 1px solid var(--border-strong);
+    z-index: 3;
+    box-shadow: 0 6px 20px rgba(0,0,0,0.10);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .process-hint .ph-tag {
+    position: absolute;
+    top: 0; left: 0;
+    background: var(--text);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 8.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    font-weight: 700;
+    z-index: 2;
+  }
+  .process-hint img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    position: relative;
+    z-index: 1;
+  }
+  .process-hint .ph-fallback {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 5px;
+    padding: 18px 8px 8px;
+    text-align: center;
+    z-index: 0;
+  }
+  .process-hint .ph-fallback .ph-name {
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    letter-spacing: 0.06em;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .process-hint .ph-fallback .ph-path {
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 8px;
+    color: var(--text-faint);
+    line-height: 1.3;
+    word-break: break-all;
+  }
+  .demo-notes {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 18px;
+    padding: 4px 0;
+  }
+  .demo-notes .row {
+    border-top: 1px solid var(--border);
+    padding-top: 12px;
+  }
+  .demo-notes .row .lab {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .demo-notes .row .txt {
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text);
+    max-width: 38ch;
+  }
+  .demo-notes .row .txt strong { font-weight: 600; }
+  .demo-notes .row .txt em {
+    display: block;
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--text-muted);
+    font-style: italic;
+  }
+  .demo-notes .row.impact {
+    border-top: 2px solid var(--accent);
+    padding-top: 14px;
+    margin-top: 4px;
+  }
+  .demo-notes .row.impact .lab { color: var(--accent); }
+  .demo-notes .row.impact .txt {
+    color: var(--accent);
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(16px, 1.45vw, 22px);
+    line-height: 1.25;
+  }
+
+  /* ---------- 13 Impact (vertical card grid) ---------- */
+  .impact-grid {
+    margin-top: 36px;
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 28px;
+    min-height: 0;
+  }
+  .impact-card {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.18);
+    padding: 32px 28px 36px;
+    display: grid;
+    grid-template-rows: 2.2fr 1fr;
+    align-items: center;
+    text-align: center;
+    min-height: 0;
+  }
+  .impact-card .ind {
+    align-self: center;
+    justify-self: center;
+    width: clamp(110px, 11vw, 150px);
+    aspect-ratio: 1 / 1;
+    color: #fff;
+  }
+  .impact-card .ind svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
+  .impact-card .ind svg .stroke {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .impact-card .text-block {
+    align-self: end;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+
+  /* Speed: chevrons drift right */
+  .slide.in-view .impact-card.r-speed .ind .ch {
+    animation: speed-drift 4.8s ease-in-out infinite;
+  }
+  .impact-card.r-speed .ind .ch:nth-child(2) { animation-delay: 0.3s; }
+  .impact-card.r-speed .ind .ch:nth-child(3) { animation-delay: 0.6s; }
+  @keyframes speed-drift {
+    0%, 100% { opacity: 0.35; transform: translateX(-1px); }
+    50% { opacity: 1; transform: translateX(2px); }
+  }
+  /* Clarity: target rings pulse */
+  .slide.in-view .impact-card.r-clarity .ind .ring {
+    animation: clarity-pulse 5.2s ease-in-out infinite;
+    transform-origin: 22px 22px;
+  }
+  .impact-card.r-clarity .ind .ring:nth-of-type(2) { animation-delay: 0.7s; }
+  @keyframes clarity-pulse {
+    0%, 100% { opacity: 0.45; }
+    50% { opacity: 1; }
+  }
+  /* System: stacked squares fade-step */
+  .slide.in-view .impact-card.r-system .ind .sq {
+    animation: system-step 5.6s ease-in-out infinite;
+  }
+  .impact-card.r-system .ind .sq:nth-child(2) { animation-delay: 0.4s; }
+  .impact-card.r-system .ind .sq:nth-child(3) { animation-delay: 0.8s; }
+  .impact-card.r-system .ind .sq:nth-child(4) { animation-delay: 1.2s; }
+  @keyframes system-step {
+    0%, 100% { opacity: 0.35; }
+    50% { opacity: 1; }
+  }
+  .impact-card b {
+    display: block;
+    font-family: var(--font-display);
+    font-size: clamp(24px, 2.2vw, 34px);
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.12;
+    letter-spacing: -0.005em;
+    max-width: 16ch;
+  }
+  .impact-card p {
+    margin: 0;
+    font-size: clamp(15px, 1.25vw, 18px);
+    line-height: 1.5;
+    color: rgba(255,255,255,0.85);
+    max-width: 34ch;
+  }
+
+  /* ---------- 14 Final close ---------- */
+  .slide.final-slide { position: relative; overflow: hidden; }
+  .slide.final-slide::before {
+    content: "SPD";
+    position: absolute;
+    right: -2vw;
+    bottom: -8vw;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(280px, 38vw, 640px);
+    line-height: 0.8;
+    color: var(--accent);
+    opacity: 0.06;
+    letter-spacing: -0.04em;
+    pointer-events: none;
+    z-index: 0;
+    user-select: none;
+  }
+  .slide.final-slide .slide-head,
+  .slide.final-slide .slide-body,
+  .slide.final-slide .slide-foot {
+    position: relative;
+    z-index: 1;
+  }
+  .final-mark {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 28px;
+  }
+  .final-mark .logo {
+    width: 56px; height: 56px;
+    background: var(--accent);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-display);
+    font-size: 18px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+  }
+  .final-mark .org {
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .impact-statement {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(56px, 8vw, 132px);
+    line-height: 0.96;
+    letter-spacing: -0.014em;
+    color: var(--text);
+    max-width: 16ch;
+    margin: 0;
+  }
+  .impact-statement em { font-style: normal; color: var(--accent); }
+  .impact-subtext {
+    margin: 18px 0 0;
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(20px, 2vw, 30px);
+    line-height: 1.25;
+    color: var(--text-muted);
+    max-width: 30ch;
+    letter-spacing: -0.005em;
+  }
+  .impact-attribution {
+    margin-top: 44px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border-strong);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--font-display);
+    font-size: 11.5px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+    max-width: 720px;
+    gap: 32px;
+  }
+
+  /* ---------- Fixed UI ---------- */
+  .deck-counter {
+    position: fixed;
+    bottom: 20px;
+    right: 24px;
+    z-index: 100;
+    background: var(--text);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    font-weight: 600;
+    padding: 8px 12px;
+    pointer-events: none;
+    display: flex;
+    gap: 8px;
+    align-items: center;
+  }
+  .deck-counter .total { color: rgba(255,255,255,0.55); }
+  .deck-counter .current { color: var(--accent); }
+  .deck-progress {
+    position: fixed;
+    top: 0; left: 0;
+    height: 2px;
+    background: var(--accent);
+    width: 0%;
+    z-index: 100;
+    transition: width .25s ease;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1180px) {
+    .slide {
+      padding: 40px 40px;
+      height: auto;
+      min-height: 100vh;
+    }
+    .slide-body { overflow: visible; padding: 24px 0; }
+    .problem-grid,
+    .did-grid,
+    .ins-grid,
+    .persona-grid,
+    .scan-grid,
+    .nav-grid,
+    .demo-stage,
+    .shift-grid,
+    .impact-grid,
+    .close-row,
+    .ba-grid {
+      grid-template-columns: 1fr;
+      gap: 18px;
+    }
+    .scan-grid { grid-template-rows: auto; }
+    .flows-table .row,
+    .story-row {
+      grid-template-columns: 80px 1fr;
+      grid-template-rows: auto auto;
+      gap: 12px 20px;
+      align-items: start;
+    }
+    .story-row .story { grid-column: 1 / -1; }
+    .impact-card { padding: 28px 22px; }
+    .impact-card .ind { width: clamp(82px, 18vw, 120px); }
+    .cover-text-half { padding: 56px 40px; }
+    .cover-text-half .title-stack {
+      font-size: clamp(64px, 12vw, 140px);
+    }
+    .slide.cover::before {
+      font-size: clamp(220px, 50vw, 480px);
+      right: -4vw;
+      bottom: -10vw;
+    }
+    .figma-frame img,
+    .figma-screen,
+    .media-box img,
+    .media-box video,
+    .did-image .canvas img,
+    .scan-image img,
+    .nav-image img,
+    .process-hint img,
+    .problem-video video,
+    .did-video video {
+      max-width: 100%;
+      max-height: 100%;
+    }
+    .demo-canvas .figma-frame,
+    .nav-canvas .figma-frame,
+    .ba-frame-wrap .canvas .figma-frame,
+    .problem-video,
+    .did-video {
+      width: 100%;
+      aspect-ratio: 16 / 11;
+    }
+  }
+  @media (max-width: 720px) {
+    .slide { padding: 28px 22px; }
+    .slide-head { padding-bottom: 12px; }
+    .slide-foot {
+      padding-top: 12px;
+      font-size: 9px;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .deck-counter {
+      bottom: 12px; right: 12px;
+      padding: 6px 8px;
+      font-size: 9.5px;
+    }
+    .cover-text-half { padding: 40px 22px; }
+    .cover-text-half .title-stack {
+      font-size: clamp(48px, 14vw, 96px);
+    }
+    .title-team { gap: 3px 14px; font-size: 12px; margin-top: 10px; }
+    .scan-bullets .row {
+      grid-template-columns: 1fr;
+      gap: 4px;
+      padding: 12px 0;
+    }
+    .impact-card .ind { width: clamp(72px, 28vw, 110px); }
+    .persona-card { padding: 18px; }
+    .demo-canvas, .nav-canvas, .scan-image { padding: 16px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .deck-progress { transition: none; }
+  }
+  @media print {
+    @page { size: 13.333in 7.5in; margin: 0; }
+    html, body { background: #fff; }
+    html { scroll-snap-type: none; overflow: visible; }
+    .slide {
+      width: 100%; height: 7.5in;
+      page-break-after: always;
+      break-after: page;
+      page-break-inside: avoid;
+    }
+    .deck-counter, .deck-progress { display: none !important; }
+    * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; }
+  }
+</style>
+</head>
+<body>
+
+<div class="deck-progress" id="deck-progress"></div>
+<div class="deck-counter" id="deck-counter">
+  <span class="current">01</span><span class="sep">/</span><span class="total">14</span>
+</div>
+
+<!-- ============ 01 — TITLE ============ -->
+<section class="slide bleed cover" data-slide="1">
+  <div class="cover-text-half">
+    <div class="title-mark reveal"><span class="dot"></span>The Society of Publication Designers</div>
+    <h1 class="title-stack reveal delay-1">
+      <span>SPD Website</span>
+      <span>Redesign<span class="punct">.</span></span>
+    </h1>
+    <div class="title-team reveal delay-2">
+      <span>Cathy Doss</span>
+      <span>Giovanni Terzano</span>
+      <span>Vedang Lambe</span>
+      <span>Kudirat Alimi</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 — PROBLEM ============ -->
+<section class="slide" data-slide="2">
+  <div class="slide-head">
+    <div class="slide-mark">
+      <span class="logo">SPD</span>
+      <span class="meta">Client Demo &middot; May 2026</span>
+    </div>
+    <span class="slide-step">02 &middot; Problem</span>
+  </div>
+
+  <div class="slide-body">
+    <div class="problem-grid">
+      <div class="problem-text">
+        <div class="eyebrow reveal">The problem</div>
+        <h2 class="problem-statement reveal delay-1">SPD has strong content, but it's hard to <em>find what you're looking for</em>.</h2>
+        <p class="problem-lede reveal delay-2">People come in with a goal, but aren't sure where to go first.</p>
+      </div>
+      <div class="problem-video reveal delay-3">
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="problem.mov" type="video/mp4">
+          <source src="assets/problem.mov" type="video/quicktime">
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-foot">
+    <span>The starting point</span>
+    <span>02 / 14</span>
+  </div>
+</section>
+
+<!-- ============ 03 — WHAT WE DID ============ -->
+<section class="slide soft" data-slide="3">
+  <div class="slide-head">
+    <div class="slide-mark">
+      <span class="logo">SPD</span>
+      <span class="meta">Client Demo &middot; May 2026</span>
+    </div>
+    <span class="slide-step">03 &middot; What we did</span>
+  </div>
+
+  <div class="slide-body top">
+    <div class="eyebrow reveal">How we got here</div>
+    <h2 class="display md reveal delay-1">We watched four designers try to use the current site.</h2>
+
+    <div class="did-grid">
+      <div class="did-text">
+        <div class="row reveal delay-2">
+          <span class="num">01</span>
+          <div>
+            <div class="lab">Who we spoke to</div>
+            <div class="body">A <strong>student designer</strong>, a <strong>junior brand designer</strong>, a <strong>digital marketing lead</strong>, and a <strong>senior CTO</strong> at a tech studio.</div>
+          </div>
+        </div>
+        <div class="row reveal delay-3">
+          <span class="num">02</span>
+          <div>
+            <div class="lab">What we asked them to do</div>
+            <div class="body">Find a job. Figure out what membership offers. Find a competition. Explain what SPD does.</div>
+          </div>
+        </div>
+        <div class="row reveal delay-4">
+          <span class="num">03</span>
+          <div>
+            <div class="lab">What we watched for</div>
+            <div class="body">Hesitation, backtracking, dead ends, and "I don't know" moments.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="did-video media-box cover reveal delay-3">
+        <div class="placeholder">
+          <span class="tag">Video</span>
+          <span class="name">User interview recording</span>
+          <span class="path">interview.mov</span>
+          <span class="hint">Drop a video file here</span>
+        </div>
+        <video autoplay muted loop playsinline preload="auto">
+          <source src="interview.mov" type="video/mp4">
+          <source src="assets/interview.mov" type="video/quicktime">
+        </video>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-foot">
+    <span>User interviews &middot; task analysis &middot; site walkthroughs</span>
+    <span>03 / 14</span>
+  </div>
+</section>
+
+<!-- ============ 04 — INSIGHTS ============ -->
+<section class="slide dark" data-slide="4">
+  <div class="slide-head">
+    <div class="slide-mark">
+      <span class="logo">SPD</span>
+      <span class="meta">Client Demo &middot; May 2026</span>
+    </div>
+    <span class="slide-step">04 &middot; What we heard</span>
+  </div>
+
+  <div class="slide-body top">
+    <div class="eyebrow reveal">What kept happening</div>
+    <h2 class="display md reveal delay-1">People came in with a task and couldn't finish it.</h2>
+
+    <div class="ins-grid">
+      <div class="ins-list">
+        <div class="row reveal delay-2">
+          <span class="num">01</span>
+          <div>
+            <h4>Nav was overwhelming.</h4>
+            <p>"The grouping of things is confusing."</p>
+          </div>
+        </div>
+        <div class="row reveal delay-3">
+          <span class="num">02</span>
+          <div>
+            <h4>People couldn't tell what content was what.</h4>
+            <p>"I don't know how it's organized at all."</p>
+          </div>
+        </div>
+        <div class="row reveal delay-4">
+          <span class="num">03</span>
+          <div>
+            <h4>Membership value wasn't clear.</h4>
+            <p>"They're not really advertising it. I probably wouldn't join."</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="ins-quotes">
+        <div class="ins-quote reveal delay-3">
+          <blockquote>"It took me at least two clicks to find out who SPD are."</blockquote>
+          <cite>Senior CTO, tech studio</cite>
+        </div>
+        <div class="ins-quote reveal delay-4">
+          <blockquote>"Their strong points is definitely their content. Their weak points is their organization."</blockquote>
+          <cite>Junior designer interview</cite>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-foot">
+    <span>Real quotes &middot; from interview transcripts</span>
+    <span>04 / 14</span>
+  </div>
+</section>
+
+<!-- ============ 05 — PERSONAS ============ -->
+<section class="slide" data-slide="5">
+  <div class="slide-head">
+    <div class="slide-mark">
+      <span class="logo">SPD</span>
+      <span class="meta">Client Demo &middot; May 2026</span>
+    </div>
+    <span class="slide-step">05 &middot; Personas</span>
+  </div>
+
+  <div class="slide-body top">
+    <div class="eyebrow reveal">Who we designed for</div>
+    <h2 class="display md reveal delay-1">Three real visitor types.</h2>
+
+    <div class="persona-grid">
+      <div class="persona-slot reveal delay-2">
+        <div class="label">Persona 1</div>
+        <div class="media-box">
+          <div class="placeholder">
+            <span class="tag">Figma image</span>
+            <span class="name">Alex</span>
+            <span class="hint">Drop image here</span>
+          </div>
+          <img class="media-img" src="assets/persona-alex.png" alt="Alex, new visitor persona" onerror="this.style.display='none'">
+        </div>
+        <div class="persona-text">
+          <div class="p-name">Alex</div>
+          <div class="p-desc">The new visitor</div>
+          <div class="p-who">App developer at Capital One, new to SPD and the editorial design world.</div>
+          <div class="p-goal"><b>Wants to</b>understand what SPD is and submit work to a competition.</div>
+          <ul class="p-needs">
+            <li>A clear "what is SPD" moment on the homepage.</li>
+            <li>An obvious entry point for competitions.</li>
+            <li>Less jargon and unexplained series names.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="persona-slot reveal delay-3">
+        <div class="label">Persona 2</div>
+        <div class="media-box">
+          <div class="placeholder">
+            <span class="tag">Figma image</span>
+            <span class="name">Maya</span>
+            <span class="hint">Drop image here</span>
+          </div>
+          <img class="media-img" src="assets/persona-maya.png" alt="Maya, mid-career designer persona" onerror="this.style.display='none'">
+        </div>
+        <div class="persona-text">
+          <div class="p-name">Maya</div>
+          <div class="p-desc">The mid-career creative</div>
+          <div class="p-who">Brand and editorial designer in Brooklyn, 5+ years in. Considering membership.</div>
+          <div class="p-goal"><b>Wants to</b>find freelance gigs, awards, and a peer community.</div>
+          <ul class="p-needs">
+            <li>A real preview of what membership unlocks.</li>
+            <li>Job board, awards, and events surfaced together.</li>
+            <li>Proof that SPD is active, not archival.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="persona-slot reveal delay-4">
+        <div class="label">Persona 3</div>
+        <div class="media-box">
+          <div class="placeholder">
+            <span class="tag">Figma image</span>
+            <span class="name">Mike</span>
+            <span class="hint">Drop image here</span>
+          </div>
+          <img class="media-img" src="assets/persona-mike.png" alt="Mike, design student persona" onerror="this.style.display='none'">
+        </div>
+        <div class="persona-text">
+          <div class="p-name">Mike</div>
+          <div class="p-desc">The design student</div>
+          <div class="p-who">Senior BFA student and design intern in LA, browsing for inspiration.</div>
+          <div class="p-goal"><b>Wants to</b>enter student competitions and see real editorial work.</div>
+          <ul class="p-needs">
+            <li>A student section that doesn't sit behind a sign-up wall.</li>
+            <li>Plain-language section labels.</li>
+            <li>Visible entry points to current competitions.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-foot">
+    <span>Built from interview transcripts &middot; real personas, not generic ones</span>
+    <span>05 / 14</span>
+  </div>
+</section>
+
+<!-- ============ 06 — PERSONAS → FLOWS ============ -->
+<section class="slide soft" data-slide="6">
+  <div class="slide-head">
+    <div class="slide-mark">
+      <span class="logo">SPD</span>
+      <span class="meta">Client Demo &middot; May 2026</span>
+    </div>
+    <span class="slide-step">06 &middot; Personas &rarr; flows</span>
+  </div>
+
+  <div class="slide-body top">
+    <div class="eyebrow reveal">From people to flows</div>
+    <h2 class="display md reveal delay-1">Each persona pointed us at a flow that needed work.</h2>
+
+    <div class="story-stack">
+      <div class="story-row r-mike reveal delay-2">
+        <div class="visual" aria-hidden="true">
+          <svg viewBox="0 0 104 104">
+            <g class="scatter">
+              <circle cx="22" cy="30" r="3"/>
+              <circle cx="38" cy="60" r="3"/>
+              <circle cx="60" cy="38" r="3"/>
+              <circle cx="78" cy="62" r="3"/>
+            </g>
+            <path class="stroke trail" d="M14 52 L84 52"/>
+            <path class="stroke head" d="M76 44 L88 52 L76 60"/>
+          </svg>
+        </div>
+        <div class="meta">
+          <div class="name">Mike, Student Designer</div>
+          <div class="flow">Homepage</div>
+        </div>
+        <p class="story">As a student designer, I want a clear starting point, so I can understand where to go without clicking through random sections.</p>
+      </div>
+
+      <div class="story-row r-alex reveal delay-3">
+        <div class="visual" aria-hidden="true">
+          <svg viewBox="0 0 104 104">
+            <g class="loose">
+              <rect x="14" y="20" width="44" height="9" rx="1.5"/>
+              <rect x="48" y="40" width="40" height="9" rx="1.5"/>
+              <rect x="22" y="64" width="58" height="9" rx="1.5"/>
+            </g>
+            <g class="organized">
+              <rect x="14" y="22" width="76" height="10" rx="1.5"/>
+              <rect x="14" y="44" width="76" height="10" rx="1.5"/>
+              <rect x="14" y="66" width="76" height="10" rx="1.5"/>
+            </g>
+          </svg>
+        </div>
+        <div class="meta">
+          <div class="name">Alex, New Visitor</div>
+          <div class="flow">About SPD</div>
+        </div>
+        <p class="story">As a new visitor, I want to quickly understand what SPD is, so I can decide if it feels relevant to me.</p>
+      </div>
+
+      <div class="story-row r-maya reveal delay-4">
+        <div class="visual" aria-hidden="true">
+          <svg viewBox="0 0 104 104">
+            <rect class="stroke c-edge" x="14" y="20" width="76" height="14" rx="1.5"/>
+            <rect class="c-hi" x="14" y="44" width="76" height="14" rx="1.5" fill="currentColor" opacity="0.32"/>
+            <rect class="stroke c-edge" x="14" y="68" width="76" height="14" rx="1.5"/>
+          </svg>
+        </div>
+        <div class="meta">
+          <div class="name">Maya, Active Designer</div>
+          <div class="flow">Job Board</div>
+        </div>
+        <p class="story">As an active designer, I want to find roles quickly, so I can see whether SPD is useful before committing to membership.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-foot">
+    <span>Three flows the redesign focuses on</span>
+    <span>06 / 14</span>
+  </div>
+</section>
+
+<!-- ============ 07 — SITE SCAN / SWOT ============ -->
+<section class="slide" data-slide="7">
+  <div class="slide-head">
+    <div class="slide-mark">
+      <span class="logo">SPD</span>
+      <span class="meta">Client Demo &middot; May 2026</span>
+    </div>
+    <span class="slide-step">07 &middot; Where the site stands</span>
+  </div>
+
+  <div class="slide-body top">
+    <div class="eyebrow reveal">Where the site is strong, and where it breaks down</div>
+    <h2 class="display md reveal delay-1">SPD has the credibility. The structure undersells it.</h2>
+
+    <div class="scan-grid">
+      <div class="scan-image reveal delay-2">
+        <img src="assets/swot.png" alt="SPD SWOT analysis" onerror="this.style.display='none'">
+      </div>
+
+      <div class="scan-bullets">
+        <div class="row strength reveal delay-3">
+          <span class="lab">Strength</span>
+          <div>
+            <h4>Strong content. Cohesive editorial brand.</h4>
+            <p>Visitors describe SPD as "clean, like a gallery." That credibility is real.</p>
+          </div>
+        </div>
+        <div class="row reveal delay-4">
+          <span class="lab">Friction</span>
+          <div>
+            <h4>The structure hides the work.</h4>
+            <p>Eight broad nav labels with sub-categories. People stop guessing.</p>
+          </div>
+        </div>
+        <div class="row reveal delay-5">
+          <span class="lab">Risk</span>
+          <div>
+            <h4>The actions that matter most are buried.</h4>
+            <p>Membership, the job board, and competitions are the reasons people come. They sit deep in the menu.</p>
+          </div>
+        </div>
+        <div class="row opp reveal delay-6">
+          <span class="lab">Opportunity</span>
+          <div>
+            <h4>Restraint is the unusual move in this category.</h4>
+            <p>Peers run visually busy. A disciplined system signals competence.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-foot">
+    <span>SWOT &middot; reframed as product risks and opportunities</span>
+    <span>07 / 14</span>
+  </div>
+</section>
+
+<!-- ============ 08 — SHIFT ============ -->
+<section class="slide bleed" data-slide="8">
+  <div class="slide-head">
+    <div class="slide-mark">
+      <span class="logo">SPD</span>
+      <span class="meta">Client Demo &middot; May 2026</span>
+    </div>
+    <span class="slide-step">08 &middot; The shift</span>
+  </div>
+
+  <div class="slide-body">
+    <div class="eyebrow reveal">The shift</div>
+
+    <div class="shift-grid">
+      <div class="shift-side reveal delay-1">
+        <div class="lab">From</div>
+        <h3>Built around the <em>archive</em>.</h3>
+        <ul>
+          <li>People had to figure out the structure before they could act.</li>
+          <li>Important pages (membership, jobs) sat behind multiple clicks.</li>
+        </ul>
+      </div>
+
+      <div class="shift-arrow reveal delay-2">&rarr;</div>
+
+      <div class="shift-side reveal delay-3">
+        <div class="lab">To</div>
+        <h3>Built around <em>what people do</em>.</h3>
+        <ul>
+          <li>Top nav matches the reasons people come.</li>
+          <li>Membership, jobs, and competitions become destinations.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-foot">
+    <span>The redesign in one sentence</span>
+    <span>08 / 14</span>
+  </div>
+</section>
+
+<!-- ============ 09 — NAV ============ -->
+<section class="slide" data-slide="9">
+  <div class="slide-head">
+    <div class="slide-mark">
+      <span class="logo">SPD</span>
+      <span class="meta">Client Demo &middot; May 2026</span>
+    </div>
+    <span class="slide-step">09 &middot; Navigation</span>
+  </div>
+
+  <div class="slide-body top">
+    <div class="eyebrow reveal">Navigation</div>
+    <h2 class="display md reveal delay-1">We reorganized navigation based on how people expect to find things.</h2>
+
+    <div class="nav-grid">
+      <div class="nav-image reveal delay-2">
+        <div class="demo-video">
+          <video autoplay muted loop playsinline preload="auto" aria-label="Navigation wireframe flow">
+            <source src="assets/nav-wireframe.mp4" type="video/mp4">
+            <source src="nav-wireframe.mp4" type="video/mp4">
+            <source src="assets/nav-wireframe.mov" type="video/quicktime">
+          </video>
+        </div>
+      </div>
+
+      <div class="nav-text">
+        <p class="lead reveal delay-3">We grouped pages by task instead of by SPD's internal categories.</p>
+        <ul class="nav-bullets reveal delay-4">
+          <li>Used card sorting to identify how users naturally group content.</li>
+          <li>Reduced navigation from a large, overwhelming set to ~4&ndash;5 core categories.</li>
+          <li>Prioritized key user actions like jobs, membership, and exploration.</li>
+          <li>Organized structure around user goals instead of internal categories.</li>
+        </ul>
+        <div class="quote reveal delay-5">
+          The hamburger menu was the easiest thing to look into. Everything else was guessing.
+          <cite>Designer interview</cite>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-foot">
+    <span>Card sorting &middot; sitemap &middot; new top-level paths</span>
+    <span>09 / 14</span>
+  </div>
+</section>
+
+<!-- ============ 10 — HOMEPAGE ============ -->
+<section class="slide" data-slide="10">
+  <div class="slide-head">
+    <div class="slide-mark">
+      <span class="logo">SPD</span>
+      <span class="meta">Client Demo &middot; May 2026</span>
+    </div>
+    <span class="slide-step">10 &middot; Homepage</span>
+  </div>
+
+  <div class="slide-body top">
+    <div class="eyebrow reveal delay-1">Homepage redesign</div>
+    <h2 class="display md reveal delay-2">From a wall of content to <em>clear sections</em>.</h2>
+
+    <div class="demo-stage">
+      <div class="demo-canvas reveal">
+        <span class="corner">Refined &middot; Homepage</span>
+        <div class="demo-video">
+          <video autoplay muted loop playsinline preload="auto" aria-label="Homepage wireframe flow">
+            <source src="assets/homepage-wireframe.mp4" type="video/mp4">
+            <source src="homepage-wireframe.mp4" type="video/mp4">
+            <source src="assets/homepage-wireframe.mov" type="video/quicktime">
+          </video>
+        </div>
+      </div>
+
+      <div class="demo-notes">
+        <div class="row reveal delay-3">
+          <div class="lab">What people need (Mike)</div>
+          <div class="txt">A clear first step the moment they land. Fewer overlapping content types.</div>
+        </div>
+        <div class="row reveal delay-4">
+          <div class="lab">What was broken</div>
+          <div class="txt">Eight nav labels, four hero messages, dense module stack.<em>"I just sort of clicking through, being like, okay, they do this, they do this. Alright, I'm just going to click all of them find out."</em></div>
+        </div>
+        <div class="row reveal delay-5">
+          <div class="lab">What changed</div>
+          <div class="txt">A <strong>bento-style layout</strong> that breaks the page into clear sections. Each card pulls people into a specific area instead of throwing everything at once.</div>
+        </div>
+        <div class="row impact reveal delay-6">
+          <div class="lab">Why it matters</div>
+          <div class="txt">Visitors get pulled into the right area without having to read everything first.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-foot">
+    <span>The page that meets new visitors first</span>
+    <span>10 / 14</span>
+  </div>
+</section>
+
+<!-- ============ 11 — ABOUT PAGE ============ -->
+<section class="slide" data-slide="11">
+  <div class="slide-head">
+    <div class="slide-mark">
+      <span class="logo">SPD</span>
+      <span class="meta">Client Demo &middot; May 2026</span>
+    </div>
+    <span class="slide-step">11 &middot; About SPD</span>
+  </div>
+
+  <div class="slide-body top">
+    <div class="eyebrow reveal delay-1">About page redesign</div>
+    <h2 class="display md reveal delay-2">Who SPD is, <em>without two extra clicks</em>.</h2>
+
+    <div class="demo-stage">
+      <div class="demo-canvas reveal">
+        <span class="corner">Refined &middot; About</span>
+        <div class="demo-video">
+          <video autoplay muted loop playsinline preload="auto" poster="assets/screen-about.png">
+            <source src="about-menu.mp4" type="video/mp4">
+            <source src="assets/about-menu.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <div class="demo-notes">
+        <div class="row reveal delay-3">
+          <div class="lab">What people need (Alex)</div>
+          <div class="txt">A quick read of who SPD is, who it serves, and why it matters.</div>
+        </div>
+        <div class="row reveal delay-4">
+          <div class="lab">What was broken</div>
+          <div class="txt">Identity and mission were buried inside long prose.<em>"It took me at least two clicks to find out who SPD are."</em></div>
+        </div>
+        <div class="row reveal delay-5">
+          <div class="lab">What changed</div>
+          <div class="txt">Cleaner structure with <strong>scannable sections</strong> for mission, what SPD does, and who it serves. Visible without scrolling through dense paragraphs.</div>
+        </div>
+        <div class="row impact reveal delay-6">
+          <div class="lab">Why it matters</div>
+          <div class="txt">Prospective members can decide if SPD is for them in seconds, not minutes.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-foot">
+    <span>The page that makes the case for SPD</span>
+    <span>11 / 14</span>
+  </div>
+</section>
+
+<!-- ============ 12 — JOB BOARD ============ -->
+<section class="slide" data-slide="12">
+  <div class="slide-head">
+    <div class="slide-mark">
+      <span class="logo">SPD</span>
+      <span class="meta">Client Demo &middot; May 2026</span>
+    </div>
+    <span class="slide-step">12 &middot; Job board</span>
+  </div>
+
+  <div class="slide-body top">
+    <div class="eyebrow reveal delay-1">Job board redesign &middot; key feature</div>
+    <h2 class="display md reveal delay-2">The benefit that keeps designers <em>coming back</em>.</h2>
+
+    <div class="demo-stage">
+      <div class="demo-canvas reveal">
+        <span class="corner">Refined &middot; Job Board</span>
+        <div class="demo-video">
+          <video autoplay muted loop playsinline preload="auto" poster="assets/screen-jobs.png">
+            <source src="job-menu.mp4" type="video/mp4">
+            <source src="assets/job-menu.mp4" type="video/mp4">
+          </video>
+        </div>
+      </div>
+
+      <div class="demo-notes">
+        <div class="row reveal delay-3">
+          <div class="lab">What people need (Maya)</div>
+          <div class="txt">Editorial roles she can find, scan, and filter without paying first.</div>
+        </div>
+        <div class="row reveal delay-4">
+          <div class="lab">What was broken</div>
+          <div class="txt">The job board sat under a generic Resources area, several clicks deep.<em>"I forget where the job board is."</em></div>
+        </div>
+        <div class="row reveal delay-5">
+          <div class="lab">What changed</div>
+          <div class="txt">Lives directly under <strong>Browse</strong>. Role and location filters surface up front. The job board gets its own destination, not a buried link.</div>
+        </div>
+        <div class="row impact reveal delay-6">
+          <div class="lab">Why it matters</div>
+          <div class="txt">It's the strongest reason designers come back, and the strongest reason to join.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-foot">
+    <span>A core member benefit, surfaced where members already are</span>
+    <span>12 / 14</span>
+  </div>
+</section>
+
+<!-- ============ 13 — IMPACT ============ -->
+<section class="slide bleed" data-slide="13">
+  <div class="slide-head">
+    <div class="slide-mark">
+      <span class="logo">SPD</span>
+      <span class="meta">Client Demo &middot; May 2026</span>
+    </div>
+    <span class="slide-step">13 &middot; Impact</span>
+  </div>
+
+  <div class="slide-body top">
+    <div class="eyebrow reveal">What this unlocks</div>
+    <h2 class="display lg reveal delay-1">Three things look different now.</h2>
+
+    <div class="impact-grid">
+      <div class="impact-card r-speed reveal delay-2">
+        <span class="ind" aria-hidden="true">
+          <svg viewBox="0 0 44 44">
+            <path class="stroke ch" d="M12 12 L22 22 L12 32"/>
+            <path class="stroke ch" d="M22 12 L32 22 L22 32"/>
+            <path class="stroke ch" d="M32 12 L42 22 L32 32"/>
+          </svg>
+        </span>
+        <div class="text-block">
+          <b>Fewer clicks to act.</b>
+          <p>Membership, jobs, and competitions are one step from the homepage. They used to be three.</p>
+        </div>
+      </div>
+
+      <div class="impact-card r-clarity reveal delay-3">
+        <span class="ind" aria-hidden="true">
+          <svg viewBox="0 0 44 44">
+            <circle class="stroke ring" cx="22" cy="22" r="16"/>
+            <circle class="stroke ring" cx="22" cy="22" r="9"/>
+            <circle cx="22" cy="22" r="2.6" fill="currentColor"/>
+          </svg>
+        </span>
+        <div class="text-block">
+          <b>Decisions happen on the page.</b>
+          <p>Tier comparison sits side by side, instead of asking visitors to scroll and remember.</p>
+        </div>
+      </div>
+
+      <div class="impact-card r-system reveal delay-4">
+        <span class="ind" aria-hidden="true">
+          <svg viewBox="0 0 44 44">
+            <rect class="stroke sq" x="6" y="6" width="14" height="14"/>
+            <rect class="stroke sq" x="24" y="6" width="14" height="14"/>
+            <rect class="stroke sq" x="6" y="24" width="14" height="14"/>
+            <rect class="stroke sq" x="24" y="24" width="14" height="14"/>
+          </svg>
+        </span>
+        <div class="text-block">
+          <b>Cycles ship as content, not redesign.</b>
+          <p>Recurring pages share one shape, so adding a year doesn't add design work.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide-foot">
+    <span>The Society of Publication Designers &middot; 2026</span>
+    <span>13 / 14</span>
+  </div>
+</section>
+
+<!-- ============ 14 — FINAL CLOSE ============ -->
+<section class="slide soft final-slide" data-slide="14">
+  <div class="slide-head">
+    <div class="slide-mark">
+      <span class="logo">SPD</span>
+      <span class="meta">Client Demo &middot; May 2026</span>
+    </div>
+    <span class="slide-step">14 &middot; In closing</span>
+  </div>
+
+  <div class="slide-body middle">
+    <div class="final-mark reveal">
+      <span class="logo">SPD</span>
+      <span class="org">The Society of Publication Designers</span>
+    </div>
+    <h2 class="impact-statement reveal delay-1">
+      Make great <em>work</em> easier to find.
+    </h2>
+    <p class="impact-subtext reveal delay-2">So the focus stays where it belongs.</p>
+    <div class="impact-attribution reveal delay-3">
+      <span>Cathy Doss &middot; Giovanni Terzano &middot; Vedang Lambe &middot; Kudirat Alimi</span>
+      <span>Thank you</span>
+    </div>
+  </div>
+
+  <div class="slide-foot">
+    <span>The Society of Publication Designers &middot; 2026</span>
+    <span>14 / 14</span>
+  </div>
+</section>
+
+<script>
+(function () {
+  // Cover video: restart 2 seconds before the end for a cleaner loop
+  const coverVideo = document.getElementById('cover-video');
+  if (coverVideo) {
+    const TRIM_END = 2;
+    coverVideo.addEventListener('timeupdate', () => {
+      const d = coverVideo.duration;
+      if (Number.isFinite(d) && d > TRIM_END + 0.1 && coverVideo.currentTime > d - TRIM_END) {
+        coverVideo.currentTime = 0;
+        coverVideo.play().catch(() => {});
+      }
+    });
+  }
+
+  document.querySelectorAll('img.figma-screen, .process-hint img').forEach(img => {
+    img.addEventListener('load', () => {
+      if (img.naturalWidth > 0) {
+        const label = img.parentElement.querySelector('.frame-label, .ph-fallback');
+        if (label) label.style.display = 'none';
+      }
+    });
+  });
+
+  // Media boxes: hide placeholder when image/video loads, accept drag-and-drop swap
+  document.querySelectorAll('.media-box').forEach(box => {
+    const ph = box.querySelector('.placeholder');
+    const img = box.querySelector('img.media-img');
+    const video = box.querySelector('video');
+
+    function hidePh() { if (ph) ph.style.display = 'none'; }
+
+    if (img) {
+      img.addEventListener('load', () => { if (img.naturalWidth > 0) hidePh(); });
+      if (img.complete && img.naturalWidth > 0) hidePh();
+    }
+    if (video) {
+      video.addEventListener('loadeddata', () => {
+        if (video.readyState >= 2) hidePh();
+      });
+      video.addEventListener('error', () => {
+        // keep placeholder visible if video can't load
+      });
+    }
+
+    box.addEventListener('dragover', e => {
+      e.preventDefault();
+      box.classList.add('drag-over');
+    });
+    box.addEventListener('dragleave', () => {
+      box.classList.remove('drag-over');
+    });
+    box.addEventListener('drop', e => {
+      e.preventDefault();
+      box.classList.remove('drag-over');
+      const file = e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files[0];
+      if (!file) return;
+      const url = URL.createObjectURL(file);
+      if (file.type.startsWith('video/') && video) {
+        video.src = url;
+        video.load();
+        video.play().catch(() => {});
+        hidePh();
+      } else if (file.type.startsWith('image/') && img) {
+        img.style.display = 'block';
+        img.src = url;
+        hidePh();
+      }
+    });
+  });
+
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const total = slides.length;
+  const counter = document.getElementById('deck-counter');
+  const progress = document.getElementById('deck-progress');
+  const currentEl = counter.querySelector('.current');
+  const totalEl = counter.querySelector('.total');
+  totalEl.textContent = String(total).padStart(2, '0');
+  let current = 0;
+
+  function setCurrent(idx) {
+    current = Math.max(0, Math.min(total - 1, idx));
+    currentEl.textContent = String(current + 1).padStart(2, '0');
+    progress.style.width = ((current + 1) / total * 100) + '%';
+    document.body.classList.toggle('is-cover', current === 0);
+  }
+  function goTo(idx) {
+    const target = Math.max(0, Math.min(total - 1, idx));
+    slides[target].scrollIntoView({ behavior: 'smooth', block: 'start' });
+    setCurrent(target);
+  }
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && entry.intersectionRatio > 0.55) {
+        const idx = slides.indexOf(entry.target);
+        if (idx !== -1) setCurrent(idx);
+      }
+      if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
+        entry.target.classList.add('in-view');
+      } else {
+        entry.target.classList.remove('in-view');
+      }
+    });
+  }, { threshold: [0, 0.3, 0.55, 0.75] });
+  slides.forEach(s => io.observe(s));
+
+  window.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    switch (e.key) {
+      case 'ArrowRight':
+      case 'ArrowDown':
+      case 'PageDown':
+      case ' ':
+        if (e.shiftKey && e.key === ' ') { e.preventDefault(); goTo(current - 1); }
+        else { e.preventDefault(); goTo(current + 1); }
+        break;
+      case 'ArrowLeft':
+      case 'ArrowUp':
+      case 'PageUp':
+        e.preventDefault(); goTo(current - 1); break;
+      case 'Home': e.preventDefault(); goTo(0); break;
+      case 'End': e.preventDefault(); goTo(total - 1); break;
+      case 'f':
+      case 'F':
+        if (!document.fullscreenElement) document.documentElement.requestFullscreen?.();
+        else document.exitFullscreen?.();
+        break;
+    }
+  });
+
+  document.addEventListener('click', (e) => {
+    if (e.target.closest('a, button, input, textarea, .deck-counter')) return;
+    const x = e.clientX / window.innerWidth;
+    if (x > 0.85) goTo(current + 1);
+    else if (x < 0.15) goTo(current - 1);
+  });
+
+  setCurrent(0);
+})();
+</script>
+
+</body>
+</html>

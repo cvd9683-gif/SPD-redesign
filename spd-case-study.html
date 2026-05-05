@@ -1,0 +1,3088 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SPD Website Redesign — Case Study</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800;900&family=Oswald:wght@500;600;700&family=DM+Serif+Display&display=swap">
+
+<style>
+  /* ============================================================
+     SPD WEBSITE REDESIGN — CASE STUDY
+     Editorial portfolio · image-led · interactive
+     ============================================================ */
+
+  *, *::before, *::after { box-sizing: border-box; }
+
+  :root {
+    --bg: #FBF8F8;
+    --bg-soft: #F2EEEE;
+    --bg-deep: #ECE7E7;
+    --surface: #ffffff;
+    --text: #1a191c;
+    --text-mid: #363537;
+    --text-muted: #6c6a6e;
+    --text-faint: #a09ea1;
+    --border: rgba(54, 53, 55, 0.12);
+    --border-strong: rgba(54, 53, 55, 0.32);
+    --accent: #EF4022;
+    --accent-soft: rgba(239, 64, 34, 0.08);
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.04);
+    --shadow-md: 0 12px 36px rgba(0,0,0,0.08);
+    --shadow-lg: 0 24px 64px rgba(0,0,0,0.12);
+
+    --font-display: "Oswald", "Archivo Narrow", "Archivo", sans-serif;
+    --font-body: "Archivo", -apple-system, sans-serif;
+    --font-serif: "DM Serif Display", "Times New Roman", serif;
+
+    --max: 1280px;
+    --max-wide: 1480px;
+    --max-narrow: 760px;
+    --gutter: 56px;
+    --gutter-tight: 28px;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--font-body);
+    color: var(--text-mid);
+    background: var(--bg);
+    line-height: 1.55;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection { background: var(--accent); color: #fff; }
+  img { max-width: 100%; display: block; }
+  button { font: inherit; cursor: pointer; border: none; background: none; padding: 0; color: inherit; }
+  a { color: inherit; text-decoration: none; }
+
+  .container { max-width: var(--max); margin: 0 auto; padding: 0 var(--gutter); }
+  .container--wide { max-width: var(--max-wide); }
+  .container--narrow { max-width: var(--max-narrow); }
+
+  section { padding: 120px 0; position: relative; }
+  section + section { border-top: 1px solid var(--border); }
+  section.bleed { background: var(--accent); color: #fff; border-top: none; }
+  section.bleed + section { border-top: none; }
+  section.soft { background: var(--bg-soft); }
+  section.dark { background: #0e0e10; color: #fff; border-top: none; }
+  section.dark + section { border-top: none; }
+
+  /* ---------- Top nav ---------- */
+  .nav {
+    position: sticky;
+    top: 0;
+    z-index: 60;
+    background: rgba(251, 248, 248, 0.92);
+    backdrop-filter: saturate(180%) blur(14px);
+    -webkit-backdrop-filter: saturate(180%) blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-inner {
+    max-width: var(--max-wide);
+    margin: 0 auto;
+    padding: 0 var(--gutter);
+    display: flex;
+    align-items: center;
+    height: 64px;
+    gap: 18px;
+  }
+  .nav-logo {
+    width: 36px; height: 36px;
+    background: var(--accent);
+    color: #fff;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+  }
+  .nav-mark {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .nav-mark b { color: var(--text); font-weight: 600; }
+  .nav-spacer { flex: 1; }
+  .nav-link {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+    padding: 6px 0;
+    border-bottom: 1px solid transparent;
+    transition: color 200ms, border-color 200ms;
+  }
+  .nav-link:hover { color: var(--text); border-color: var(--accent); }
+
+  /* ============================================================
+     BANNER — slim, soft animated gradient
+     ============================================================ */
+  .case-banner {
+    width: 100%;
+    aspect-ratio: 16 / 3.4;
+    min-height: 180px;
+    max-height: 320px;
+    background: var(--accent);
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    position: relative;
+    isolation: isolate;
+  }
+  .case-banner::before {
+    content: "";
+    position: absolute;
+    inset: -20%;
+    background:
+      radial-gradient(60% 80% at 18% 30%, rgba(255,255,255,0.22) 0%, rgba(255,255,255,0) 60%),
+      radial-gradient(50% 70% at 78% 65%, rgba(255,180,160,0.32) 0%, rgba(255,180,160,0) 60%),
+      radial-gradient(55% 75% at 50% 100%, rgba(120,30,20,0.45) 0%, rgba(120,30,20,0) 65%),
+      linear-gradient(135deg, #F2522F 0%, #E03A1F 45%, #B82A14 100%);
+    background-size: 180% 180%, 180% 180%, 180% 180%, 100% 100%;
+    background-position: 0% 0%, 100% 100%, 50% 100%, 0 0;
+    z-index: 1;
+    animation: bannerGradient 22s ease-in-out infinite alternate;
+  }
+  @keyframes bannerGradient {
+    0%   { background-position:   0% 0%, 100% 100%, 50% 100%, 0 0; }
+    50%  { background-position:  60% 30%,  40%  60%, 30%  80%, 0 0; }
+    100% { background-position: 100% 50%,   0%  20%, 70% 100%, 0 0; }
+  }
+  .case-banner::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0) 55%, rgba(0,0,0,0.18) 100%);
+    pointer-events: none;
+    z-index: 4;
+  }
+  .case-banner .banner-mark {
+    position: absolute;
+    bottom: 22px;
+    left: 56px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.95);
+    font-weight: 600;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+  }
+  .case-banner .banner-mark::before {
+    content: "";
+    width: 7px; height: 7px;
+    background: #fff;
+    border-radius: 50%;
+  }
+  .case-banner .banner-watermark {
+    position: absolute;
+    right: -3vw;
+    top: -16%;
+    font-family: var(--font-display);
+    font-size: clamp(160px, 24vw, 320px);
+    font-weight: 700;
+    line-height: 0.8;
+    color: #fff;
+    opacity: 0.10;
+    letter-spacing: -0.04em;
+    pointer-events: none;
+    user-select: none;
+    z-index: 2;
+    animation: bannerDrift 28s ease-in-out infinite alternate;
+  }
+  @keyframes bannerDrift {
+    from { transform: translate(0, 0); }
+    to { transform: translate(-1.6vw, -1vw); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .case-banner::before, .banner-watermark { animation: none !important; }
+  }
+
+  /* ============================================================
+     HERO TEXT BLOCK
+     ============================================================ */
+  .hero-text { padding: 96px 0 72px; border-top: none; }
+  .hero-text + section { border-top: 1px solid var(--border); }
+  .hero-eyebrow {
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 28px;
+  }
+  .hero-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(56px, 6.6vw, 116px);
+    line-height: 0.96;
+    letter-spacing: -0.014em;
+    margin: 0 0 28px;
+    max-width: 18ch;
+    color: var(--text);
+  }
+  .hero-title em { font-style: normal; color: var(--accent); }
+  .hero-blurb {
+    font-size: clamp(17px, 1.4vw, 22px);
+    line-height: 1.55;
+    color: var(--text-muted);
+    max-width: 60ch;
+    margin: 0 0 44px;
+  }
+  .hero-blurb b { color: var(--text); font-weight: 600; }
+
+  .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 48px; }
+  .tag {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-mid);
+    font-weight: 600;
+    padding: 7px 14px;
+    border: 1px solid var(--border-strong);
+    background: transparent;
+    border-radius: 999px;
+  }
+
+  .hero-meta {
+    display: grid;
+    grid-template-columns: 1.4fr 0.8fr 1.1fr 1.7fr;
+    gap: 40px;
+    border-top: 1px solid var(--border-strong);
+    padding-top: 36px;
+    align-items: start;
+  }
+  .hero-meta .cell { min-width: 0; }
+  .hero-meta .cell .label {
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    letter-spacing: 0.26em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: block;
+  }
+  .hero-meta .cell .value {
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--text);
+    margin: 0;
+    padding: 0;
+  }
+  .hero-meta .method-list {
+    list-style: none;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px 24px;
+  }
+  .hero-meta .method-list li {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--text);
+    padding-left: 14px;
+    position: relative;
+  }
+  .hero-meta .method-list li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 6px;
+    height: 1.5px;
+    background: var(--accent);
+  }
+
+  /* ============================================================
+     TYPE
+     ============================================================ */
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 24px;
+  }
+  .eyebrow::before { content: ""; width: 28px; height: 2px; background: var(--accent); }
+  section.bleed .eyebrow, section.dark .eyebrow { color: #fff; }
+  section.bleed .eyebrow::before, section.dark .eyebrow::before { background: #fff; }
+
+  .display {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 0.96;
+    letter-spacing: -0.012em;
+    color: var(--text);
+    margin: 0;
+  }
+  .display em { font-style: normal; color: var(--accent); }
+  section.bleed .display, section.dark .display { color: #fff; }
+  .display.lg { font-size: clamp(40px, 4.8vw, 80px); }
+  .display.md { font-size: clamp(30px, 3.2vw, 52px); }
+  .display.sm { font-size: clamp(22px, 2vw, 32px); }
+
+  .body-text {
+    font-size: 16px;
+    line-height: 1.65;
+    color: var(--text-mid);
+    max-width: 68ch;
+  }
+  .body-text b { color: var(--text); font-weight: 600; }
+
+  .section-head {
+    display: grid;
+    grid-template-columns: 1fr 2.4fr;
+    gap: 56px;
+    margin-bottom: 56px;
+    align-items: baseline;
+  }
+  .section-head .num {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 5.4vw, 88px);
+    line-height: 1;
+    color: var(--accent);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+  .section-head .num small {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 700;
+    margin-top: 12px;
+  }
+  .section-head h2 { margin: 0 0 14px; }
+  .section-head .kicker {
+    font-size: clamp(15px, 1.2vw, 18px);
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 60ch;
+  }
+  .section-head .kicker b { color: var(--text); font-weight: 600; }
+
+  /* ============================================================
+     OVERVIEW CARDS
+     ============================================================ */
+  .overview-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .overview-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 36px 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    border-top: 3px solid var(--accent);
+    transition: transform 280ms cubic-bezier(0.16,1,0.3,1),
+                box-shadow 280ms cubic-bezier(0.16,1,0.3,1),
+                border-color 280ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .overview-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent);
+  }
+  .overview-card .label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .overview-card h3 {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 1.95vw, 28px);
+    line-height: 1.2;
+    margin: 0;
+    color: var(--text);
+    font-weight: 600;
+  }
+  .overview-card p {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  /* ============================================================
+     AUDIT — image-led editorial
+     ============================================================ */
+  .audit-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 88px;
+  }
+  .audit-row {
+    display: grid;
+    grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.55fr);
+    gap: 56px;
+    align-items: center;
+  }
+  .audit-meta { display: flex; flex-direction: column; gap: 8px; max-width: 44ch; }
+  .audit-meta .lab {
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .audit-meta h3 {
+    font-family: var(--font-display);
+    font-size: clamp(26px, 2.4vw, 38px);
+    line-height: 1.05;
+    margin: 4px 0 6px;
+    color: var(--text);
+    font-weight: 700;
+    letter-spacing: -0.008em;
+  }
+  .audit-meta p {
+    margin: 0;
+    font-size: clamp(15px, 1.15vw, 17px);
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+  .audit-meta p b { color: var(--text); font-weight: 700; }
+  .audit-figure {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: transform 320ms cubic-bezier(0.16,1,0.3,1),
+                box-shadow 320ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .audit-figure:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .audit-figure .artifact {
+    background: var(--bg-soft);
+    aspect-ratio: 16 / 11;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-in;
+    position: relative;
+    overflow: hidden;
+    padding: 12px;
+  }
+  .audit-figure .artifact img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: transform 360ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .audit-figure .artifact:hover img { transform: scale(1.015); }
+  .audit-figure .artifact::after {
+    content: "Click to enlarge";
+    position: absolute;
+    bottom: 16px;
+    right: 16px;
+    background: rgba(20,20,22,0.78);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 200ms;
+    pointer-events: none;
+    backdrop-filter: blur(6px);
+  }
+  .audit-figure .artifact:hover::after { opacity: 1; }
+
+  /* Competitor iframe preview */
+  .competitor-preview {
+    background: var(--bg-soft);
+    aspect-ratio: 16 / 11;
+    cursor: zoom-in;
+    position: relative;
+    overflow: hidden;
+    transition: transform 280ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .competitor-preview iframe {
+    width: 250%;
+    height: 250%;
+    border: 0;
+    transform: scale(0.4);
+    transform-origin: top left;
+    pointer-events: none;
+    background: #fff;
+  }
+  .competitor-preview::after {
+    content: "Click to view full analysis";
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    background: rgba(20,20,22,0.78);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 200ms;
+    pointer-events: none;
+    backdrop-filter: blur(6px);
+  }
+  .competitor-preview:hover::after { opacity: 1; }
+
+  /* Pull quote */
+  .pull-quote {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: clamp(28px, 3.4vw, 52px);
+    line-height: 1.16;
+    letter-spacing: -0.005em;
+    color: var(--text);
+    max-width: 22ch;
+    margin: 0;
+    padding-left: 24px;
+    border-left: 3px solid var(--accent);
+  }
+  .pull-quote em { font-style: normal; color: var(--accent); }
+  .pull-quote .src {
+    display: block;
+    margin-top: 18px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  /* ============================================================
+     METHODS — clickable cards w/ icon
+     ============================================================ */
+  .methods-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+  }
+  .method-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 26px 22px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 280px;
+    text-align: left;
+    width: 100%;
+    cursor: pointer;
+    position: relative;
+    transition: transform 280ms cubic-bezier(0.16,1,0.3,1),
+                box-shadow 280ms cubic-bezier(0.16,1,0.3,1),
+                border-color 280ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .method-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent);
+  }
+  .method-card .m-icon {
+    width: 48px; height: 48px;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 4px;
+    transition: transform 280ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .method-card:hover .m-icon { transform: rotate(-2deg) scale(1.06); }
+  .method-card .m-icon .stroke {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .method-card .m-icon .fill { fill: currentColor; }
+  .method-card .num {
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    color: var(--text-muted);
+    font-weight: 700;
+  }
+  .method-card h4 {
+    font-family: var(--font-display);
+    font-size: clamp(17px, 1.4vw, 21px);
+    line-height: 1.2;
+    margin: 0;
+    color: var(--text);
+    font-weight: 600;
+  }
+  .method-card .summary {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+  .method-card .more {
+    margin-top: auto;
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-weight: 700;
+    padding-top: 14px;
+    transition: color 200ms;
+  }
+  .method-card:hover .more { color: var(--accent); }
+  .method-card .more::after { content: " \2192"; }
+
+  /* ============================================================
+     INSIGHTS — dark, high contrast
+     ============================================================ */
+  .insights-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 16px;
+  }
+  .insight {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.16);
+    padding: 32px 26px 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 240px;
+    transition: transform 280ms cubic-bezier(0.16,1,0.3,1),
+                background 280ms cubic-bezier(0.16,1,0.3,1),
+                border-color 280ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .insight:hover {
+    transform: translateY(-4px);
+    background: rgba(255,255,255,0.10);
+    border-color: var(--accent);
+  }
+  .insight .ix {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 18px;
+  }
+  .insight q {
+    font-family: var(--font-display);
+    font-size: clamp(20px, 1.7vw, 26px);
+    line-height: 1.22;
+    color: #fff;
+    font-weight: 600;
+    quotes: "\201C" "\201D";
+  }
+  .insight q::before { content: open-quote; color: var(--accent); }
+  .insight q::after { content: close-quote; color: var(--accent); }
+  .insight .sub {
+    margin-top: 18px;
+    font-size: 13.5px;
+    line-height: 1.55;
+    color: rgba(255,255,255,0.72);
+  }
+  .insights-quotes {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 28px;
+    margin-top: 56px;
+  }
+  .insights-quotes .q {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.16);
+    border-left: 3px solid var(--accent);
+    padding: 28px 32px;
+  }
+  .insights-quotes .q blockquote {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(20px, 1.85vw, 28px);
+    line-height: 1.25;
+    color: #fff;
+    font-weight: 500;
+  }
+  .insights-quotes .q cite {
+    display: block;
+    margin-top: 14px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    font-weight: 600;
+    font-style: normal;
+  }
+
+  /* ============================================================
+     PERSONAS — full image visible
+     ============================================================ */
+  .persona-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .persona {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 280ms cubic-bezier(0.16,1,0.3,1),
+                box-shadow 280ms cubic-bezier(0.16,1,0.3,1),
+                border-color 280ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .persona:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-md);
+    border-color: var(--accent);
+  }
+  .persona .photo {
+    aspect-ratio: 1 / 1.06;
+    background: #EF4022;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-bottom: 1px solid var(--border);
+    overflow: hidden;
+    cursor: zoom-in;
+    position: relative;
+    padding: 0;
+  }
+  .persona .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    transition: transform 360ms cubic-bezier(0.16,1,0.3,1);
+    background: #EF4022;
+  }
+  .persona .photo:hover img { transform: scale(1.025); }
+  .persona .photo::after {
+    content: "View full persona";
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    background: rgba(20,20,22,0.78);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 200ms;
+    pointer-events: none;
+    backdrop-filter: blur(6px);
+  }
+  .persona .photo:hover::after { opacity: 1; }
+  .persona .body { padding: 28px 28px 30px; flex: 1; display: flex; flex-direction: column; gap: 14px; }
+  .persona .head { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; }
+  .persona .name {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 1.9vw, 28px);
+    color: var(--text);
+    font-weight: 700;
+  }
+  .persona .age {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .persona .role {
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    font-weight: 500;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 14px;
+  }
+  .persona .needs .lab {
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .persona .needs p {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--text);
+  }
+  .persona .quote {
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+    font-family: var(--font-display);
+    font-size: 14.5px;
+    line-height: 1.35;
+    color: var(--accent);
+    font-weight: 600;
+    font-style: italic;
+  }
+  .persona .quote::before { content: "\201C"; }
+  .persona .quote::after { content: "\201D"; }
+
+  /* ============================================================
+     FUNNEL + USER STORIES
+     ============================================================ */
+  .funnel {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr auto 1fr auto 1fr;
+    gap: 20px;
+    align-items: stretch;
+    margin-top: 16px;
+  }
+  .funnel .stage {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px 22px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-top: 3px solid var(--accent);
+    transition: transform 280ms cubic-bezier(0.16,1,0.3,1), box-shadow 280ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .funnel .stage:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .funnel .stage .ix {
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .funnel .stage h4 {
+    font-family: var(--font-display);
+    font-size: clamp(18px, 1.5vw, 22px);
+    margin: 0 0 6px;
+    line-height: 1.2;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .funnel .stage p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+  .funnel .arrow {
+    font-family: var(--font-display);
+    font-size: 36px;
+    color: var(--accent);
+    align-self: center;
+    line-height: 1;
+  }
+
+  .stories {
+    display: flex;
+    flex-direction: column;
+    margin-top: 56px;
+    border-top: 1px solid var(--border-strong);
+  }
+  .story {
+    padding: 28px 0;
+    border-bottom: 1px solid var(--border);
+    display: grid;
+    grid-template-columns: 70px 200px 1fr 140px;
+    gap: 32px;
+    align-items: center;
+  }
+  .story .num {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 2.6vw, 40px);
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .story .who b {
+    font-family: var(--font-display);
+    font-size: clamp(18px, 1.5vw, 22px);
+    color: var(--text);
+    font-weight: 700;
+    line-height: 1;
+    display: block;
+  }
+  .story .who small {
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+    display: block;
+    margin-top: 6px;
+  }
+  .story .quote {
+    font-family: var(--font-display);
+    font-size: clamp(17px, 1.45vw, 22px);
+    line-height: 1.4;
+    color: var(--text);
+    font-weight: 500;
+  }
+  .story .target {
+    text-align: right;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .story .target small {
+    display: block;
+    font-family: var(--font-body);
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+
+  /* ============================================================
+     SKETCHES — 2x2, large, clickable
+     ============================================================ */
+  .sketches {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .sketch-tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: transform 280ms cubic-bezier(0.16,1,0.3,1), box-shadow 280ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .sketch-tile:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .sketch-tile .img {
+    aspect-ratio: 4/3;
+    background: var(--bg-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    cursor: zoom-in;
+    position: relative;
+  }
+  .sketch-tile .img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 360ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .sketch-tile .img:hover img { transform: scale(1.03); }
+  .sketch-tile .img::after {
+    content: "Click to enlarge";
+    position: absolute;
+    bottom: 14px;
+    right: 14px;
+    background: rgba(20,20,22,0.7);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    font-weight: 600;
+    opacity: 0;
+    transition: opacity 200ms;
+    pointer-events: none;
+    backdrop-filter: blur(6px);
+  }
+  .sketch-tile .img:hover::after { opacity: 1; }
+  .sketch-tile .cap {
+    padding: 16px 22px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+  }
+  .sketch-tile .cap b {
+    font-family: var(--font-display);
+    font-size: 14.5px;
+    letter-spacing: 0.04em;
+    color: var(--text);
+    font-weight: 600;
+  }
+  .sketch-tile .cap small {
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  /* ============================================================
+     FINAL DESIGN
+     ============================================================ */
+  .final-stage {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    margin-top: 16px;
+    transition: transform 280ms cubic-bezier(0.16,1,0.3,1), box-shadow 280ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .final-stage:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .final-stage .canvas {
+    background: var(--bg-soft);
+    padding: 96px 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 600px;
+    cursor: zoom-in;
+    position: relative;
+  }
+  .final-stage .canvas .placeholder-frame {
+    aspect-ratio: 16/10;
+    max-width: 760px;
+    width: 100%;
+    border: 1px dashed var(--border-strong);
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px;
+    gap: 10px;
+  }
+  .final-stage .canvas .pf-tag {
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    padding: 4px 10px;
+    border: 1px solid var(--accent);
+    font-weight: 700;
+  }
+  .final-stage .canvas .pf-name {
+    font-family: var(--font-display);
+    font-size: 14px;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    font-weight: 500;
+  }
+  .final-stage .label-row {
+    padding: 18px 32px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 24px;
+    flex-wrap: wrap;
+  }
+  .final-stage .label-row b {
+    font-family: var(--font-display);
+    font-size: 14.5px;
+    color: var(--text);
+    font-weight: 600;
+  }
+  .final-stage .label-row small {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+
+  .final-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+    margin-top: 18px;
+    align-items: start;
+  }
+  .video-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+    margin-top: 18px;
+    align-items: start;
+  }
+  .video-row + .video-row { margin-top: 22px; }
+  .video-row.vertical {
+    max-width: 760px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .final-tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: transform 280ms cubic-bezier(0.16,1,0.3,1), box-shadow 280ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .final-tile:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .final-tile .img {
+    aspect-ratio: 4/5;
+    background: var(--bg-soft);
+    display: grid;
+    place-items: center;
+    cursor: zoom-in;
+    padding: 24px;
+    overflow: hidden;
+  }
+  .final-tile .img.has-video {
+    cursor: zoom-in;
+    padding: 0;
+    background: #000;
+    aspect-ratio: 9 / 16;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .final-tile .img.has-video.is-landscape { aspect-ratio: 4 / 3; }
+  .final-tile .img video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    background: #000;
+  }
+  /* Final-stage: video variant of the big hero canvas */
+  .final-stage .canvas.has-video {
+    padding: 0;
+    background: #000;
+    min-height: 0;
+    aspect-ratio: 16 / 10;
+    cursor: zoom-in;
+  }
+  .final-stage .canvas.has-video video {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    background: #000;
+  }
+  .final-tile .img .placeholder-frame {
+    width: 100%;
+    height: 100%;
+    border: 1px dashed var(--border-strong);
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+    gap: 8px;
+  }
+  .final-tile .cap {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+  }
+  .final-tile .cap b {
+    font-family: var(--font-display);
+    font-size: 14px;
+    display: block;
+    margin-bottom: 4px;
+    color: var(--text);
+    font-weight: 600;
+  }
+  .final-tile .cap small {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .design-decisions {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 18px;
+    margin-top: 56px;
+  }
+  .design-decisions .dec {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px;
+    display: grid;
+    grid-template-columns: 50px 1fr;
+    gap: 22px;
+    align-items: start;
+    transition: transform 280ms cubic-bezier(0.16,1,0.3,1), box-shadow 280ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .design-decisions .dec:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .design-decisions .dec .num {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 2.4vw, 38px);
+    color: var(--accent);
+    font-weight: 700;
+    line-height: 1;
+  }
+  .design-decisions .dec h4 {
+    font-family: var(--font-display);
+    font-size: clamp(18px, 1.6vw, 22px);
+    line-height: 1.25;
+    margin: 0 0 8px;
+    color: var(--text);
+    font-weight: 600;
+  }
+  .design-decisions .dec p {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--text-muted);
+  }
+
+  /* ============================================================
+     ARTIFACT LINK — small consistent CTA
+     ============================================================ */
+  .artifact-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    padding: 8px 0;
+    border-bottom: 1px solid transparent;
+    cursor: pointer;
+    background: transparent;
+    transition: border-color 220ms, transform 220ms;
+    align-self: flex-start;
+  }
+  .artifact-link::after { content: "\2197"; font-size: 14px; line-height: 1; }
+  .artifact-link:hover { border-bottom-color: var(--accent); }
+  .artifact-link:hover::after { transform: translate(2px, -2px); }
+  .artifact-link::after { transition: transform 220ms cubic-bezier(0.16,1,0.3,1); }
+
+  .section-link-row {
+    margin-top: 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 22px;
+    align-items: center;
+  }
+  .link-row {
+    margin-top: 14px;
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 22px;
+    row-gap: 4px;
+    align-items: center;
+  }
+  .link-row .artifact-link { padding-top: 4px; padding-bottom: 4px; }
+
+  .cta-row { display: flex; gap: 14px; margin-top: 40px; flex-wrap: wrap; }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    padding: 14px 22px;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 11.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    font-weight: 700;
+    border: 1px solid var(--accent);
+    transition: background 200ms, color 200ms, border-color 200ms;
+  }
+  .btn:hover { background: var(--text); border-color: var(--text); }
+  .btn.secondary {
+    background: transparent;
+    color: var(--text);
+    border-color: var(--border-strong);
+  }
+  .btn.secondary:hover { background: var(--text); color: #fff; border-color: var(--text); }
+
+  /* ============================================================
+     RESULT
+     ============================================================ */
+  .result-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 56px; align-items: start; }
+  .result-numbers { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+  .result-numbers .stat { padding: 6px 0; }
+  .result-numbers .label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .result-numbers .number {
+    font-family: var(--font-display);
+    font-size: clamp(48px, 5.2vw, 80px);
+    line-height: 1;
+    color: #fff;
+    font-weight: 700;
+    letter-spacing: -0.018em;
+  }
+  .result-numbers .desc {
+    margin-top: 8px;
+    font-size: 13px;
+    color: rgba(255,255,255,0.78);
+    line-height: 1.5;
+  }
+  .result-blurb {
+    color: rgba(255,255,255,0.92);
+    font-family: var(--font-display);
+    font-weight: 500;
+    font-size: clamp(22px, 2vw, 30px);
+    line-height: 1.32;
+    max-width: 32ch;
+  }
+  .result-blurb em { font-style: normal; color: rgba(255,255,255,0.65); }
+
+  /* ============================================================
+     REFLECTION
+     ============================================================ */
+  .reflection-cols {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+  .reflect {
+    padding: 32px 28px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--accent);
+    transition: transform 280ms cubic-bezier(0.16,1,0.3,1), box-shadow 280ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .reflect:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+  .reflect .label {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .reflect h4 {
+    font-family: var(--font-display);
+    font-size: clamp(18px, 1.6vw, 22px);
+    line-height: 1.2;
+    margin: 0 0 10px;
+    color: var(--text);
+    font-weight: 600;
+  }
+  .reflect p {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--text-muted);
+  }
+
+  /* ============================================================
+     FOOTER
+     ============================================================ */
+  footer.foot { padding: 64px 0 80px; background: var(--text); color: #fff; border-top: none; }
+  .foot-inner { display: grid; grid-template-columns: 1fr auto; gap: 32px; align-items: end; }
+  .foot h3 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3vw, 44px);
+    line-height: 1.05;
+    color: #fff;
+    margin: 0 0 12px;
+    font-weight: 700;
+    max-width: 18ch;
+  }
+  .foot h3 em { font-style: normal; color: var(--accent); }
+  .foot small {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.55);
+    font-weight: 600;
+  }
+  .foot .credit {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+    font-weight: 600;
+    text-align: right;
+  }
+  .foot .credit span { display: block; }
+
+  /* ============================================================
+     LIGHTBOX (image + iframe)
+     ============================================================ */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(14,14,16,0.96);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px 24px 60px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    transition: opacity 240ms;
+  }
+  .lightbox[hidden] { display: none; }
+  .lightbox.open { opacity: 1; }
+  .lb-inner {
+    max-width: 95vw;
+    max-height: 92vh;
+    width: 95vw;
+    height: 92vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .lb-img {
+    max-width: 95vw;
+    max-height: calc(92vh - 48px);
+    object-fit: contain;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    transform: scale(0.96);
+    transition: transform 320ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .lightbox.open .lb-img { transform: scale(1); }
+  .lb-iframe {
+    width: 95vw;
+    height: calc(92vh - 48px);
+    border: 0;
+    background: #fff;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    transform: scale(0.97);
+    transition: transform 320ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .lightbox.open .lb-iframe { transform: scale(1); }
+  .lb-video {
+    max-width: 95vw;
+    max-height: calc(92vh - 48px);
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    background: #000;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.6);
+    transform: scale(0.96);
+    transition: transform 320ms cubic-bezier(0.16,1,0.3,1);
+    display: block;
+  }
+  .lightbox.open .lb-video { transform: scale(1); }
+  .lb-cap {
+    font-family: var(--font-display);
+    font-size: 12px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.85);
+    font-weight: 600;
+    text-align: center;
+    max-width: 60ch;
+  }
+  .lb-close {
+    position: fixed;
+    top: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    background: rgba(255,255,255,0.08);
+    border: 1px solid rgba(255,255,255,0.18);
+    border-radius: 50%;
+    color: #fff;
+    font-size: 22px;
+    line-height: 1;
+    display: grid;
+    place-items: center;
+    transition: background 200ms, transform 200ms;
+    z-index: 1001;
+  }
+  .lb-close:hover { background: rgba(255,255,255,0.18); transform: rotate(90deg); }
+
+  /* ============================================================
+     METHOD MODAL — large, 2-column, animated visual
+     ============================================================ */
+  .method-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
+    background: rgba(14,14,16,0.94);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 56px;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    opacity: 0;
+    transition: opacity 240ms;
+  }
+  .method-modal[hidden] { display: none; }
+  .method-modal.open { opacity: 1; }
+  .mm-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    max-width: 880px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1.05fr 1fr;
+    overflow: hidden;
+    transform: translateY(8px);
+    transition: transform 320ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .method-modal.open .mm-card { transform: translateY(0); }
+  .mm-content {
+    padding: 56px 48px 48px;
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    overflow-y: auto;
+    max-height: calc(100vh - 200px);
+  }
+  .mm-num {
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    color: var(--accent);
+    font-weight: 700;
+    display: block;
+  }
+  .mm-content h3 {
+    font-family: var(--font-display);
+    font-size: clamp(28px, 3vw, 40px);
+    line-height: 1.08;
+    margin: 0;
+    color: var(--text);
+    font-weight: 700;
+    letter-spacing: -0.008em;
+  }
+  .mm-summary {
+    margin: 0;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--text-mid);
+  }
+  .mm-summary b { color: var(--text); font-weight: 600; }
+  .mm-stats {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 4px 0;
+  }
+  .mm-chip {
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-soft);
+    border: 1px solid var(--accent);
+    padding: 6px 10px;
+    font-weight: 700;
+  }
+  .mm-section {
+    margin-top: 10px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+  }
+  .mm-section-label {
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 10px;
+    display: block;
+  }
+  .mm-section p {
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--text-mid);
+    margin: 0;
+  }
+  .mm-section p b { color: var(--text); font-weight: 600; }
+  .mm-link-row {
+    margin-top: 14px;
+    padding-top: 18px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    flex-wrap: wrap;
+    column-gap: 22px;
+    row-gap: 4px;
+  }
+  .mm-link-row[hidden] { display: none; }
+  .mm-link-row .artifact-link { padding-top: 4px; padding-bottom: 4px; }
+  .mm-visual {
+    background: var(--bg-soft);
+    border-left: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 36px;
+    position: relative;
+    overflow: hidden;
+    min-height: 320px;
+  }
+  .mm-visual svg {
+    width: 100%;
+    max-width: 280px;
+    color: var(--accent);
+    display: block;
+  }
+  .mm-visual svg .stroke {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .mm-visual svg .fill { fill: currentColor; }
+  .mm-visual svg text {
+    font-family: var(--font-display);
+    font-weight: 700;
+    fill: currentColor;
+  }
+
+  /* Method visual animations (run when modal opens) */
+  /* Stakeholder: SPD logo first, lines draw outward, people land last */
+  .method-modal.open .v-stakeholder .core {
+    opacity: 0;
+    animation: mmFadeIn 500ms cubic-bezier(0.16,1,0.3,1) 80ms forwards;
+  }
+  .method-modal.open .v-stakeholder .conn {
+    stroke-dasharray: 140; stroke-dashoffset: 140;
+    animation: mmDrawLine 700ms cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .method-modal.open .v-stakeholder .c-1 { animation-delay: 280ms; }
+  .method-modal.open .v-stakeholder .c-2 { animation-delay: 380ms; }
+  .method-modal.open .v-stakeholder .c-3 { animation-delay: 480ms; }
+  .method-modal.open .v-stakeholder .c-4 { animation-delay: 580ms; }
+  .method-modal.open .v-stakeholder .person {
+    opacity: 0;
+    animation: mmFadeIn 500ms cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .method-modal.open .v-stakeholder .p-1 { animation-delay: 720ms; }
+  .method-modal.open .v-stakeholder .p-2 { animation-delay: 820ms; }
+  .method-modal.open .v-stakeholder .p-3 { animation-delay: 920ms; }
+  .method-modal.open .v-stakeholder .p-4 { animation-delay: 1020ms; }
+
+  /* User interviews: speech bubbles */
+  .method-modal.open .v-user .bubble {
+    opacity: 0; transform: translateY(8px);
+    animation: mmBubbleIn 700ms cubic-bezier(0.16,1,0.3,1) forwards;
+    transform-origin: center;
+  }
+  .method-modal.open .v-user .bubble:nth-child(1) { animation-delay: 100ms; }
+  .method-modal.open .v-user .bubble:nth-child(2) { animation-delay: 380ms; }
+
+  /* Task: path draws + checkpoints */
+  .method-modal.open .v-task .task-path {
+    stroke-dasharray: 360; stroke-dashoffset: 360;
+    animation: mmDrawLong 1500ms cubic-bezier(0.16,1,0.3,1) 200ms forwards;
+  }
+  .method-modal.open .v-task .cp {
+    opacity: 0;
+    animation: mmFadeIn 400ms cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .method-modal.open .v-task .cp:nth-of-type(1) { animation-delay: 100ms; }
+  .method-modal.open .v-task .cp:nth-of-type(2) { animation-delay: 600ms; }
+  .method-modal.open .v-task .cp:nth-of-type(3) { animation-delay: 1100ms; }
+  .method-modal.open .v-task .cp:nth-of-type(4) { animation-delay: 1600ms; }
+
+  /* Heuristic: checks appear in sequence */
+  .method-modal.open .v-heuristic .check-row {
+    opacity: 0; transform: translateX(-6px);
+    animation: mmSlideIn 500ms cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .method-modal.open .v-heuristic .check-row:nth-child(1) { animation-delay: 100ms; }
+  .method-modal.open .v-heuristic .check-row:nth-child(2) { animation-delay: 260ms; }
+  .method-modal.open .v-heuristic .check-row:nth-child(3) { animation-delay: 420ms; }
+  .method-modal.open .v-heuristic .check-row:nth-child(4) { animation-delay: 580ms; }
+  .method-modal.open .v-heuristic .check-row:nth-child(5) { animation-delay: 740ms; }
+
+  /* Competitor: SPD row pulses */
+  .method-modal.open .v-competitor .grid-cell {
+    opacity: 0;
+    animation: mmFadeIn 500ms cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .method-modal.open .v-competitor .grid-cell:nth-child(n) { animation-delay: calc(60ms * var(--i, 1)); }
+  .method-modal.open .v-competitor .spd-row {
+    opacity: 0;
+    animation: mmHighlight 2.6s ease-in-out infinite;
+    animation-delay: 700ms;
+  }
+
+  /* Card sorting: cards slide into groups */
+  .method-modal.open .v-cardsort .sortcard {
+    opacity: 0;
+    animation: mmFadeIn 600ms cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .method-modal.open .v-cardsort .sortcard:nth-child(1) { animation-delay: 100ms; }
+  .method-modal.open .v-cardsort .sortcard:nth-child(2) { animation-delay: 220ms; }
+  .method-modal.open .v-cardsort .sortcard:nth-child(3) { animation-delay: 340ms; }
+  .method-modal.open .v-cardsort .grouped {
+    opacity: 0;
+    animation: mmFadeIn 600ms cubic-bezier(0.16,1,0.3,1) 600ms forwards;
+  }
+  .method-modal.open .v-cardsort .arrow-down {
+    opacity: 0;
+    animation: mmFadeIn 400ms cubic-bezier(0.16,1,0.3,1) 480ms forwards;
+  }
+
+  /* Sitemap: root → top branch → top leaves → sub branch → sub leaves */
+  .method-modal.open .v-sitemap .root-node {
+    opacity: 0;
+    animation: mmFadeIn 500ms cubic-bezier(0.16,1,0.3,1) 100ms forwards;
+  }
+  .method-modal.open .v-sitemap .branch-line {
+    stroke-dasharray: 480; stroke-dashoffset: 480;
+    animation: mmDrawLong 900ms cubic-bezier(0.16,1,0.3,1) 320ms forwards;
+  }
+  .method-modal.open .v-sitemap .branch-line.sub {
+    stroke-dasharray: 220; stroke-dashoffset: 220;
+    animation: mmDrawLong 700ms cubic-bezier(0.16,1,0.3,1) 1100ms forwards;
+  }
+  .method-modal.open .v-sitemap .leaf-node {
+    opacity: 0;
+    animation: mmFadeIn 500ms cubic-bezier(0.16,1,0.3,1) forwards;
+  }
+  .method-modal.open .v-sitemap .ln-1 { animation-delay: 740ms; }
+  .method-modal.open .v-sitemap .ln-2 { animation-delay: 840ms; }
+  .method-modal.open .v-sitemap .ln-3 { animation-delay: 940ms; }
+  .method-modal.open .v-sitemap .ln-4 { animation-delay: 1040ms; }
+  .method-modal.open .v-sitemap .ln-5 { animation-delay: 1480ms; }
+  .method-modal.open .v-sitemap .ln-6 { animation-delay: 1560ms; }
+  .method-modal.open .v-sitemap .ln-7 { animation-delay: 1640ms; }
+
+  /* SWOT: quadrants pulse in sequence */
+  .method-modal.open .v-swot .quad {
+    animation: mmQuadPulse 3.2s ease-in-out infinite;
+  }
+  .method-modal.open .v-swot .q1 { animation-delay: 0s; }
+  .method-modal.open .v-swot .q2 { animation-delay: 0.4s; }
+  .method-modal.open .v-swot .q3 { animation-delay: 0.8s; }
+  .method-modal.open .v-swot .q4 { animation-delay: 1.2s; }
+
+  @keyframes mmFadeIn { to { opacity: 1; } }
+  @keyframes mmBubbleIn { to { opacity: 1; transform: translateY(0); } }
+  @keyframes mmSlideIn { to { opacity: 1; transform: translateX(0); } }
+  @keyframes mmDrawLine { to { stroke-dashoffset: 0; } }
+  @keyframes mmDrawLong { to { stroke-dashoffset: 0; } }
+  @keyframes mmHighlight {
+    0%, 100% { opacity: 0.18; }
+    50% { opacity: 0.42; }
+  }
+  @keyframes mmQuadPulse {
+    0%, 100% { opacity: 0.14; }
+    50% { opacity: 0.36; }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .method-modal.open svg * {
+      animation: none !important;
+      opacity: 1 !important;
+      stroke-dashoffset: 0 !important;
+      transform: none !important;
+    }
+  }
+  @media (max-width: 760px) {
+    .method-modal { padding: 24px; }
+    .mm-card { grid-template-columns: 1fr; max-width: 540px; }
+    .mm-content { padding: 44px 32px 32px; max-height: none; }
+    .mm-visual { border-left: none; border-top: 1px solid var(--border); padding: 28px; min-height: 220px; }
+    .mm-visual svg { max-width: 200px; }
+  }
+
+  /* ============================================================
+     REVEAL ANIM
+     ============================================================ */
+  .reveal {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 700ms cubic-bezier(0.16,1,0.3,1), transform 700ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .reveal.in { opacity: 1; transform: translateY(0); }
+  .reveal.delay-1 { transition-delay: 80ms; }
+  .reveal.delay-2 { transition-delay: 160ms; }
+  .reveal.delay-3 { transition-delay: 240ms; }
+  .reveal.delay-4 { transition-delay: 320ms; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1 !important; transform: none !important; transition: none !important; }
+  }
+
+  /* ============================================================
+     RESPONSIVE
+     ============================================================ */
+  @media (max-width: 1080px) {
+    section { padding: 80px 0; }
+    .container { padding: 0 var(--gutter-tight); }
+    .nav-inner { padding: 0 var(--gutter-tight); }
+    .case-banner { aspect-ratio: 16 / 6; }
+    .case-banner .banner-mark { left: 28px; bottom: 18px; font-size: 10.5px; }
+    .section-head { grid-template-columns: 1fr; gap: 16px; margin-bottom: 40px; }
+    .overview-grid, .persona-grid, .reflection-cols { grid-template-columns: 1fr; }
+    .methods-grid, .insights-grid { grid-template-columns: repeat(2, 1fr); }
+    .insights-quotes, .result-grid, .design-decisions, .final-grid, .video-row { grid-template-columns: 1fr; }
+    .audit-row { grid-template-columns: 1fr; gap: 22px; }
+    .funnel { grid-template-columns: 1fr; }
+    .funnel .arrow { display: none; }
+    .story { grid-template-columns: 50px 1fr; gap: 14px; }
+    .story .who, .story .target { grid-column: span 2; }
+    .story .quote { grid-column: span 2; }
+    .sketches { grid-template-columns: 1fr; }
+    .hero-meta { grid-template-columns: repeat(2, 1fr); gap: 28px; }
+    .hero-meta .cell-wide { grid-column: span 2; }
+    .foot-inner { grid-template-columns: 1fr; }
+    .foot .credit { text-align: left; }
+    .lightbox { padding: 32px 18px 60px; }
+    .lb-img { max-height: calc(100vh - 140px); }
+    .lb-iframe { height: calc(100vh - 140px); }
+    .competitor-preview iframe { transform: scale(0.4); width: 250%; height: 250%; }
+  }
+  @media (max-width: 600px) {
+    .methods-grid, .insights-grid { grid-template-columns: 1fr; }
+    .hero-title { font-size: clamp(48px, 13vw, 76px); }
+    .hero-meta { grid-template-columns: 1fr; gap: 18px; }
+    .case-banner { aspect-ratio: 16 / 7; }
+    .lb-close { top: 14px; right: 14px; width: 38px; height: 38px; }
+    .mm-card { padding: 36px 28px 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ============ NAV ============ -->
+<header class="nav">
+  <div class="nav-inner">
+    <span class="nav-logo">SPD</span>
+    <span class="nav-mark"><b>Society of Publication Designers</b> &middot; Case Study</span>
+    <span class="nav-spacer"></span>
+    <a href="#research" class="nav-link">Research</a>
+    <a href="#design" class="nav-link">Design</a>
+    <a href="#prototype" class="nav-link">Prototype</a>
+  </div>
+</header>
+
+<!-- ============ BANNER (slim + animated gradient) ============ -->
+<section class="case-banner" aria-hidden="true">
+  <span class="banner-watermark">SPD</span>
+  <span class="banner-mark">Website Redesign &middot; UX Case Study</span>
+</section>
+
+<!-- ============ HERO TEXT ============ -->
+<section class="hero-text">
+  <div class="container">
+    <div class="hero-eyebrow reveal">UX Case Study &middot; 2026</div>
+    <h1 class="hero-title reveal delay-1">A clearer way into <em>SPD's work</em>.</h1>
+    <p class="hero-blurb reveal delay-2">SPD has decades of editorial work, competitions, events, and member resources. The site doesn't make any of it easy to find. <b>We restructured how visitors meet it.</b></p>
+
+    <div class="hero-tags reveal delay-3">
+      <span class="tag">UX Research</span>
+      <span class="tag">Information Architecture</span>
+      <span class="tag">Heuristic Evaluation</span>
+      <span class="tag">Card Sorting</span>
+      <span class="tag">Prototyping</span>
+    </div>
+
+    <div class="hero-meta reveal delay-4">
+      <div class="cell">
+        <div class="label">Team</div>
+        <div class="value">Cathy Doss, Giovanni Terzano, Vedang Lambe, Kudirat Alimi</div>
+      </div>
+      <div class="cell">
+        <div class="label">Timeline</div>
+        <div class="value">11 weeks</div>
+      </div>
+      <div class="cell">
+        <div class="label">Type</div>
+        <div class="value">Case Study / Project Demo</div>
+      </div>
+      <div class="cell cell-wide">
+        <div class="label">Methods</div>
+        <ul class="value method-list">
+          <li>UX Research</li>
+          <li>Information Architecture</li>
+          <li>Heuristic Evaluation</li>
+          <li>Competitive Analysis</li>
+          <li>Card Sorting</li>
+          <li>Prototyping</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 01 — OVERVIEW ============ -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div class="num">01<small>Overview</small></div>
+      <div>
+        <h2 class="display lg">Strong content, organized for the people who built it.</h2>
+        <p class="kicker"><b>We didn't rebrand SPD. We restructured how visitors meet it.</b></p>
+      </div>
+    </div>
+
+    <div class="overview-grid">
+      <div class="overview-card reveal">
+        <div class="label">Challenge</div>
+        <h3>Strong content, weak structure.</h3>
+        <p>The site felt aimed at insiders. Jargon-heavy categories, overloaded nav, and unclear pathways to membership, jobs, and competitions.</p>
+      </div>
+      <div class="overview-card reveal delay-1">
+        <div class="label">Outcome</div>
+        <h3>An IA redesign, grounded in real visitor goals.</h3>
+        <p>Simplified top-level nav, clearer entry points, and a homepage that orients new visitors. Three core flows prototyped end-to-end.</p>
+      </div>
+      <div class="overview-card reveal delay-2">
+        <div class="label">Goal</div>
+        <h3>Make the work findable.</h3>
+        <p>Same content, better access. Reduce hunting, surface the actions visitors actually came to do, and let SPD's editorial credibility speak.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 02 — WHAT EXISTS NOW ============ -->
+<section id="research" class="soft">
+  <div class="container">
+    <div class="section-head">
+      <div class="num">02<small>What exists now</small></div>
+      <div>
+        <h2 class="display lg">Understanding the current site.</h2>
+        <p class="kicker"><b>Strong content. Weak structure.</b> Before talking to users, we audited what the site was already doing. Three artifacts surfaced the recurring pattern.</p>
+      </div>
+    </div>
+
+    <div class="audit-stack">
+      <!-- Heuristic eval -->
+      <article class="audit-row reveal">
+        <div class="audit-meta">
+          <span class="lab">Audit &middot; 01</span>
+          <h3>Heuristic Evaluation</h3>
+          <p>Nielsen's ten heuristics, applied to web and mobile. <b>Ten recurring violations &mdash; system-level, not polish.</b></p>
+          <div class="link-row">
+            <a class="artifact-link" href="https://www.figma.com/design/vOhpNxr88HkSkgHrqL3BvH/Vedang-Heuristic-Evaluation-SPD?node-id=7-266" target="_blank" rel="noopener">View full artifact</a>
+          </div>
+        </div>
+        <div class="audit-figure">
+          <div class="artifact" data-lightbox data-full="assets/heuristic-1.png" data-cap="Heuristic evaluation, Nielsen's ten heuristics applied to web and mobile">
+            <img src="assets/heuristic-1.png" alt="Heuristic evaluation">
+          </div>
+        </div>
+      </article>
+
+      <!-- SWOT -->
+      <article class="audit-row reveal">
+        <div class="audit-meta">
+          <span class="lab">Audit &middot; 02</span>
+          <h3>SWOT Analysis</h3>
+          <p>Audit findings, translated into risks and opportunities. <b>Strong content, weakened by confusing navigation.</b></p>
+          <div class="link-row">
+            <a class="artifact-link" href="https://www.figma.com/board/syjPzmoIXO2orZCNHb5wet/SPD-SWOT-Analysis" target="_blank" rel="noopener">View full artifact</a>
+          </div>
+        </div>
+        <div class="audit-figure">
+          <div class="artifact" data-lightbox data-full="assets/swot.png" data-cap="SWOT analysis, translating audit findings into product risks and opportunities">
+            <img src="assets/swot.png" alt="SPD SWOT analysis">
+          </div>
+        </div>
+      </article>
+
+      <!-- Competitor (iframe preview, single Figma link) -->
+      <article class="audit-row reveal">
+        <div class="audit-meta">
+          <span class="lab">Audit &middot; 03</span>
+          <h3>Competitor Analysis</h3>
+          <p>How peer organizations structure design content. <b>Usable peers lead with action, not categories.</b></p>
+          <div class="link-row">
+            <a class="artifact-link" href="https://www.figma.com/design/cr2QtLCQwgEnbAYpzcfx8Z/SPD-Competitor-analysis?node-id=0-1&t=293fwlZO9Eu8DaTc-1" target="_blank" rel="noopener">View full competitor analysis</a>
+          </div>
+        </div>
+        <div class="audit-figure">
+          <div class="competitor-preview" data-lightbox-iframe data-full="spd-competitor-analysis.html?view=detail" data-cap="Competitor analysis, peer organizations sampled for navigation strategies">
+            <iframe src="spd-competitor-analysis.html?view=detail" title="Competitor analysis preview" loading="lazy" tabindex="-1" aria-hidden="true"></iframe>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <p class="pull-quote reveal" style="margin: 80px auto 0;">
+      The site already had everything it needed. <em>It was in the wrong shape.</em>
+      <span class="src">From audit synthesis</span>
+    </p>
+  </div>
+</section>
+
+<!-- ============ 03 — METHODS (with icons) ============ -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div class="num">03<small>Methods</small></div>
+      <div>
+        <h2 class="display lg">Triangulating the problem.</h2>
+        <p class="kicker">Three angles on the same site. <b>Click any card for details.</b></p>
+      </div>
+    </div>
+
+    <div class="methods-grid">
+      <button class="method-card reveal"
+        data-method-num="Method 01"
+        data-method-title="Stakeholder interviews"
+        data-method-visual="stakeholder"
+        data-method-summary="We spoke with people inside the SPD team to understand <b>how the site is read internally</b>, which content is non-negotiable, and what the organization needs visitors to understand quickly."
+        data-method-stats="Internal team | Editorial priorities | Content lineage"
+        data-method-shaped="Surfaced the gap between SPD's internal mental model (the site as a record of past work) and visitors' (the site as a tool). The redesign aims to do both, but lead with tool."
+        data-method-links="View interview script||assets/interview-script.docx">
+        <svg class="m-icon" viewBox="0 0 56 56" aria-hidden="true">
+          <circle class="stroke" cx="20" cy="22" r="6"/>
+          <circle class="stroke" cx="36" cy="22" r="6"/>
+          <path class="stroke" d="M10 44 Q20 34 30 44 M26 44 Q36 34 46 44"/>
+        </svg>
+        <span class="num">Method 01</span>
+        <h4>Stakeholder interviews</h4>
+        <p class="summary">How SPD's own team thinks about the site. Surfaced the gap between record and tool.</p>
+        <span class="more">Read more</span>
+      </button>
+
+      <button class="method-card reveal delay-1"
+        data-method-num="Method 02"
+        data-method-title="User interviews"
+        data-method-visual="user"
+        data-method-summary="Four designers across career stages walked through the existing site live, completing real tasks while thinking aloud."
+        data-method-stats="4 participants | Student designer | Junior brand designer | Digital marketing lead | Senior CTO"
+        data-method-shaped="Recurring frictions surfaced across all four sessions: nav was overwhelming, content types were unclear, membership value wasn't explained, and key actions sat behind too many clicks. Those became the redesign priorities."
+        data-method-links="View interview recording||assets/interview.mov">
+        <svg class="m-icon" viewBox="0 0 56 56" aria-hidden="true">
+          <rect class="stroke" x="10" y="12" width="36" height="26" rx="2.5"/>
+          <path class="stroke" d="M22 38 L18 44 L26 38"/>
+          <line class="stroke" x1="16" y1="20" x2="40" y2="20"/>
+          <line class="stroke" x1="16" y1="26" x2="36" y2="26"/>
+          <line class="stroke" x1="16" y1="32" x2="32" y2="32"/>
+        </svg>
+        <span class="num">Method 02</span>
+        <h4>User interviews</h4>
+        <p class="summary">Four designers walked through the site live. We listened for hesitation and dead ends.</p>
+        <span class="more">Read more</span>
+      </button>
+
+      <button class="method-card reveal delay-2"
+        data-method-num="Method 03"
+        data-method-title="Task analysis"
+        data-method-visual="task"
+        data-method-summary="We watched people try real tasks against the existing site, tracking <b>hesitation, backtracking, dead ends, and 'I don't know' moments</b>."
+        data-method-stats="4 core tasks | Find a job | Join membership | Find a competition | Explain SPD"
+        data-method-shaped="Most tasks took at least three more clicks than they should have. Several ended in dead ends. The friction points mapped directly onto the three flows we prototyped end-to-end.">
+
+        <svg class="m-icon" viewBox="0 0 56 56" aria-hidden="true">
+          <circle class="fill" cx="10" cy="30" r="2.5" fill="currentColor"/>
+          <circle class="fill" cx="22" cy="20" r="2.5" fill="currentColor"/>
+          <circle class="fill" cx="34" cy="36" r="2.5" fill="currentColor"/>
+          <circle class="fill" cx="46" cy="26" r="2.5" fill="currentColor"/>
+          <path class="stroke" d="M10 30 L22 20 L34 36 L46 26" stroke-dasharray="3 4"/>
+          <path class="stroke" d="M42 22 L46 26 L42 30"/>
+        </svg>
+        <span class="num">Method 03</span>
+        <h4>Task analysis</h4>
+        <p class="summary">Five priority tasks against the existing site. Counted clicks, mapped detours, flagged dead ends.</p>
+        <span class="more">Read more</span>
+      </button>
+
+      <button class="method-card reveal delay-3"
+        data-method-num="Method 04"
+        data-method-title="Heuristic evaluation"
+        data-method-visual="heuristic"
+        data-method-summary="A structured walkthrough of the site against <b>Nielsen's ten heuristics</b> on both web and mobile, tagged by severity."
+        data-method-stats="Web + Mobile | Nielsen's 10 | Severity tagged | Navigation clarity | Recognition over recall"
+        data-method-shaped="Surfaced ten recurring violations, mostly structural: visibility of system status, consistency, recognition over recall, error prevention. Confirmed that visual polish wasn't the issue."
+        data-method-links="View web evaluation||https://www.figma.com/design/vOhpNxr88HkSkgHrqL3BvH/Vedang-Heuristic-Evaluation-SPD?node-id=7-266 ;; View mobile evaluation||https://www.figma.com/design/vOhpNxr88HkSkgHrqL3BvH/Vedang-Heuristic-Evaluation-SPD?node-id=150-129">
+        <svg class="m-icon" viewBox="0 0 56 56" aria-hidden="true">
+          <rect class="stroke" x="12" y="14" width="6" height="6"/>
+          <path class="stroke" d="M13 17 L15 19 L18 14"/>
+          <line class="stroke" x1="24" y1="17" x2="44" y2="17"/>
+          <rect class="stroke" x="12" y="24" width="6" height="6"/>
+          <path class="stroke" d="M13 27 L15 29 L18 24"/>
+          <line class="stroke" x1="24" y1="27" x2="42" y2="27"/>
+          <rect class="stroke" x="12" y="34" width="6" height="6"/>
+          <line class="stroke" x1="24" y1="37" x2="40" y2="37"/>
+        </svg>
+        <span class="num">Method 04</span>
+        <h4>Heuristic evaluation</h4>
+        <p class="summary">Mobile and web walkthroughs against Nielsen's ten heuristics. Surfaced structural issues.</p>
+        <span class="more">Read more</span>
+      </button>
+
+      <button class="method-card reveal"
+        data-method-num="Method 05"
+        data-method-title="Competitor analysis"
+        data-method-visual="competitor"
+        data-method-summary="We compared SPD against three peer design organizations across navigation, content, competitions, events, opportunities, membership, and overall structure."
+        data-method-stats="4 sites | SPD | AIGA NY | TDC | D&amp;AD"
+        data-method-shaped="The most usable peer sites lead with action verbs and a single clear entry per user type. SPD's eight broad nav entries were the outlier. The new top-level lifted directly from this finding."
+        data-method-links="View full competitor analysis||https://www.figma.com/design/cr2QtLCQwgEnbAYpzcfx8Z/SPD-Competitor-analysis?node-id=0-1&t=293fwlZO9Eu8DaTc-1">
+        <svg class="m-icon" viewBox="0 0 56 56" aria-hidden="true">
+          <rect class="stroke" x="10" y="10" width="16" height="16"/>
+          <rect class="stroke" x="30" y="10" width="16" height="16" fill="currentColor" fill-opacity="0.22"/>
+          <rect class="stroke" x="10" y="30" width="16" height="16"/>
+          <rect class="stroke" x="30" y="30" width="16" height="16"/>
+        </svg>
+        <span class="num">Method 05</span>
+        <h4>Competitor analysis</h4>
+        <p class="summary">Eight peer organizations sampled for nav, events, and member-content patterns.</p>
+        <span class="more">Read more</span>
+      </button>
+
+      <button class="method-card reveal delay-1"
+        data-method-num="Method 06"
+        data-method-title="Card sorting"
+        data-method-visual="cardsort"
+        data-method-summary="An internal exercise grouping existing SPD pages <b>by what users were trying to do</b>, not by SPD's internal categories."
+        data-method-stats="30+ pages grouped | Task-based sorting | 4 buckets emerged | Enter, Join, Browse, About"
+        data-method-shaped="The same four buckets formed every time across the team: Enter, Join, Browse, About. That became the new top-level navigation directly."
+        data-method-links="View card sorting||https://www.figma.com/board/gsUammh4HLr82XctdbWQRr/SPD-Card-Sorting-Exercise">
+        <svg class="m-icon" viewBox="0 0 56 56" aria-hidden="true">
+          <rect class="stroke" x="8" y="14" width="22" height="14" rx="2" fill="white" fill-opacity="0.001"/>
+          <rect class="stroke" x="18" y="22" width="22" height="14" rx="2" fill="white"/>
+          <rect class="stroke" x="12" y="32" width="22" height="14" rx="2" fill="white"/>
+          <line class="stroke" x1="14" y1="20" x2="22" y2="20"/>
+          <line class="stroke" x1="24" y1="29" x2="34" y2="29"/>
+        </svg>
+        <span class="num">Method 06</span>
+        <h4>Card sorting</h4>
+        <p class="summary">30+ pages grouped by task. Four buckets emerged consistently across the team.</p>
+        <span class="more">Read more</span>
+      </button>
+
+      <button class="method-card reveal delay-2"
+        data-method-num="Method 07"
+        data-method-title="Sitemap audit"
+        data-method-visual="sitemap"
+        data-method-summary="We compared the existing SPD sitemap against the proposed sitemap, looking at <b>top-level categories, duplicate paths, buried pages, unclear labels, and content hierarchy</b>."
+        data-method-stats="8 top-level branches | Duplicate paths | Buried pages | Unclear labels"
+        data-method-shaped="Year-by-year and category-by-category content was forcing redundant top-level entries. We moved them one click in as filters, which collapsed the structure significantly."
+        data-method-links="View full sitemap||https://www.figma.com/board/KbBnQuLFLPtad9LeRa3otr/SPD-Sitemap">
+        <svg class="m-icon" viewBox="0 0 56 56" aria-hidden="true">
+          <rect class="stroke" x="22" y="10" width="12" height="8" rx="1"/>
+          <rect class="stroke" x="6" y="36" width="12" height="8" rx="1"/>
+          <rect class="stroke" x="22" y="36" width="12" height="8" rx="1"/>
+          <rect class="stroke" x="38" y="36" width="12" height="8" rx="1"/>
+          <path class="stroke" d="M28 18 L28 26 M12 36 L12 26 L44 26 L44 36 M28 26 L28 36"/>
+        </svg>
+        <span class="num">Method 07</span>
+        <h4>Sitemap audit</h4>
+        <p class="summary">Mapped the existing structure end-to-end. Found duplicating, hiding, fighting categories.</p>
+        <span class="more">Read more</span>
+      </button>
+
+      <button class="method-card reveal delay-3"
+        data-method-num="Method 08"
+        data-method-title="SWOT synthesis"
+        data-method-visual="swot"
+        data-method-summary="A 4-part synthesis to translate research findings into <b>product risks and opportunities</b>, instead of a checklist of usability complaints."
+        data-method-stats="Strengths | Weaknesses | Opportunities | Threats"
+        data-method-shaped="Reframed the conversation from 'what's wrong' to 'what's the opportunity for SPD.' That made the redesign decisions easier to defend."
+        data-method-links="View SWOT board||https://www.figma.com/board/syjPzmoIXO2orZCNHb5wet/SPD-SWOT-Analysis">
+        <svg class="m-icon" viewBox="0 0 56 56" aria-hidden="true">
+          <rect class="stroke" x="8" y="8" width="40" height="40"/>
+          <line class="stroke" x1="28" y1="8" x2="28" y2="48"/>
+          <line class="stroke" x1="8" y1="28" x2="48" y2="28"/>
+          <circle class="fill" cx="18" cy="18" r="3" fill="currentColor"/>
+          <circle class="fill" cx="38" cy="38" r="3" fill="currentColor" fill-opacity="0.4"/>
+        </svg>
+        <span class="num">Method 08</span>
+        <h4>SWOT synthesis</h4>
+        <p class="summary">Translated findings into product risks and opportunities, not a usability checklist.</p>
+        <span class="more">Read more</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 04 — INSIGHTS ============ -->
+<section class="dark">
+  <div class="container">
+    <div class="section-head">
+      <div class="num" style="color: #fff;">04<small style="color: rgba(255,255,255,0.55);">Insights</small></div>
+      <div>
+        <h2 class="display lg">What we kept hearing.</h2>
+        <p class="kicker" style="color: rgba(255,255,255,0.78);">Five frictions surfaced across interviews and task analysis. <b style="color: #fff;">Not about polish. About people not understanding what SPD is, where to go, or what they could do once they got there.</b></p>
+      </div>
+    </div>
+
+    <div class="insights-grid">
+      <div class="insight reveal">
+        <div><div class="ix">Insight 01</div><q>I don't know what SPD is yet.</q></div>
+        <p class="sub">Visitors couldn't articulate what SPD does or who it's for after looking at the homepage. The page assumes you already know.</p>
+      </div>
+      <div class="insight reveal delay-1">
+        <div><div class="ix">Insight 02</div><q>The navigation is doing too much.</q></div>
+        <p class="sub">Eight broad top-level entries with sub-categories. People stopped guessing and used the hamburger menu.</p>
+      </div>
+      <div class="insight reveal delay-2">
+        <div><div class="ix">Insight 03</div><q>Membership value is hidden.</q></div>
+        <p class="sub">Users couldn't evaluate whether membership was worth it before being asked to pay. They closed the tab.</p>
+      </div>
+      <div class="insight reveal delay-3">
+        <div><div class="ix">Insight 04</div><q>Strong content, weak structure.</q></div>
+        <p class="sub">Every interview noted SPD's editorial work as a positive. The same interviews noted that the site made it hard to find that work.</p>
+      </div>
+      <div class="insight reveal delay-4">
+        <div><div class="ix">Insight 05</div><q>Insider language creates barriers.</q></div>
+        <p class="sub">Series names like "First Love," "Credits," and "Grids" mean nothing to a new visitor. The site speaks to people who already know SPD.</p>
+      </div>
+    </div>
+
+    <div class="insights-quotes">
+      <div class="q reveal">
+        <blockquote>It took me at least two clicks to find out who SPD are.</blockquote>
+        <cite>Senior CTO, tech studio</cite>
+      </div>
+      <div class="q reveal delay-1">
+        <blockquote>Their strong points is their content. Their weak points is their organization.</blockquote>
+        <cite>Junior designer interview</cite>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 — PERSONAS ============ -->
+<section>
+  <div class="container container--wide">
+    <div class="section-head">
+      <div class="num">05<small>Personas</small></div>
+      <div>
+        <h2 class="display lg">Three real visitor types.</h2>
+        <p class="kicker"><b>Each one pointed to a different page that wasn't doing its job.</b></p>
+      </div>
+    </div>
+
+    <div class="persona-grid">
+      <div class="persona reveal">
+        <div class="photo" data-lightbox data-full="assets/persona-alex.png" data-cap="Alex V · Newcomer · Application Developer Analyst">
+          <img src="assets/persona-alex.png" alt="Alex V persona">
+        </div>
+        <div class="body">
+          <div class="head"><span class="name">Alex V</span><span class="age">28 · Newcomer</span></div>
+          <div class="role">Application Developer Analyst, Capital One</div>
+          <div class="needs">
+            <div class="lab">What he needs</div>
+            <p>To quickly understand what SPD does, who it's for, and how to submit work to a competition without getting lost in unfamiliar series names.</p>
+          </div>
+          <div class="quote">Their strong points is their content. Their weak points is their organization.</div>
+        </div>
+      </div>
+
+      <div class="persona reveal delay-1">
+        <div class="photo" data-lightbox data-full="assets/persona-maya.png" data-cap="Maya Chen · Mid-career · Brand & Editorial Designer">
+          <img src="assets/persona-maya.png" alt="Maya Chen persona">
+        </div>
+        <div class="body">
+          <div class="head"><span class="name">Maya Chen</span><span class="age">28 · Mid-career</span></div>
+          <div class="role">Brand &amp; Editorial Designer, Brooklyn</div>
+          <div class="needs">
+            <div class="lab">What she needs</div>
+            <p>Freelance gigs, awards she can put on her portfolio, and a clear breakdown of what membership offers before she pays for it.</p>
+          </div>
+          <div class="quote">I need people to sell it to me a little more.</div>
+        </div>
+      </div>
+
+      <div class="persona reveal delay-2">
+        <div class="photo" data-lightbox data-full="assets/persona-mike.png" data-cap="Mike · Student · Senior BFA in Design">
+          <img src="assets/persona-mike.png" alt="Mike persona">
+        </div>
+        <div class="body">
+          <div class="head"><span class="name">Mike</span><span class="age">22 · Student</span></div>
+          <div class="role">Senior BFA in Design, Los Angeles</div>
+          <div class="needs">
+            <div class="lab">What he needs</div>
+            <p>An obvious starting point. Student competitions, inspiration, and a sense that publication design is a real career path.</p>
+          </div>
+          <div class="quote">I like the vibe, but I got lost trying to actually do anything.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-link-row reveal">
+      <a class="artifact-link" href="https://www.figma.com/design/vOhpNxr88HkSkgHrqL3BvH/Vedang-Heuristic-Evaluation-SPD?node-id=253-2" target="_blank" rel="noopener">View full artifact</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 06 — PRIORITIZATION ============ -->
+<section id="design">
+  <div class="container">
+    <div class="section-head">
+      <div class="num">06<small>Prioritization</small></div>
+      <div>
+        <h2 class="display lg">From research to three flows.</h2>
+        <p class="kicker"><b>Three user stories carried into prototype.</b></p>
+      </div>
+    </div>
+
+    <div class="funnel">
+      <div class="stage reveal">
+        <div class="ix">Step 01</div>
+        <h4>Research</h4>
+        <p>Audit, interviews, task analysis, card sort, SWOT, competitor scan.</p>
+      </div>
+      <div class="arrow">→</div>
+      <div class="stage reveal delay-1">
+        <div class="ix">Step 02</div>
+        <h4>Personas</h4>
+        <p>Three visitor types: newcomer, mid-career creative, student.</p>
+      </div>
+      <div class="arrow">→</div>
+      <div class="stage reveal delay-2">
+        <div class="ix">Step 03</div>
+        <h4>User stories</h4>
+        <p>Three prioritized stories that map to navigation and discoverability.</p>
+      </div>
+      <div class="arrow">→</div>
+      <div class="stage reveal delay-3">
+        <div class="ix">Step 04</div>
+        <h4>Prototype</h4>
+        <p>Wireframes, lo-fi, hi-fi screens for the three flows.</p>
+      </div>
+    </div>
+
+    <div class="stories">
+      <div class="story reveal">
+        <span class="num">01</span>
+        <div class="who"><b>Mike</b><small>Student designer</small></div>
+        <p class="quote">"As a student designer, I want a clear starting point, so I can understand where to go without clicking through random sections."</p>
+        <div class="target">Homepage<small>Orientation, hero, three actions</small></div>
+      </div>
+      <div class="story reveal delay-1">
+        <span class="num">02</span>
+        <div class="who"><b>Alex V</b><small>New visitor</small></div>
+        <p class="quote">"As a new visitor, I want to quickly understand what SPD is, so I can decide if it feels relevant to me."</p>
+        <div class="target">About SPD<small>Identity, mission, value</small></div>
+      </div>
+      <div class="story reveal delay-2">
+        <span class="num">03</span>
+        <div class="who"><b>Maya Chen</b><small>Active designer</small></div>
+        <p class="quote">"As an active designer, I want to find roles quickly, so I can see whether SPD is useful before committing to membership."</p>
+        <div class="target">Job board<small>Filterable, not buried</small></div>
+      </div>
+    </div>
+
+    <div class="section-link-row reveal">
+      <a class="artifact-link" href="https://www.figma.com/design/vOhpNxr88HkSkgHrqL3BvH/Vedang-Heuristic-Evaluation-SPD?node-id=157-330" target="_blank" rel="noopener">View full artifact</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 07 — SKETCHES ============ -->
+<section class="soft">
+  <div class="container">
+    <div class="section-head">
+      <div class="num">07<small>Sketching</small></div>
+      <div>
+        <h2 class="display lg">We drew before we designed.</h2>
+        <p class="kicker"><b>Throwing out compositions on paper, before committing.</b></p>
+      </div>
+    </div>
+
+    <div class="sketches">
+      <div class="sketch-tile reveal">
+        <div class="img" data-lightbox data-full="assets/sketch-page-1.png" data-cap="Sketch 01 · Homepage exploration">
+          <img src="assets/sketch-page-1.png" alt="Homepage sketches">
+        </div>
+        <div class="cap"><b>Homepage exploration</b><small>Sketch 01</small></div>
+      </div>
+      <div class="sketch-tile reveal delay-1">
+        <div class="img" data-lightbox data-full="assets/sketch-web-1.jpg" data-cap="Sketch 02 · Web layout">
+          <img src="assets/sketch-web-1.jpg" alt="Web sketch 1">
+        </div>
+        <div class="cap"><b>Web layout</b><small>Sketch 02</small></div>
+      </div>
+      <div class="sketch-tile reveal delay-2">
+        <div class="img" data-lightbox data-full="assets/sketch-web-2.jpg" data-cap="Sketch 03 · Nav exploration">
+          <img src="assets/sketch-web-2.jpg" alt="Web sketch 2">
+        </div>
+        <div class="cap"><b>Nav exploration</b><small>Sketch 03</small></div>
+      </div>
+      <div class="sketch-tile reveal delay-3">
+        <div class="img" data-lightbox data-full="assets/sketch-mobile.jpg" data-cap="Sketch 04 · Mobile">
+          <img src="assets/sketch-mobile.jpg" alt="Mobile sketch">
+        </div>
+        <div class="cap"><b>Mobile</b><small>Sketch 04</small></div>
+      </div>
+    </div>
+
+    <div class="section-link-row reveal">
+      <a class="artifact-link" href="https://drive.google.com/file/d/1bp_mUy3t_b891JkHNBOOOszf3CeQGuXC/view" target="_blank" rel="noopener">View full artifact</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 08 — FINAL DESIGN ============ -->
+<section id="prototype">
+  <div class="container container--wide">
+    <div class="section-head">
+      <div class="num">08<small>Final direction</small></div>
+      <div>
+        <h2 class="display lg">A clearer homepage. A simpler nav. Real entry points.</h2>
+        <p class="kicker"><b>Same identity. Tighter structure underneath.</b></p>
+      </div>
+    </div>
+
+    <!-- Row 1: phone-shape (vertical) videos -->
+    <div class="video-row vertical">
+      <div class="final-tile reveal">
+        <div class="img has-video" data-lightbox-video data-full="assets/about-menu.mp4" data-cap="About SPD wireframe flow">
+          <video src="assets/about-menu.mp4" autoplay loop muted playsinline preload="metadata" aria-label="About SPD wireframe flow"></video>
+        </div>
+        <div class="cap">
+          <b>About SPD</b>
+          <small>About SPD wireframe flow.</small>
+        </div>
+      </div>
+      <div class="final-tile reveal delay-1">
+        <div class="img has-video" data-lightbox-video data-full="assets/job-menu.mp4" data-cap="Job Board wireframe flow">
+          <video src="assets/job-menu.mp4" autoplay loop muted playsinline preload="metadata" aria-label="Job Board wireframe flow"></video>
+        </div>
+        <div class="cap">
+          <b>Job board</b>
+          <small>Job Board wireframe flow.</small>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: landscape (horizontal) videos -->
+    <div class="video-row horizontal">
+      <div class="final-tile reveal">
+        <div class="img has-video is-landscape" data-lightbox-video data-full="assets/nav-wireframe.mp4" data-cap="Navigation wireframe flow">
+          <video src="assets/nav-wireframe.mp4" autoplay loop muted playsinline preload="metadata" aria-label="Navigation wireframe flow"></video>
+        </div>
+        <div class="cap">
+          <b>Navigation</b>
+          <small>Navigation wireframe flow.</small>
+        </div>
+      </div>
+      <div class="final-tile reveal delay-1">
+        <div class="img has-video is-landscape" data-lightbox-video data-full="assets/homepage-wireframe.mp4" data-cap="Homepage wireframe flow">
+          <video src="assets/homepage-wireframe.mp4" autoplay loop muted playsinline preload="metadata" aria-label="Homepage wireframe flow"></video>
+        </div>
+        <div class="cap">
+          <b>Homepage</b>
+          <small>Homepage wireframe flow.</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="design-decisions">
+      <div class="dec reveal">
+        <span class="num">01</span>
+        <div>
+          <h4>Replaced category-based menus with action-based ones.</h4>
+          <p>Top nav becomes Enter, Join, Browse, About. New content has an obvious home, and visitors don't translate categories before they can act.</p>
+        </div>
+      </div>
+      <div class="dec reveal delay-1">
+        <span class="num">02</span>
+        <div>
+          <h4>Built shared shapes for recurring page types.</h4>
+          <p>Homepage, competition, winner, event, and member tier each get one consistent layout. Yearly updates ship as content, not new design work.</p>
+        </div>
+      </div>
+      <div class="dec reveal">
+        <span class="num">03</span>
+        <div>
+          <h4>Reworked content-heavy pages to match the decision.</h4>
+          <p>Where the goal is comparison, content sits side by side. Where it's scanning, content breaks into recognizable chunks.</p>
+        </div>
+      </div>
+      <div class="dec reveal delay-1">
+        <span class="num">04</span>
+        <div>
+          <h4>Surfaced the actions that bring people back.</h4>
+          <p>Job board, competitions, and membership are first-class destinations now, not buried links inside a generic Resources section.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-row reveal">
+      <a class="btn" href="https://www.figma.com/design/Acqoug51ao6QYXwl2ZrQmH/mobile-spd?node-id=0-1" target="_blank" rel="noopener">View final prototype</a>
+      <a class="btn secondary" href="https://www.figma.com/design/vOhpNxr88HkSkgHrqL3BvH/Vedang-Heuristic-Evaluation-SPD?node-id=269-126" target="_blank" rel="noopener">View style tile</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 09 — RESULT ============ -->
+<section class="bleed">
+  <div class="container">
+    <div class="section-head">
+      <div class="num" style="color: #fff;">09<small style="color: rgba(255,255,255,0.6);">Result</small></div>
+      <div>
+        <h2 class="display lg" style="color: #fff;">A dense ecosystem, made navigable.</h2>
+      </div>
+    </div>
+
+    <div class="result-grid">
+      <p class="result-blurb reveal">
+        Same content. <em>Better access.</em> The redesign reorganizes SPD's existing value so users can actually find it.
+      </p>
+      <div class="result-numbers reveal delay-1">
+        <div class="stat">
+          <div class="label">Then</div>
+          <div class="number" data-count="8">0</div>
+          <div class="desc">Top-level nav entries</div>
+        </div>
+        <div class="stat">
+          <div class="label">Now</div>
+          <div class="number" data-count="4">0</div>
+          <div class="desc">Task-led paths</div>
+        </div>
+        <div class="stat">
+          <div class="label">Flows</div>
+          <div class="number" data-count="3">0</div>
+          <div class="desc">Prototyped end-to-end</div>
+        </div>
+        <div class="stat">
+          <div class="label">Personas</div>
+          <div class="number" data-count="3">0</div>
+          <div class="desc">Real visitor types</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 10 — REFLECTION ============ -->
+<section>
+  <div class="container">
+    <div class="section-head">
+      <div class="num">10<small>Reflection</small></div>
+      <div>
+        <h2 class="display lg">What we learned, what we'd do next.</h2>
+        <p class="kicker">As a student project, this stops at the prototype. <b>The lessons hold.</b></p>
+      </div>
+    </div>
+
+    <div class="reflection-cols">
+      <div class="reflect reveal">
+        <div class="label">What we learned</div>
+        <h4>Visual polish doesn't equal usability.</h4>
+        <p>SPD's site already looks editorial and considered. The problem was structural. Spending design time on the surface would have masked the real issue.</p>
+      </div>
+      <div class="reflect reveal delay-1">
+        <div class="label">What stuck</div>
+        <h4>IA was the foundation of the redesign.</h4>
+        <p>Once the top-level was task-led, the homepage, About, and job board fell into place. The card sort gave us more leverage than any visual exploration.</p>
+      </div>
+      <div class="reflect reveal delay-2">
+        <div class="label">What's next</div>
+        <h4>Test with SPD users. Refine membership. Build templates.</h4>
+        <p>Usability testing the prototype with real SPD visitors, fleshing out the membership comparison, and turning the recurring page shapes into a small template system.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="foot">
+  <div class="container">
+    <div class="foot-inner">
+      <div>
+        <small>SPD Website Redesign · UX Case Study</small>
+        <h3>A clearer way into <em>the work</em>.</h3>
+      </div>
+      <div class="credit">
+        <span>Cathy Doss</span>
+        <span>Giovanni Terzano</span>
+        <span>Vedang Lambe</span>
+        <span>Kudirat Alimi</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ LIGHTBOX ============ -->
+<div class="lightbox" id="lightbox" hidden>
+  <button class="lb-close" id="lb-close" aria-label="Close">&times;</button>
+  <div class="lb-inner">
+    <img class="lb-img" id="lb-img" src="" alt="" hidden>
+    <iframe class="lb-iframe" id="lb-iframe" hidden title="Embedded artifact"></iframe>
+    <video class="lb-video" id="lb-video" autoplay loop muted playsinline hidden></video>
+    <div class="lb-cap" id="lb-cap"></div>
+  </div>
+</div>
+
+<!-- ============ METHOD MODAL ============ -->
+<div class="method-modal" id="method-modal" hidden>
+  <button class="lb-close" id="mm-close" aria-label="Close">&times;</button>
+  <div class="mm-card">
+    <div class="mm-content">
+      <span class="mm-num" id="mm-num"></span>
+      <h3 id="mm-title"></h3>
+      <p class="mm-summary" id="mm-summary"></p>
+      <div class="mm-stats" id="mm-stats"></div>
+      <div class="mm-section">
+        <span class="mm-section-label">How it shaped the redesign</span>
+        <p id="mm-shaped"></p>
+      </div>
+      <div class="mm-link-row" id="mm-link-row" hidden></div>
+    </div>
+    <div class="mm-visual" id="mm-visual" aria-hidden="true"></div>
+  </div>
+</div>
+
+<!-- ============ METHOD VISUAL TEMPLATES ============ -->
+<template id="visual-stakeholder">
+  <svg class="v-stakeholder" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+    <!-- Connection lines (drawn first so nodes paint on top) -->
+    <line class="conn c-1 stroke" x1="140" y1="140" x2="60"  y2="60"/>
+    <line class="conn c-2 stroke" x1="140" y1="140" x2="220" y2="60"/>
+    <line class="conn c-3 stroke" x1="140" y1="140" x2="60"  y2="220"/>
+    <line class="conn c-4 stroke" x1="140" y1="140" x2="220" y2="220"/>
+    <!-- Person nodes -->
+    <circle class="person p-1 stroke" cx="60"  cy="60"  r="18"/>
+    <circle class="person p-2 stroke" cx="220" cy="60"  r="18"/>
+    <circle class="person p-3 stroke" cx="60"  cy="220" r="18"/>
+    <circle class="person p-4 stroke" cx="220" cy="220" r="18"/>
+    <!-- Center SPD logo, painted last so it sits on top of lines -->
+    <rect class="core core-bg" x="116" y="116" width="48" height="48" rx="2" fill="currentColor" fill-opacity="0.22"/>
+    <rect class="core core-frame stroke" x="116" y="116" width="48" height="48" rx="2"/>
+    <text class="core core-label" x="140" y="146" font-size="13" text-anchor="middle">SPD</text>
+  </svg>
+</template>
+
+<template id="visual-user">
+  <svg class="v-user" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+    <g class="bubble">
+      <rect x="30" y="50" width="140" height="76" rx="3" fill="currentColor" fill-opacity="0.12"/>
+      <line class="stroke" x1="48" y1="74" x2="148" y2="74"/>
+      <line class="stroke" x1="48" y1="88" x2="138" y2="88"/>
+      <line class="stroke" x1="48" y1="102" x2="120" y2="102"/>
+      <path d="M52 126 L42 142 L66 126 Z" fill="currentColor" fill-opacity="0.12"/>
+    </g>
+    <g class="bubble">
+      <rect x="110" y="156" width="140" height="76" rx="3" fill="currentColor" fill-opacity="0.22"/>
+      <line class="stroke" x1="128" y1="180" x2="228" y2="180"/>
+      <line class="stroke" x1="128" y1="194" x2="218" y2="194"/>
+      <line class="stroke" x1="128" y1="208" x2="200" y2="208"/>
+      <path d="M226 232 L236 248 L212 232 Z" fill="currentColor" fill-opacity="0.22"/>
+    </g>
+  </svg>
+</template>
+
+<template id="visual-task">
+  <svg class="v-task" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <marker id="task-arrow" viewBox="0 0 12 12" refX="10" refY="6" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+        <path d="M0 0 L12 6 L0 12 Z" fill="currentColor"/>
+      </marker>
+    </defs>
+    <!-- Single continuous path through 4 checkpoints, arrow at end -->
+    <path class="task-path stroke"
+          d="M30 210 L94 144 L168 178 L242 80"
+          stroke-width="2.2"
+          marker-end="url(#task-arrow)"/>
+    <circle class="cp fill" cx="30"  cy="210" r="7"/>
+    <circle class="cp fill" cx="94"  cy="144" r="7"/>
+    <circle class="cp fill" cx="168" cy="178" r="7"/>
+    <circle class="cp fill" cx="242" cy="80"  r="7"/>
+  </svg>
+</template>
+
+<template id="visual-heuristic">
+  <svg class="v-heuristic" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+    <g class="check-row">
+      <rect class="stroke" x="40" y="36" width="22" height="22" rx="1.5"/>
+      <path class="stroke" d="M44 47 L50 53 L60 41" stroke-width="2"/>
+      <line class="stroke" x1="76" y1="47" x2="240" y2="47"/>
+    </g>
+    <g class="check-row">
+      <rect class="stroke" x="40" y="80" width="22" height="22" rx="1.5"/>
+      <path class="stroke" d="M44 91 L50 97 L60 85" stroke-width="2"/>
+      <line class="stroke" x1="76" y1="91" x2="220" y2="91"/>
+    </g>
+    <g class="check-row">
+      <rect class="stroke" x="40" y="124" width="22" height="22" rx="1.5"/>
+      <path class="stroke" d="M44 135 L50 141 L60 129" stroke-width="2"/>
+      <line class="stroke" x1="76" y1="135" x2="234" y2="135"/>
+    </g>
+    <g class="check-row">
+      <rect class="stroke" x="40" y="168" width="22" height="22" rx="1.5"/>
+      <path class="stroke" d="M44 179 L50 185 L60 173" stroke-width="2"/>
+      <line class="stroke" x1="76" y1="179" x2="200" y2="179"/>
+    </g>
+    <g class="check-row">
+      <rect class="stroke" x="40" y="212" width="22" height="22" rx="1.5"/>
+      <line class="stroke" x1="76" y1="223" x2="216" y2="223"/>
+    </g>
+  </svg>
+</template>
+
+<template id="visual-competitor">
+  <svg class="v-competitor" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+    <!-- Header row -->
+    <rect class="grid-cell stroke" style="--i:1" x="40" y="40" width="48" height="36"/>
+    <rect class="grid-cell stroke" style="--i:2" x="92" y="40" width="48" height="36"/>
+    <rect class="grid-cell stroke" style="--i:3" x="144" y="40" width="48" height="36"/>
+    <rect class="grid-cell stroke" style="--i:4" x="196" y="40" width="48" height="36"/>
+    <!-- Row 2 -->
+    <rect class="grid-cell stroke" style="--i:5" x="40" y="80" width="48" height="36"/>
+    <rect class="grid-cell stroke" style="--i:6" x="92" y="80" width="48" height="36"/>
+    <rect class="grid-cell stroke" style="--i:7" x="144" y="80" width="48" height="36"/>
+    <rect class="grid-cell stroke" style="--i:8" x="196" y="80" width="48" height="36"/>
+    <!-- Row 3 -->
+    <rect class="grid-cell stroke" style="--i:9" x="40" y="120" width="48" height="36"/>
+    <rect class="grid-cell stroke" style="--i:10" x="92" y="120" width="48" height="36"/>
+    <rect class="grid-cell stroke" style="--i:11" x="144" y="120" width="48" height="36"/>
+    <rect class="grid-cell stroke" style="--i:12" x="196" y="120" width="48" height="36"/>
+    <!-- SPD highlighted row 4 -->
+    <rect class="spd-row" x="40" y="160" width="204" height="36" fill="currentColor"/>
+    <rect class="grid-cell stroke" style="--i:13" x="40" y="160" width="48" height="36"/>
+    <rect class="grid-cell stroke" style="--i:14" x="92" y="160" width="48" height="36"/>
+    <rect class="grid-cell stroke" style="--i:15" x="144" y="160" width="48" height="36"/>
+    <rect class="grid-cell stroke" style="--i:16" x="196" y="160" width="48" height="36"/>
+    <text class="grid-cell" style="--i:17" x="50" y="184" font-size="11">SPD</text>
+    <!-- Row 5 -->
+    <rect class="grid-cell stroke" style="--i:18" x="40" y="200" width="48" height="36"/>
+    <rect class="grid-cell stroke" style="--i:19" x="92" y="200" width="48" height="36"/>
+    <rect class="grid-cell stroke" style="--i:20" x="144" y="200" width="48" height="36"/>
+    <rect class="grid-cell stroke" style="--i:21" x="196" y="200" width="48" height="36"/>
+  </svg>
+</template>
+
+<template id="visual-cardsort">
+  <svg class="v-cardsort" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+    <!-- Top row: scattered cards -->
+    <rect class="sortcard stroke" x="22" y="34" width="58" height="34" rx="2" fill="white"/>
+    <rect class="sortcard stroke" x="106" y="22" width="58" height="34" rx="2" fill="white"/>
+    <rect class="sortcard stroke" x="190" y="40" width="58" height="34" rx="2" fill="white"/>
+    <!-- Arrow down -->
+    <path class="arrow-down stroke" d="M140 100 L140 138 M128 130 L140 142 L152 130" stroke-width="2"/>
+    <!-- Grouped cluster -->
+    <g class="grouped">
+      <rect class="stroke" x="32" y="170" width="48" height="28" rx="2" fill="currentColor" fill-opacity="0.15"/>
+      <rect class="stroke" x="86" y="170" width="48" height="28" rx="2" fill="currentColor" fill-opacity="0.15"/>
+      <rect class="stroke" x="140" y="170" width="48" height="28" rx="2" fill="currentColor" fill-opacity="0.15"/>
+      <rect class="stroke" x="194" y="170" width="48" height="28" rx="2" fill="currentColor" fill-opacity="0.15"/>
+      <text x="56" y="190" font-size="9" text-anchor="middle">Enter</text>
+      <text x="110" y="190" font-size="9" text-anchor="middle">Join</text>
+      <text x="164" y="190" font-size="9" text-anchor="middle">Browse</text>
+      <text x="218" y="190" font-size="9" text-anchor="middle">About</text>
+      <line class="stroke" x1="40" y1="216" x2="234" y2="216"/>
+      <line class="stroke" x1="40" y1="226" x2="234" y2="226" stroke-opacity="0.5"/>
+    </g>
+  </svg>
+</template>
+
+<template id="visual-sitemap">
+  <svg class="v-sitemap" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+    <!-- Coords:
+         Root rect:   x=120 w=40 → centerX=140; y=60 h=24 → bottomY=84
+         Bus row Y:   130
+         Leaves Y:    170 (top of rect), height 26
+         Leaf rects:  centers x=50, 110, 170, 230 (each 56 wide → 22-78, 82-138, 142-198, 202-258)
+    -->
+    <!-- Branch lines, painted first so nodes sit on top -->
+    <path class="branch-line stroke"
+          d="M140 84 L140 130
+             M50 130 L230 130
+             M50 130 L50 170
+             M110 130 L110 170
+             M170 130 L170 170
+             M230 130 L230 170"
+          stroke-width="1.4"/>
+    <!-- Sub-bus under Browse: bus from x=120 to x=220, drops at 120/170/220 -->
+    <path class="branch-line sub stroke"
+          d="M170 196 L170 218
+             M120 218 L220 218
+             M120 218 L120 234
+             M170 218 L170 234
+             M220 218 L220 234"
+          stroke-width="1.2"/>
+
+    <!-- Root -->
+    <g class="root-node">
+      <rect class="stroke" x="120" y="60" width="40" height="24" rx="2" fill="currentColor" fill-opacity="0.18"/>
+      <text x="140" y="77" font-size="10" text-anchor="middle">SPD</text>
+    </g>
+
+    <!-- Top-level leaves (4 task paths) -->
+    <g class="leaf-node ln-1">
+      <rect class="stroke" x="22"  y="170" width="56" height="26" rx="2"/>
+      <text x="50"  y="187" font-size="10" text-anchor="middle">Enter</text>
+    </g>
+    <g class="leaf-node ln-2">
+      <rect class="stroke" x="82"  y="170" width="56" height="26" rx="2"/>
+      <text x="110" y="187" font-size="10" text-anchor="middle">Join</text>
+    </g>
+    <g class="leaf-node ln-3">
+      <rect class="stroke" x="142" y="170" width="56" height="26" rx="2"/>
+      <text x="170" y="187" font-size="10" text-anchor="middle">Browse</text>
+    </g>
+    <g class="leaf-node ln-4">
+      <rect class="stroke" x="202" y="170" width="56" height="26" rx="2"/>
+      <text x="230" y="187" font-size="10" text-anchor="middle">About</text>
+    </g>
+
+    <!-- Sub-leaves under Browse, centered at x=120, 170, 220 -->
+    <g class="leaf-node ln-5">
+      <rect class="stroke" x="100" y="234" width="40" height="20" rx="2" fill="currentColor" fill-opacity="0.04"/>
+    </g>
+    <g class="leaf-node ln-6">
+      <rect class="stroke" x="150" y="234" width="40" height="20" rx="2" fill="currentColor" fill-opacity="0.04"/>
+    </g>
+    <g class="leaf-node ln-7">
+      <rect class="stroke" x="200" y="234" width="40" height="20" rx="2" fill="currentColor" fill-opacity="0.04"/>
+    </g>
+  </svg>
+</template>
+
+<template id="visual-swot">
+  <svg class="v-swot" viewBox="0 0 280 280" xmlns="http://www.w3.org/2000/svg">
+    <rect class="stroke" x="40" y="40" width="200" height="200" stroke-width="1.6"/>
+    <line class="stroke" x1="140" y1="40" x2="140" y2="240" stroke-width="1.6"/>
+    <line class="stroke" x1="40" y1="140" x2="240" y2="140" stroke-width="1.6"/>
+    <rect class="quad q1" x="42" y="42" width="96" height="96" fill="currentColor"/>
+    <rect class="quad q2" x="142" y="42" width="96" height="96" fill="currentColor"/>
+    <rect class="quad q3" x="42" y="142" width="96" height="96" fill="currentColor"/>
+    <rect class="quad q4" x="142" y="142" width="96" height="96" fill="currentColor"/>
+    <text x="58" y="68" font-size="14">S</text>
+    <text x="158" y="68" font-size="14">W</text>
+    <text x="58" y="168" font-size="14">O</text>
+    <text x="158" y="168" font-size="14">T</text>
+  </svg>
+</template>
+
+<script>
+(function () {
+  // ---------- Reveal on scroll ----------
+  const reveals = document.querySelectorAll('.reveal');
+  const revealObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        revealObs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+  reveals.forEach(t => revealObs.observe(t));
+
+  // ---------- Count-up numbers ----------
+  const counters = document.querySelectorAll('[data-count]');
+  const counterObs = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.count, 10);
+        const duration = 1100;
+        const start = performance.now();
+        function step(now) {
+          const t = Math.min((now - start) / duration, 1);
+          const eased = 1 - Math.pow(1 - t, 3);
+          el.textContent = Math.round(target * eased);
+          if (t < 1) requestAnimationFrame(step);
+        }
+        requestAnimationFrame(step);
+        counterObs.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+  counters.forEach(c => counterObs.observe(c));
+
+  // ---------- Lightbox (image + iframe + video) ----------
+  const lb = document.getElementById('lightbox');
+  const lbImg = document.getElementById('lb-img');
+  const lbFrame = document.getElementById('lb-iframe');
+  const lbVideo = document.getElementById('lb-video');
+  const lbCap = document.getElementById('lb-cap');
+  const lbClose = document.getElementById('lb-close');
+
+  function resetMedia() {
+    lbImg.hidden = true; lbImg.src = '';
+    lbFrame.hidden = true; lbFrame.src = '';
+    lbVideo.hidden = true; lbVideo.pause(); lbVideo.removeAttribute('src'); lbVideo.load();
+  }
+  function openImage(src, cap) {
+    resetMedia();
+    lbImg.hidden = false;
+    lbImg.src = src;
+    lbImg.alt = cap || '';
+    lbCap.textContent = cap || '';
+    lb.removeAttribute('hidden');
+    requestAnimationFrame(() => lb.classList.add('open'));
+    document.body.style.overflow = 'hidden';
+  }
+  function openIframe(src, cap) {
+    resetMedia();
+    lbFrame.hidden = false;
+    lbFrame.src = src;
+    lbCap.textContent = cap || '';
+    lb.removeAttribute('hidden');
+    requestAnimationFrame(() => lb.classList.add('open'));
+    document.body.style.overflow = 'hidden';
+  }
+  function openVideo(src, cap) {
+    resetMedia();
+    lbVideo.hidden = false;
+    lbVideo.src = src;
+    lbVideo.muted = true;
+    lbVideo.loop = true;
+    lbVideo.playsInline = true;
+    lbVideo.play().catch(() => {});
+    lbCap.textContent = cap || '';
+    lb.removeAttribute('hidden');
+    requestAnimationFrame(() => lb.classList.add('open'));
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    lb.classList.remove('open');
+    setTimeout(() => {
+      lb.setAttribute('hidden', '');
+      resetMedia();
+      document.body.style.overflow = '';
+    }, 220);
+  }
+
+  document.querySelectorAll('[data-lightbox]').forEach(el => {
+    el.addEventListener('click', () => {
+      const img = el.querySelector('img');
+      const src = el.dataset.full || (img && img.src);
+      const cap = el.dataset.cap || (img && img.alt) || '';
+      if (src) openImage(src, cap);
+    });
+  });
+  document.querySelectorAll('[data-lightbox-iframe]').forEach(el => {
+    el.addEventListener('click', () => {
+      const src = el.dataset.full;
+      const cap = el.dataset.cap || '';
+      if (src) openIframe(src, cap);
+    });
+  });
+  document.querySelectorAll('[data-lightbox-video]').forEach(el => {
+    el.addEventListener('click', () => {
+      const v = el.querySelector('video');
+      const src = el.dataset.full || (v && (v.currentSrc || v.src));
+      const cap = el.dataset.cap || '';
+      if (src) openVideo(src, cap);
+    });
+  });
+
+  lbClose.addEventListener('click', closeLightbox);
+  lb.addEventListener('click', e => {
+    if (e.target === lb || e.target === lb.querySelector('.lb-inner')) closeLightbox();
+  });
+
+  // ---------- Method modal ----------
+  const mm = document.getElementById('method-modal');
+  const mmNum = document.getElementById('mm-num');
+  const mmTitle = document.getElementById('mm-title');
+  const mmSummary = document.getElementById('mm-summary');
+  const mmStats = document.getElementById('mm-stats');
+  const mmShaped = document.getElementById('mm-shaped');
+  const mmVisual = document.getElementById('mm-visual');
+  const mmLinkRow = document.getElementById('mm-link-row');
+  const mmClose = document.getElementById('mm-close');
+
+  function openMethod(card) {
+    mmNum.textContent = card.dataset.methodNum || '';
+    mmTitle.textContent = card.dataset.methodTitle || '';
+    mmSummary.innerHTML = card.dataset.methodSummary || '';
+    mmShaped.innerHTML = card.dataset.methodShaped || '';
+
+    // Stats: pipe-separated string
+    const stats = (card.dataset.methodStats || '').split('|').map(s => s.trim()).filter(Boolean);
+    mmStats.innerHTML = stats.map(s => `<span class="mm-chip">${s}</span>`).join('');
+
+    // Optional artifact links: `Label||URL` pairs separated by `;;`
+    const linksRaw = (card.dataset.methodLinks || '').trim();
+    if (linksRaw) {
+      const items = linksRaw.split(';;').map(s => s.trim()).filter(Boolean);
+      mmLinkRow.innerHTML = items.map(pair => {
+        const [label, url] = pair.split('||').map(s => s && s.trim());
+        if (!label || !url) return '';
+        return `<a class="artifact-link" href="${url}" target="_blank" rel="noopener">${label}</a>`;
+      }).join('');
+      mmLinkRow.hidden = false;
+    } else {
+      mmLinkRow.innerHTML = '';
+      mmLinkRow.hidden = true;
+    }
+
+    // Visual: clone matching template
+    mmVisual.innerHTML = '';
+    const visualKey = card.dataset.methodVisual;
+    if (visualKey) {
+      const tpl = document.getElementById(`visual-${visualKey}`);
+      if (tpl) mmVisual.appendChild(tpl.content.cloneNode(true));
+    }
+
+    mm.removeAttribute('hidden');
+    requestAnimationFrame(() => mm.classList.add('open'));
+    document.body.style.overflow = 'hidden';
+  }
+  function closeMethod() {
+    mm.classList.remove('open');
+    setTimeout(() => {
+      mm.setAttribute('hidden', '');
+      mmVisual.innerHTML = '';
+      mmLinkRow.innerHTML = '';
+      mmLinkRow.hidden = true;
+      document.body.style.overflow = '';
+    }, 220);
+  }
+
+  document.querySelectorAll('.method-card').forEach(card => {
+    card.addEventListener('click', () => openMethod(card));
+  });
+  mmClose.addEventListener('click', closeMethod);
+  mm.addEventListener('click', e => { if (e.target === mm) closeMethod(); });
+
+  // ---------- Esc closes modals ----------
+  window.addEventListener('keydown', e => {
+    if (e.key === 'Escape') {
+      if (!lb.hasAttribute('hidden')) closeLightbox();
+      if (!mm.hasAttribute('hidden')) closeMethod();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>

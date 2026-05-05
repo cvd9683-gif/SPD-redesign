@@ -1,0 +1,1167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Competitor Analysis · SPD Redesign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #FAF8F8;
+    --bg-soft: #F2EEEE;
+    --bg-deep: #ECE7E7;
+    --surface: #ffffff;
+    --text: #1a191c;
+    --text-mid: #363537;
+    --text-muted: #6c6a6e;
+    --text-faint: #a09ea1;
+    --border: rgba(54, 53, 55, 0.08);
+    --border-mid: rgba(54, 53, 55, 0.16);
+    --border-strong: rgba(54, 53, 55, 0.32);
+    --accent: #EF4022;
+    --accent-tint: rgba(239, 64, 34, 0.04);
+    --accent-tint-2: rgba(239, 64, 34, 0.08);
+    --accent-edge: rgba(239, 64, 34, 0.22);
+
+    --font-display: "Oswald", "Archivo Narrow", "Archivo", sans-serif;
+    --font-body: "Archivo", -apple-system, sans-serif;
+
+    --max: 1440px;
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--font-body);
+    color: var(--text-mid);
+    background: var(--bg);
+    font-size: 14px;
+    line-height: 1.45;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  ::selection { background: var(--accent); color: #fff; }
+
+  .wrap {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 56px 36px 72px;
+  }
+
+  /* ---------- Top header ---------- */
+  .head {
+    margin-bottom: 22px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border-strong);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
+    gap: 32px;
+  }
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 24px;
+    height: 2px;
+    background: var(--accent);
+    display: inline-block;
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(28px, 3.4vw, 44px);
+    line-height: 1;
+    letter-spacing: -0.005em;
+    margin: 0 0 8px;
+    color: var(--text);
+    text-transform: uppercase;
+  }
+  h1 em { font-style: normal; color: var(--accent); }
+  .lede {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--text-muted);
+    max-width: 70ch;
+    margin: 0;
+  }
+  .head-tag {
+    text-align: right;
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-weight: 600;
+    line-height: 1.5;
+  }
+  .head-tag b { color: var(--text); font-weight: 700; }
+
+  /* ---------- Export bar ---------- */
+  .export-bar {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 24px;
+    flex-wrap: wrap;
+  }
+  .export-bar .label {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin-right: 6px;
+  }
+  .btn {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 9px 18px;
+    border-radius: 999px;
+    border: 1px solid var(--border-strong);
+    background: #fff;
+    color: var(--text);
+    cursor: pointer;
+    transition: background .15s ease, color .15s ease, border-color .15s ease;
+  }
+  .btn:hover { background: var(--text); color: #fff; border-color: var(--text); }
+  .btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+  .btn.is-primary {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+  }
+  .btn.is-primary:hover {
+    background: #d8351b;
+    border-color: #d8351b;
+  }
+  .btn.is-ghost {
+    border-color: transparent;
+    background: transparent;
+    color: var(--text-muted);
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+  .btn.is-ghost:hover { background: var(--bg-soft); color: var(--text); }
+
+  /* ---------- Section heads ---------- */
+  .section { margin-top: 44px; }
+  .section:first-of-type { margin-top: 8px; }
+  .section-head {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 18px;
+    align-items: baseline;
+    margin-bottom: 14px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border-mid);
+  }
+  .section-num {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+  .section-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 1;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  .section-title small {
+    display: inline-block;
+    margin-left: 12px;
+    font-family: var(--font-body);
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0;
+    text-transform: none;
+    color: var(--text-muted);
+  }
+  .section-tag {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+  }
+
+  /* ---------- Shared table chrome ---------- */
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+  }
+  .scroll {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+  }
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    background: var(--surface);
+    table-layout: fixed;
+  }
+
+  thead th {
+    background: var(--bg-soft);
+    color: var(--text);
+    text-align: left;
+    vertical-align: bottom;
+    border-right: 1px solid var(--border-mid);
+    border-bottom: 1.5px solid var(--text);
+    font-weight: 500;
+  }
+  thead th:last-child { border-right: 0; }
+  thead th.site-hdr {
+    background: #fff;
+    border-bottom-color: var(--border-strong);
+    position: sticky;
+    left: 0;
+    z-index: 3;
+  }
+  thead th .col-num {
+    display: block;
+    font-family: var(--font-display);
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-weight: 600;
+  }
+  thead th .col-name {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  thead th.site-hdr .col-name {
+    color: var(--text-faint);
+    letter-spacing: 0.22em;
+  }
+
+  tbody td, tbody th {
+    border-top: 1.5px solid var(--border-mid);
+    border-right: 1px solid var(--border);
+    vertical-align: top;
+    background: var(--surface);
+  }
+  tbody td:last-child, tbody th:last-child { border-right: 0; }
+
+  tbody th.site {
+    text-align: left;
+    background: #fff;
+    border-right: 1px solid var(--border-strong);
+    position: sticky;
+    left: 0;
+    z-index: 2;
+  }
+  tbody th.site .num {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    color: var(--text-faint);
+  }
+  tbody th.site .name {
+    display: block;
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0.01em;
+    text-transform: uppercase;
+    color: var(--text);
+  }
+  tbody th.site .sub {
+    display: block;
+    font-family: var(--font-body);
+    font-weight: 500;
+    line-height: 1.3;
+    letter-spacing: 0.04em;
+    color: var(--text-faint);
+  }
+  tbody th.site .tag {
+    display: inline-block;
+    font-family: var(--font-display);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-weight: 700;
+    border: 1px solid var(--border-mid);
+  }
+
+  /* SPD row emphasis */
+  tr.row-spd th.site,
+  tr.row-spd td {
+    background: var(--accent-tint);
+    border-top: 2px solid var(--accent);
+  }
+  tr.row-spd th.site { border-right-color: var(--accent-edge); }
+  tr.row-spd th.site .num { color: var(--accent); }
+  tr.row-spd th.site .name { color: var(--accent); }
+  tr.row-spd th.site .tag {
+    color: #fff;
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  tr.row-spd td { border-right-color: var(--accent-edge); }
+  tr.row-spd .key { color: var(--accent); }
+
+  /* SPD × Overall — emphasis via red text, not inverted background */
+  tr.row-spd td.col-overall {
+    background: var(--bg-soft);
+  }
+  tr.row-spd td.col-overall .key { color: var(--accent); }
+  tr.row-spd td.col-overall .sub-line { color: var(--text-muted); }
+
+  /* Insight typography (shared) */
+  .key {
+    font-weight: 700;
+    color: var(--text);
+    margin: 0;
+    letter-spacing: -0.003em;
+  }
+  .sub-line {
+    display: block;
+    font-weight: 500;
+    color: var(--text-muted);
+  }
+
+  /* ============================================================
+     PART 01 — DETAILED CASE STUDY VIEW
+     ============================================================ */
+  .v-detail .col-site { width: 132px; }
+  .v-detail .col-cat  { width: auto; }
+  .v-detail .col-overall { width: 152px; }
+  .v-detail table { min-width: 1200px; }
+
+  .v-detail thead th { padding: 14px 14px 12px; }
+  .v-detail thead th .col-num { font-size: 9px; margin-bottom: 5px; }
+  .v-detail thead th .col-name { font-size: 12.5px; }
+  .v-detail thead th.site-hdr .col-name { font-size: 10px; }
+
+  .v-detail tbody td,
+  .v-detail tbody th { padding: 18px 14px; }
+
+  .v-detail tbody th.site .num { font-size: 9.5px; margin-bottom: 5px; }
+  .v-detail tbody th.site .name { font-size: 18px; margin-bottom: 5px; }
+  .v-detail tbody th.site .sub { font-size: 9.5px; margin-bottom: 8px; }
+  .v-detail tbody th.site .tag { padding: 2px 6px; font-size: 8.5px; }
+
+  .v-detail .key {
+    font-size: 13px;
+    line-height: 1.25;
+    margin-bottom: 5px;
+  }
+  .v-detail .sub-line {
+    font-size: 10.5px;
+    line-height: 1.35;
+    letter-spacing: 0.005em;
+  }
+
+  .v-detail thead th.col-overall {
+    background: var(--bg-deep);
+    border-left: 1px solid var(--border-strong);
+    border-bottom-color: var(--text);
+  }
+  .v-detail thead th.col-overall .col-num { color: var(--accent); }
+  .v-detail tbody td.col-overall {
+    background: var(--bg-soft);
+    border-left: 1px solid var(--border-strong);
+  }
+  .v-detail td.col-overall .key {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 12.5px;
+    letter-spacing: 0.02em;
+  }
+
+  /* Subtle column striping for scannability */
+  .v-detail tbody td:nth-child(3),
+  .v-detail tbody td:nth-child(5),
+  .v-detail tbody td:nth-child(7),
+  .v-detail tbody td:nth-child(9) {
+    background: rgba(54, 53, 55, 0.018);
+  }
+
+  /* ============================================================
+     PART 02 — SLIDE VIEW
+     ============================================================ */
+  .v-slide .col-site { width: 154px; }
+  .v-slide .col-cat  { width: auto; }
+  .v-slide .col-overall { width: 184px; }
+  .v-slide table { min-width: 1040px; }
+
+  .v-slide thead th { padding: 18px 18px 14px; }
+  .v-slide thead th .col-num { font-size: 10px; margin-bottom: 7px; }
+  .v-slide thead th .col-name { font-size: 15px; }
+  .v-slide thead th.site-hdr .col-name { font-size: 11px; }
+
+  .v-slide tbody td,
+  .v-slide tbody th { padding: 26px 18px; }
+
+  .v-slide tbody th.site .num { font-size: 10px; margin-bottom: 6px; }
+  .v-slide tbody th.site .name { font-size: 22px; margin-bottom: 6px; }
+  .v-slide tbody th.site .sub { font-size: 10px; margin-bottom: 10px; }
+  .v-slide tbody th.site .tag { padding: 3px 8px; font-size: 9px; }
+
+  .v-slide .key {
+    font-size: 16px;
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .v-slide .sub-line {
+    font-size: 11.5px;
+    line-height: 1.35;
+    letter-spacing: 0.005em;
+  }
+
+  .v-slide thead th.col-overall {
+    background: var(--bg-deep);
+    border-left: 1px solid var(--border-strong);
+    border-bottom-color: var(--text);
+  }
+  .v-slide thead th.col-overall .col-num { color: var(--accent); }
+  .v-slide tbody td.col-overall {
+    background: var(--bg-soft);
+    border-left: 1px solid var(--border-strong);
+  }
+  .v-slide td.col-overall .key {
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    font-size: 15px;
+    letter-spacing: 0.02em;
+  }
+
+  .v-slide tr.row-spd .key { font-size: 17px; }
+  .v-slide tr.row-spd td.col-overall .key { font-size: 16px; }
+
+  /* ---------- Footer ---------- */
+  .foot {
+    margin-top: 18px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 24px;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-weight: 600;
+  }
+  .legend { display: flex; flex-wrap: wrap; gap: 18px; }
+  .legend-item { display: inline-flex; align-items: center; gap: 7px; }
+  .legend-swatch {
+    width: 11px; height: 11px;
+    border: 1px solid var(--border-strong);
+    display: inline-block;
+  }
+  .legend-swatch.spd { background: var(--accent); border-color: var(--accent); }
+  .legend-swatch.peer { background: #fff; }
+  .legend-swatch.synth { background: var(--bg-deep); }
+  .scope b { color: var(--text); font-weight: 700; }
+
+  /* ---------- Modal ---------- */
+  .modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(26, 25, 28, 0.55);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    animation: modalFade .15s ease;
+  }
+  .modal[hidden] { display: none; }
+  @keyframes modalFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+  .modal-card {
+    background: var(--surface);
+    border: 1px solid var(--border-strong);
+    width: 100%;
+    max-width: 480px;
+    padding: 32px 32px 26px;
+    position: relative;
+  }
+  .modal-card::before {
+    content: "";
+    position: absolute;
+    top: -1px; left: -1px; right: -1px;
+    height: 4px;
+    background: var(--accent);
+  }
+  .modal-eyebrow {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+  .modal-title {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 26px;
+    line-height: 1.05;
+    letter-spacing: -0.005em;
+    margin: 0 0 6px;
+    color: var(--text);
+    text-transform: uppercase;
+  }
+  .modal-view {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 11px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    margin: 0 0 16px;
+  }
+  .modal-view b { color: var(--text); font-weight: 700; }
+  .modal-note {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--text-muted);
+    margin: 0 0 24px;
+    padding: 14px 16px;
+    background: var(--bg-soft);
+    border-left: 2px solid var(--accent);
+  }
+  .modal-note kbd {
+    font-family: var(--font-body);
+    font-size: 11.5px;
+    font-weight: 700;
+    color: var(--text);
+    padding: 1px 6px;
+    border: 1px solid var(--border-mid);
+    border-radius: 3px;
+    background: #fff;
+  }
+  .modal-actions {
+    display: flex;
+    gap: 8px;
+    justify-content: flex-end;
+    align-items: center;
+  }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 1240px) {
+    .wrap { padding: 36px 20px 56px; }
+    .head { grid-template-columns: 1fr; gap: 12px; }
+    .head-tag { text-align: left; }
+  }
+  @media (max-width: 560px) {
+    .modal-card { padding: 24px 22px 20px; }
+    .modal-title { font-size: 22px; }
+  }
+
+  /* ============================================================
+     PRINT / EXPORT MODES
+     - export-detail → only detailed view prints
+     - export-slide  → only slide view prints
+     ============================================================ */
+  @media print {
+    body { background: #fff; }
+    .wrap { padding: 16px; max-width: none; }
+    .scroll { overflow: visible; }
+    .v-detail table, .v-slide table { min-width: 0; }
+    .head, .section, table { page-break-inside: avoid; }
+    tbody th.site, thead th.site-hdr { position: static; }
+
+    /* Always-hidden in print */
+    .export-bar,
+    .modal {
+      display: none !important;
+    }
+
+    /* Default print: hide footer for cleaner capture */
+    .foot { display: none !important; }
+
+    /* Detailed-only export */
+    body.export-detail .v-slide { display: none !important; }
+    /* Slide-only export */
+    body.export-slide .v-detail { display: none !important; }
+
+    /* Both export modes preserve top header for context;
+       suppress section dividers between for a single-page feel */
+    body.export-detail .section,
+    body.export-slide .section {
+      page-break-before: auto;
+      margin-top: 12px;
+    }
+  }
+
+  /* Embed mode: when ?view=detail is set, hide the slide view, controls, and modal */
+  body.embed-detail #view-slide,
+  body.embed-detail .foot { display: none !important; }
+  body.embed-detail .head-tag { display: none; }
+  .lede .lede-note { color: var(--text-mid); font-weight: 600; }
+</style>
+<script>
+  (function() {
+    var p = new URLSearchParams(window.location.search);
+    if (p.get('view') === 'detail') {
+      document.documentElement.classList.add('embed-detail-html');
+      document.addEventListener('DOMContentLoaded', function() {
+        document.body.classList.add('embed-detail');
+      });
+    }
+  })();
+</script>
+</head>
+<body>
+  <main class="wrap">
+
+    <header class="head">
+      <div>
+        <div class="eyebrow">SPD Redesign · Competitor Analysis</div>
+        <h1>IA, usability, <em>and discoverability.</em></h1>
+        <p class="lede">SPD read against AIGA NY, TDC, and D&amp;AD on how each site structures user pathways. <span class="lede-note">Detailed case-study chart.</span></p>
+      </div>
+      <div class="head-tag">
+        <div><b>04</b> Sites</div>
+        <div><b>02</b> Views</div>
+      </div>
+    </header>
+
+    <!-- Export controls -->
+    <div class="export-bar" role="toolbar" aria-label="Export views">
+      <span class="label">Export</span>
+      <button type="button" class="btn" data-export="detail">Save detailed view</button>
+      <button type="button" class="btn" data-export="slide">Save slide view</button>
+    </div>
+
+    <!-- =====================================================================
+         01 · DETAILED CASE STUDY VIEW
+         ===================================================================== -->
+    <section class="section v-detail" id="view-detail">
+      <div class="section-head">
+        <div class="section-num">01</div>
+        <div class="section-title">Detailed view <small>9 categories · case study</small></div>
+        <div class="section-tag">Read across</div>
+      </div>
+
+      <div class="table-wrap">
+        <div class="scroll">
+          <table>
+            <colgroup>
+              <col class="col-site" />
+              <col class="col-cat" /><col class="col-cat" /><col class="col-cat" />
+              <col class="col-cat" /><col class="col-cat" /><col class="col-cat" />
+              <col class="col-cat" /><col class="col-cat" />
+              <col class="col-overall" />
+            </colgroup>
+
+            <thead>
+              <tr>
+                <th class="site-hdr">
+                  <span class="col-num">Site</span>
+                  <span class="col-name">Index</span>
+                </th>
+                <th><span class="col-num">01</span><span class="col-name">Navigation</span></th>
+                <th><span class="col-num">02</span><span class="col-name">Homepage</span></th>
+                <th><span class="col-num">03</span><span class="col-name">Content</span></th>
+                <th><span class="col-num">04</span><span class="col-name">Competitions</span></th>
+                <th><span class="col-num">05</span><span class="col-name">Events</span></th>
+                <th><span class="col-num">06</span><span class="col-name">Opportunities</span></th>
+                <th><span class="col-num">07</span><span class="col-name">Membership</span></th>
+                <th><span class="col-num">08</span><span class="col-name">Interaction</span></th>
+                <th class="col-overall"><span class="col-num">09</span><span class="col-name">Overall</span></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr class="row-spd">
+                <th class="site">
+                  <span class="num">01</span>
+                  <span class="name">SPD</span>
+                  <span class="sub">Society of Publication Designers</span>
+                  <span class="tag">Subject</span>
+                </th>
+                <td>
+                  <p class="key">Overloaded nav</p>
+                  <span class="sub-line">Equal-weight paths blur priority</span>
+                </td>
+                <td>
+                  <p class="key">No anchor moment</p>
+                  <span class="sub-line">Competing CTAs split focus</span>
+                </td>
+                <td>
+                  <p class="key">Repetitive page system</p>
+                  <span class="sub-line">Layouts repeat without intent</span>
+                </td>
+                <td>
+                  <p class="key">Awards de-emphasized</p>
+                  <span class="sub-line">Open status often unclear</span>
+                </td>
+                <td>
+                  <p class="key">Buried in flow</p>
+                  <span class="sub-line">Registration path is hidden</span>
+                </td>
+                <td>
+                  <p class="key">Listing, not a tool</p>
+                  <span class="sub-line">Filters feel decorative</span>
+                </td>
+                <td>
+                  <p class="key">Hard to find</p>
+                  <span class="sub-line">Value lives below the fold</span>
+                </td>
+                <td>
+                  <p class="key">Silent feedback</p>
+                  <span class="sub-line">Click destinations unclear</span>
+                </td>
+                <td class="col-overall">
+                  <p class="key">Structure, not surface</p>
+                  <span class="sub-line">Hierarchy is the redesign brief</span>
+                </td>
+              </tr>
+
+              <tr>
+                <th class="site">
+                  <span class="num">02</span>
+                  <span class="name">AIGA NY</span>
+                  <span class="sub">AIGA New York chapter</span>
+                  <span class="tag">Peer</span>
+                </th>
+                <td>
+                  <p class="key">Community-led labels</p>
+                  <span class="sub-line">Fewer, simpler choices</span>
+                </td>
+                <td>
+                  <p class="key">Programming-first</p>
+                  <span class="sub-line">Events anchor the page</span>
+                </td>
+                <td>
+                  <p class="key">Programs as containers</p>
+                  <span class="sub-line">Resources cluster cleanly</span>
+                </td>
+                <td>
+                  <p class="key">Quiet surface</p>
+                  <span class="sub-line">Events lead instead</span>
+                </td>
+                <td>
+                  <p class="key">Front and center</p>
+                  <span class="sub-line">Clear path to register</span>
+                </td>
+                <td>
+                  <p class="key">Directory-supported</p>
+                  <span class="sub-line">Career via community ties</span>
+                </td>
+                <td>
+                  <p class="key">Support framing</p>
+                  <span class="sub-line">Participation visible everywhere</span>
+                </td>
+                <td>
+                  <p class="key">Predictable cards</p>
+                  <span class="sub-line">States behave consistently</span>
+                </td>
+                <td class="col-overall">
+                  <p class="key">Community as IA</p>
+                  <span class="sub-line">Grouping makes content reachable</span>
+                </td>
+              </tr>
+
+              <tr>
+                <th class="site">
+                  <span class="num">03</span>
+                  <span class="name">TDC</span>
+                  <span class="sub">Type Directors Club</span>
+                  <span class="tag">Peer</span>
+                </th>
+                <td>
+                  <p class="key">Short, role-based</p>
+                  <span class="sub-line">Specialized labels do the work</span>
+                </td>
+                <td>
+                  <p class="key">Identity as anchor</p>
+                  <span class="sub-line">Type holds the page together</span>
+                </td>
+                <td>
+                  <p class="key">One subject, many views</p>
+                  <span class="sub-line">Tight context, fewer branches</span>
+                </td>
+                <td>
+                  <p class="key">Built into the brand</p>
+                  <span class="sub-line">Front-of-site placement</span>
+                </td>
+                <td>
+                  <p class="key">Owned calendar</p>
+                  <span class="sub-line">Upcoming list is scannable</span>
+                </td>
+                <td>
+                  <p class="key">Routed via membership</p>
+                  <span class="sub-line">No standalone job board</span>
+                </td>
+                <td>
+                  <p class="key">Benefit-first framing</p>
+                  <span class="sub-line">Access · discounts · archives</span>
+                </td>
+                <td>
+                  <p class="key">Minimal decisions</p>
+                  <span class="sub-line">Few actions per page</span>
+                </td>
+                <td class="col-overall">
+                  <p class="key">Focus-as-IA</p>
+                  <span class="sub-line">One subject can unify the site</span>
+                </td>
+              </tr>
+
+              <tr>
+                <th class="site">
+                  <span class="num">04</span>
+                  <span class="name">D&amp;AD</span>
+                  <span class="sub">Design &amp; Art Direction</span>
+                  <span class="tag">Peer</span>
+                </th>
+                <td>
+                  <p class="key">Goal-led grouping</p>
+                  <span class="sub-line">Awards · learn · community · shop</span>
+                </td>
+                <td>
+                  <p class="key">Editorial hierarchy</p>
+                  <span class="sub-line">Pathways read as distinct</span>
+                </td>
+                <td>
+                  <p class="key">Ecosystem silos</p>
+                  <span class="sub-line">Each section is its own world</span>
+                </td>
+                <td>
+                  <p class="key">Strong front pathway</p>
+                  <span class="sub-line">Hierarchy guides entry</span>
+                </td>
+                <td>
+                  <p class="key">Linked to learning</p>
+                  <span class="sub-line">Discoverable through adjacency</span>
+                </td>
+                <td>
+                  <p class="key">Goal-driven paths</p>
+                  <span class="sub-line">Awards + learning over a job board</span>
+                </td>
+                <td>
+                  <p class="key">Framed as access</p>
+                  <span class="sub-line">Tied to outcomes, not status</span>
+                </td>
+                <td>
+                  <p class="key">Confident CTAs</p>
+                  <span class="sub-line">Flows feel intentional</span>
+                </td>
+                <td class="col-overall">
+                  <p class="key">Editorial at scale</p>
+                  <span class="sub-line">Hierarchy carries complex content</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================================
+         02 · SLIDE VIEW
+         ===================================================================== -->
+    <section class="section v-slide" id="view-slide">
+      <div class="section-head">
+        <div class="section-num">02</div>
+        <div class="section-title">Slide view <small>6 categories · presentation</small></div>
+        <div class="section-tag">Read at a glance</div>
+      </div>
+
+      <div class="table-wrap">
+        <div class="scroll">
+          <table>
+            <colgroup>
+              <col class="col-site" />
+              <col class="col-cat" /><col class="col-cat" /><col class="col-cat" />
+              <col class="col-cat" /><col class="col-cat" />
+              <col class="col-overall" />
+            </colgroup>
+
+            <thead>
+              <tr>
+                <th class="site-hdr">
+                  <span class="col-num">Site</span>
+                  <span class="col-name">Index</span>
+                </th>
+                <th><span class="col-num">01</span><span class="col-name">Navigation</span></th>
+                <th><span class="col-num">02</span><span class="col-name">Homepage</span></th>
+                <th><span class="col-num">03</span><span class="col-name">Content</span></th>
+                <th><span class="col-num">04</span><span class="col-name">Opportunities</span></th>
+                <th><span class="col-num">05</span><span class="col-name">Membership</span></th>
+                <th class="col-overall"><span class="col-num">06</span><span class="col-name">Overall</span></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <tr class="row-spd">
+                <th class="site">
+                  <span class="num">01</span>
+                  <span class="name">SPD</span>
+                  <span class="sub">Society of Publication Designers</span>
+                  <span class="tag">Subject</span>
+                </th>
+                <td>
+                  <p class="key">Overloaded nav</p>
+                  <span class="sub-line">Equal-weight paths blur priority</span>
+                </td>
+                <td>
+                  <p class="key">No anchor moment</p>
+                  <span class="sub-line">Competing CTAs split focus</span>
+                </td>
+                <td>
+                  <p class="key">Repetitive layouts</p>
+                  <span class="sub-line">Pages blur into each other</span>
+                </td>
+                <td>
+                  <p class="key">Listing, not a tool</p>
+                  <span class="sub-line">Filters feel decorative</span>
+                </td>
+                <td>
+                  <p class="key">Hard to find</p>
+                  <span class="sub-line">Value lives below the fold</span>
+                </td>
+                <td class="col-overall">
+                  <p class="key">Structure, not surface</p>
+                  <span class="sub-line">Hierarchy is the brief</span>
+                </td>
+              </tr>
+
+              <tr>
+                <th class="site">
+                  <span class="num">02</span>
+                  <span class="name">AIGA NY</span>
+                  <span class="sub">AIGA New York chapter</span>
+                  <span class="tag">Peer</span>
+                </th>
+                <td>
+                  <p class="key">Community-led labels</p>
+                  <span class="sub-line">Fewer, simpler choices</span>
+                </td>
+                <td>
+                  <p class="key">Programming-first</p>
+                  <span class="sub-line">Events anchor the page</span>
+                </td>
+                <td>
+                  <p class="key">Programs as containers</p>
+                </td>
+                <td>
+                  <p class="key">Directory-supported</p>
+                  <span class="sub-line">Career via community ties</span>
+                </td>
+                <td>
+                  <p class="key">Support framing</p>
+                  <span class="sub-line">Participation visible</span>
+                </td>
+                <td class="col-overall">
+                  <p class="key">Community as IA</p>
+                  <span class="sub-line">Grouping makes content reachable</span>
+                </td>
+              </tr>
+
+              <tr>
+                <th class="site">
+                  <span class="num">03</span>
+                  <span class="name">TDC</span>
+                  <span class="sub">Type Directors Club</span>
+                  <span class="tag">Peer</span>
+                </th>
+                <td>
+                  <p class="key">Short, role-based</p>
+                  <span class="sub-line">Specialized labels</span>
+                </td>
+                <td>
+                  <p class="key">Identity as anchor</p>
+                  <span class="sub-line">Type holds the page</span>
+                </td>
+                <td>
+                  <p class="key">One subject, many views</p>
+                </td>
+                <td>
+                  <p class="key">Routed via membership</p>
+                  <span class="sub-line">No standalone board</span>
+                </td>
+                <td>
+                  <p class="key">Benefit-first framing</p>
+                  <span class="sub-line">Access · discounts · archives</span>
+                </td>
+                <td class="col-overall">
+                  <p class="key">Focus-as-IA</p>
+                  <span class="sub-line">One subject unifies the site</span>
+                </td>
+              </tr>
+
+              <tr>
+                <th class="site">
+                  <span class="num">04</span>
+                  <span class="name">D&amp;AD</span>
+                  <span class="sub">Design &amp; Art Direction</span>
+                  <span class="tag">Peer</span>
+                </th>
+                <td>
+                  <p class="key">Goal-led grouping</p>
+                  <span class="sub-line">Awards · learn · community · shop</span>
+                </td>
+                <td>
+                  <p class="key">Editorial hierarchy</p>
+                  <span class="sub-line">Pathways read as distinct</span>
+                </td>
+                <td>
+                  <p class="key">Ecosystem silos</p>
+                </td>
+                <td>
+                  <p class="key">Goal-driven paths</p>
+                  <span class="sub-line">Awards + learning over jobs</span>
+                </td>
+                <td>
+                  <p class="key">Framed as access</p>
+                  <span class="sub-line">Tied to outcomes</span>
+                </td>
+                <td class="col-overall">
+                  <p class="key">Editorial at scale</p>
+                  <span class="sub-line">Hierarchy carries complex content</span>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <div class="foot">
+      <div class="legend">
+        <span class="legend-item"><span class="legend-swatch spd"></span>SPD — subject</span>
+        <span class="legend-item"><span class="legend-swatch peer"></span>Peers</span>
+        <span class="legend-item"><span class="legend-swatch synth"></span>Synthesis column</span>
+      </div>
+      <div class="scope"><b>Scope</b> — IA · usability · discoverability only</div>
+    </div>
+
+  </main>
+
+  <!-- ===================== Save / export modal ===================== -->
+  <div class="modal" id="exportModal" role="dialog" aria-modal="true" aria-labelledby="exportModalTitle" hidden>
+    <div class="modal-card">
+      <div class="modal-eyebrow">Save view</div>
+      <h2 class="modal-title" id="exportModalTitle">Export</h2>
+      <p class="modal-view" id="exportModalView">Selected · <b>—</b></p>
+      <p class="modal-note">Use <kbd>Save as PDF</kbd> in the print dialog. Only the selected view will be included; the other view, controls, and footer are hidden during export.</p>
+      <div class="modal-actions">
+        <button type="button" class="btn is-ghost" id="exportCancel">Cancel</button>
+        <button type="button" class="btn is-primary" id="exportConfirm">Print / Save PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      var modal       = document.getElementById('exportModal');
+      var modalTitle  = document.getElementById('exportModalTitle');
+      var modalView   = document.getElementById('exportModalView');
+      var btnCancel   = document.getElementById('exportCancel');
+      var btnConfirm  = document.getElementById('exportConfirm');
+      var triggers    = document.querySelectorAll('[data-export]');
+      var activeMode  = null;
+      var lastFocus   = null;
+
+      var labels = {
+        detail: { title: 'Save detailed view', view: 'Detailed view · 9 categories' },
+        slide:  { title: 'Save slide view',    view: 'Slide view · 6 categories'    }
+      };
+
+      function openModal(mode) {
+        activeMode = mode;
+        var l = labels[mode] || labels.detail;
+        modalTitle.textContent = l.title;
+        modalView.innerHTML = 'Selected · <b>' + l.view + '</b>';
+        lastFocus = document.activeElement;
+        modal.hidden = false;
+        // Focus primary action for keyboard users
+        setTimeout(function () { btnConfirm.focus(); }, 0);
+      }
+
+      function closeModal() {
+        modal.hidden = true;
+        activeMode = null;
+        if (lastFocus && typeof lastFocus.focus === 'function') {
+          lastFocus.focus();
+        }
+      }
+
+      function runExport() {
+        if (!activeMode) return;
+        var cls = 'export-' + activeMode;
+        document.body.classList.remove('export-detail', 'export-slide');
+        document.body.classList.add(cls);
+        modal.hidden = true;
+        // Allow paint to apply class before opening print dialog
+        setTimeout(function () { window.print(); }, 60);
+      }
+
+      // Strip export class after print dialog closes
+      function clearExportClass() {
+        document.body.classList.remove('export-detail', 'export-slide');
+      }
+      window.addEventListener('afterprint', clearExportClass);
+      // Some browsers don't fire afterprint reliably from matchMedia
+      if (window.matchMedia) {
+        var mql = window.matchMedia('print');
+        if (mql && mql.addEventListener) {
+          mql.addEventListener('change', function (e) { if (!e.matches) clearExportClass(); });
+        } else if (mql && mql.addListener) {
+          mql.addListener(function (e) { if (!e.matches) clearExportClass(); });
+        }
+      }
+
+      triggers.forEach(function (btn) {
+        btn.addEventListener('click', function () { openModal(btn.dataset.export); });
+      });
+      btnCancel.addEventListener('click', closeModal);
+      btnConfirm.addEventListener('click', runExport);
+
+      // Click backdrop to close
+      modal.addEventListener('click', function (e) {
+        if (e.target === modal) closeModal();
+      });
+      // Escape to close
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && !modal.hidden) closeModal();
+      });
+    })();
+  </script>
+</body>
+</html>

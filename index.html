@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SPD Website Redesign</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #FAF8F8;
+    --text: #1a191c;
+    --text-muted: #6c6a6e;
+    --border: rgba(54, 53, 55, 0.10);
+    --accent: #EF4022;
+    --display: "Oswald", sans-serif;
+    --body: "Archivo", sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: var(--body);
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 48px 24px;
+  }
+  .wrap { max-width: 760px; width: 100%; }
+  .eyebrow {
+    font-family: var(--display);
+    font-size: 11px;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 22px;
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+  }
+  h1 {
+    font-family: var(--display);
+    font-size: clamp(48px, 7vw, 92px);
+    line-height: 0.95;
+    letter-spacing: -0.01em;
+    margin: 0 0 18px;
+    font-weight: 700;
+  }
+  h1 em { font-style: normal; color: var(--accent); }
+  .lede {
+    font-size: clamp(16px, 1.4vw, 19px);
+    line-height: 1.55;
+    color: var(--text-muted);
+    max-width: 56ch;
+    margin: 0 0 48px;
+  }
+  .links {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 40px;
+  }
+  @media (max-width: 640px) { .links { grid-template-columns: 1fr; } }
+  .link-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+    background: #fff;
+    border: 1px solid var(--border);
+    padding: 28px 28px 30px;
+    transition: transform 220ms cubic-bezier(0.16,1,0.3,1), box-shadow 220ms, border-color 220ms;
+    position: relative;
+  }
+  .link-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 14px 40px rgba(20,20,22,0.08);
+    border-color: var(--accent);
+  }
+  .link-card .label {
+    font-family: var(--display);
+    font-size: 10.5px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+  .link-card .title {
+    font-family: var(--display);
+    font-size: 22px;
+    color: var(--text);
+    font-weight: 700;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .link-card .title::after {
+    content: "↗";
+    font-size: 18px;
+    transition: transform 220ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .link-card:hover .title::after { transform: translate(2px, -2px); }
+  .link-card .desc {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--text-muted);
+  }
+  .meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 18px 26px;
+    border-top: 1px solid var(--border);
+    padding-top: 22px;
+    font-family: var(--display);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .meta a {
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 200ms, color 200ms;
+  }
+  .meta a:hover { color: var(--accent); border-bottom-color: var(--accent); }
+</style>
+</head>
+<body>
+  <main class="wrap">
+    <div class="eyebrow">UX Case Study &middot; Spring 2026</div>
+    <h1>SPD Website <em>Redesign</em>.</h1>
+    <p class="lede">A redesign of the Society of Publication Designers website &mdash; restructured information architecture, streamlined navigation, and three prototyped flows.</p>
+
+    <div class="links">
+      <a class="link-card" href="spd-presentation.html">
+        <div class="label">Client Demo</div>
+        <div class="title">View SPD Presentation</div>
+        <div class="desc">14-slide walkthrough of the problem, research, and redesign.</div>
+      </a>
+      <a class="link-card" href="spd-case-study.html">
+        <div class="label">Portfolio</div>
+        <div class="title">View SPD Case Study</div>
+        <div class="desc">Long-form documentation of the process, audit, and final direction.</div>
+      </a>
+    </div>
+
+    <div class="meta">
+      <span>Team &middot; Cathy Doss, Giovanni Terzano, Vedang Lambe, Kudirat Alimi</span>
+      <a href="SPD-redesign-presentation.pdf">Presentation PDF &#x2197;</a>
+    </div>
+  </main>
+</body>
+</html>
