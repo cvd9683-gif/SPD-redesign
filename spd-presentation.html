@@ -35,25 +35,17 @@
     --font-body: "Archivo", -apple-system, sans-serif;
     --font-serif: "DM Serif Display", "Times New Roman", serif;
 
-    /* Responsive type scale — scales up for projector / large displays */
-    --text-2xs: clamp(10px, 0.5vw, 13px);
-    --text-xs:  clamp(11px, 0.55vw, 15px);
-    --text-sm:  clamp(13px, 0.9vw, 18px);
-    --text-base: clamp(15px, 1.1vw, 22px);
-    --text-md:  clamp(18px, 1.4vw, 28px);
-    --text-bullet: clamp(20px, 1.6vw, 34px);
-    --text-lg:  clamp(28px, 2.4vw, 56px);
-    --text-xl:  clamp(48px, 5vw, 120px);
-
-    --slide-pad-x: 88px;
-    --slide-pad-y: 56px;
-  }
-
-  @media (min-width: 1600px) {
-    :root {
-      --slide-pad-x: clamp(72px, 4vw, 128px);
-      --slide-pad-y: clamp(56px, 3vw, 96px);
-    }
+    /* Fluid type scale tuned for projector / large monitor presentation */
+    --fs-eyebrow: clamp(11px, 0.7vw, 16px);
+    --fs-meta:    clamp(13px, 0.9vw, 18px);
+    --fs-sm:      clamp(15px, 1.0vw, 20px);
+    --fs-base:    clamp(18px, 1.3vw, 26px);
+    --fs-lead:    clamp(20px, 1.6vw, 34px);
+    --fs-md:      clamp(24px, 2vw, 38px);
+    --fs-h-md:    clamp(34px, 4vw, 72px);
+    --fs-h-lg:    clamp(44px, 5vw, 112px);
+    --fs-h-xl:    clamp(56px, 8vw, 140px);
+    --fs-mega:    clamp(80px, 12vw, 220px);
   }
 
   html {
@@ -69,7 +61,11 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.5;
-    font-size: var(--text-base);
+    font-size: var(--fs-base);
+  }
+  /* Large monitors / projectors */
+  @media (min-width: 1600px) {
+    .slide { padding: clamp(56px, 4vw, 96px); }
   }
   ::selection { background: var(--accent); color: #fff; }
 
@@ -112,7 +108,7 @@
     scroll-snap-stop: always;
     position: relative;
     overflow: hidden;
-    padding: var(--slide-pad-y) var(--slide-pad-x);
+    padding: 56px 88px;
     display: grid;
     grid-template-rows: auto 1fr auto;
   }
@@ -135,7 +131,7 @@
     align-items: center;
     gap: 14px;
     font-family: var(--font-display);
-    font-size: var(--text-sm);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     font-weight: 600;
@@ -146,7 +142,7 @@
     color: #fff;
     display: grid;
     place-items: center;
-    font-size: var(--text-sm);
+    font-size: var(--fs-eyebrow);
     font-weight: 700;
     letter-spacing: 0;
   }
@@ -157,7 +153,7 @@
 
   .slide-step {
     font-family: var(--font-display);
-    font-size: var(--text-sm);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     font-weight: 700;
@@ -173,7 +169,7 @@
     padding-top: 16px;
     border-top: 1px solid var(--border);
     font-family: var(--font-display);
-    font-size: var(--text-2xs);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--text-faint);
@@ -198,7 +194,7 @@
     align-items: center;
     gap: 12px;
     font-family: var(--font-display);
-    font-size: var(--text-sm);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -222,9 +218,9 @@
     letter-spacing: -0.01em;
     margin: 0;
   }
-  .display.xl { font-size: clamp(48px, 6vw, 124px); }
-  .display.lg { font-size: clamp(44px, 5vw, 112px); }
-  .display.md { font-size: clamp(32px, 3.6vw, 72px); }
+  .display.xl { font-size: var(--fs-h-xl); }
+  .display.lg { font-size: var(--fs-h-lg); }
+  .display.md { font-size: var(--fs-h-md); }
   .display em { font-style: normal; color: var(--accent); }
   .slide.bleed .display em,
   .slide.dark .display em { color: var(--accent); }
@@ -262,7 +258,7 @@
   }
   .media-box .placeholder .tag {
     font-family: var(--font-display);
-    font-size: var(--text-2xs);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -273,20 +269,20 @@
   }
   .media-box .placeholder .name {
     font-family: var(--font-display);
-    font-size: var(--text-xs);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.06em;
     color: var(--text-muted);
     font-weight: 500;
   }
   .media-box .placeholder .path {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: var(--text-2xs);
+    font-size: var(--fs-eyebrow);
     color: var(--text-faint);
   }
   .media-box .placeholder .hint {
     margin-top: 4px;
     font-family: var(--font-display);
-    font-size: var(--text-2xs);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--text-faint);
@@ -342,7 +338,7 @@
   }
   .figma-frame .frame-label .tag {
     font-family: var(--font-display);
-    font-size: var(--text-2xs);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--accent);
@@ -353,14 +349,14 @@
   }
   .figma-frame .frame-label .name {
     font-family: var(--font-display);
-    font-size: var(--text-sm);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.06em;
     color: var(--text-muted);
     font-weight: 500;
   }
   .figma-frame .frame-label .path {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: var(--text-2xs);
+    font-size: var(--fs-eyebrow);
     color: var(--text-faint);
   }
   .figma-screen {
@@ -378,7 +374,7 @@
   .title-mark {
     color: rgba(255,255,255,0.85);
     font-family: var(--font-display);
-    font-size: var(--text-sm);
+    font-size: var(--fs-meta);
     letter-spacing: 0.3em;
     text-transform: uppercase;
     font-weight: 600;
@@ -405,7 +401,7 @@
     gap: 3px 20px;
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(14px, 1.2vw, 20px);
+    font-size: var(--fs-base);
     line-height: 1.25;
     color: rgba(255,255,255,0.78);
     letter-spacing: 0.16em;
@@ -505,7 +501,7 @@
   .problem-statement em { font-style: normal; color: var(--accent); }
   .problem-lede {
     margin-top: 28px;
-    font-size: clamp(18px, 1.55vw, 30px);
+    font-size: var(--fs-lead);
     line-height: 1.5;
     color: var(--text-muted);
     max-width: 56ch;
@@ -541,7 +537,7 @@
   .did-text .row:last-child { border-bottom: none; }
   .did-text .num {
     font-family: var(--font-display);
-    font-size: clamp(20px, 1.7vw, 34px);
+    font-size: var(--fs-lead);
     color: var(--accent);
     font-weight: 700;
     line-height: 1;
@@ -549,7 +545,7 @@
   }
   .did-text .lab {
     font-family: var(--font-display);
-    font-size: var(--text-sm);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -557,14 +553,14 @@
     margin-bottom: 6px;
   }
   .did-text .body {
-    font-size: clamp(18px, 1.55vw, 30px);
+    font-size: var(--fs-lead);
     line-height: 1.55;
     color: var(--text);
     max-width: 42ch;
   }
   .did-text .body strong { font-weight: 600; }
   .did-text .lab {
-    font-size: var(--text-sm);
+    font-size: var(--fs-meta);
   }
 
   .did-video {
@@ -606,7 +602,7 @@
   }
   .ins-list .row .num {
     font-family: var(--font-display);
-    font-size: clamp(20px, 1.7vw, 32px);
+    font-size: var(--fs-lead);
     color: var(--accent);
     font-weight: 700;
     line-height: 1;
@@ -614,7 +610,7 @@
   }
   .ins-list .row h4 {
     font-family: var(--font-display);
-    font-size: clamp(22px, 2vw, 38px);
+    font-size: var(--fs-md);
     line-height: 1.18;
     color: #fff;
     font-weight: 600;
@@ -624,7 +620,7 @@
   }
   .ins-list .row p {
     margin: 0;
-    font-size: var(--text-base);
+    font-size: 16.5px;
     line-height: 1.45;
     color: rgba(255,255,255,0.72);
     font-style: italic;
@@ -644,14 +640,14 @@
   .ins-quote blockquote {
     margin: 0 0 12px;
     font-family: var(--font-display);
-    font-size: clamp(20px, 1.85vw, 34px);
+    font-size: var(--fs-lead);
     line-height: 1.2;
     color: #fff;
     font-weight: 500;
   }
   .ins-quote cite {
     font-family: var(--font-display);
-    font-size: var(--text-2xs);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.65);
@@ -676,7 +672,7 @@
   }
   .persona-slot .label {
     font-family: var(--font-display);
-    font-size: var(--text-sm);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -698,7 +694,7 @@
   }
   .persona-text .p-name {
     font-family: var(--font-display);
-    font-size: clamp(18px, 1.55vw, 30px);
+    font-size: var(--fs-lead);
     line-height: 1.05;
     color: var(--text);
     font-weight: 700;
@@ -706,7 +702,7 @@
   }
   .persona-text .p-desc {
     font-family: var(--font-body);
-    font-size: var(--text-xs);
+    font-size: var(--fs-eyebrow);
     line-height: 1.35;
     color: var(--text-muted);
     font-weight: 500;
@@ -714,14 +710,14 @@
   }
   .persona-text .p-who {
     font-family: var(--font-body);
-    font-size: var(--text-sm);
+    font-size: var(--fs-meta);
     line-height: 1.45;
     color: var(--text);
     margin-top: 4px;
   }
   .persona-text .p-goal {
     font-family: var(--font-body);
-    font-size: var(--text-sm);
+    font-size: var(--fs-meta);
     line-height: 1.45;
     color: var(--text);
   }
@@ -730,7 +726,7 @@
     color: var(--accent);
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    font-size: var(--text-2xs);
+    font-size: var(--fs-eyebrow);
     display: inline-block;
     margin-right: 6px;
     transform: translateY(-1px);
@@ -745,7 +741,7 @@
   }
   .persona-text .p-needs li {
     font-family: var(--font-body);
-    font-size: var(--text-sm);
+    font-size: var(--fs-meta);
     line-height: 1.4;
     color: var(--text);
     padding-left: 14px;
@@ -778,14 +774,14 @@
   }
   .persona-card .name {
     font-family: var(--font-display);
-    font-size: clamp(22px, 2vw, 36px);
+    font-size: var(--fs-md);
     line-height: 1;
     color: var(--text);
     font-weight: 700;
   }
   .persona-card .age {
     font-family: var(--font-display);
-    font-size: var(--text-xs);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--accent);
@@ -793,7 +789,7 @@
   }
   .persona-card .role {
     font-family: var(--font-display);
-    font-size: var(--text-sm);
+    font-size: var(--fs-meta);
     letter-spacing: 0.06em;
     color: var(--text-muted);
     font-weight: 500;
@@ -808,7 +804,7 @@
   .persona-card .row:first-of-type { border-top: none; padding-top: 0; }
   .persona-card .row .lab {
     font-family: var(--font-display);
-    font-size: var(--text-2xs);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -816,7 +812,7 @@
     margin-bottom: 5px;
   }
   .persona-card .row .txt {
-    font-size: var(--text-base);
+    font-size: var(--fs-sm);
     line-height: 1.5;
     color: var(--text);
   }
@@ -825,7 +821,7 @@
     padding-top: 14px;
     border-top: 1px solid var(--border);
     font-family: var(--font-display);
-    font-size: var(--text-base);
+    font-size: 15.5px;
     line-height: 1.3;
     color: var(--accent);
     font-weight: 600;
@@ -862,7 +858,7 @@
   }
   .story-row .meta .name {
     font-family: var(--font-display);
-    font-size: clamp(19px, 1.7vw, 26px);
+    font-size: var(--fs-lead);
     font-weight: 700;
     line-height: 1.1;
     color: var(--text);
@@ -870,7 +866,7 @@
   }
   .story-row .meta .flow {
     font-family: var(--font-display);
-    font-size: var(--text-sm);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -878,7 +874,7 @@
   }
   .story-row .story {
     font-family: var(--font-display);
-    font-size: clamp(17px, 1.55vw, 23px);
+    font-size: var(--fs-lead);
     line-height: 1.35;
     color: var(--text);
     font-weight: 500;
@@ -1002,14 +998,14 @@
   }
   .flows-table .persona b {
     font-family: var(--font-display);
-    font-size: clamp(22px, 2vw, 36px);
+    font-size: var(--fs-md);
     font-weight: 700;
     color: var(--text);
     line-height: 1;
   }
   .flows-table .persona small {
     font-family: var(--font-display);
-    font-size: var(--text-xs);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -1017,21 +1013,21 @@
   }
   .flows-table .arrow {
     font-family: var(--font-display);
-    font-size: clamp(26px, 2.2vw, 36px);
+    font-size: var(--fs-md);
     color: var(--accent);
     font-weight: 400;
     line-height: 1;
   }
   .flows-table .flow {
     font-family: var(--font-display);
-    font-size: clamp(17px, 1.5vw, 22px);
+    font-size: var(--fs-lead);
     color: var(--accent);
     font-weight: 700;
     letter-spacing: 0.04em;
     text-transform: uppercase;
   }
   .flows-table .why {
-    font-size: var(--text-base);
+    font-size: 16.5px;
     color: var(--text-muted);
     line-height: 1.5;
     max-width: 40ch;
@@ -1052,7 +1048,7 @@
     color: #fff;
     padding: 8px 14px;
     font-family: var(--font-display);
-    font-size: var(--text-sm);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.16em;
     text-transform: uppercase;
     font-weight: 700;
@@ -1081,7 +1077,7 @@
     border: 1.5px solid var(--text);
     padding: 7px 8px;
     font-family: var(--font-display);
-    font-size: var(--text-2xs);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.06em;
     text-transform: uppercase;
     font-weight: 600;
@@ -1115,7 +1111,7 @@
     padding-top: 12px;
     border-top: 1px solid var(--border);
     font-family: var(--font-display);
-    font-size: var(--text-2xs);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -1164,7 +1160,7 @@
   .scan-bullets .row:last-child { border-bottom: none; }
   .scan-bullets .lab {
     font-family: var(--font-display);
-    font-size: var(--text-2xs);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -1174,7 +1170,7 @@
   .scan-bullets .row.strength .lab { color: var(--accent); }
   .scan-bullets h4 {
     font-family: var(--font-display);
-    font-size: clamp(18px, 1.55vw, 30px);
+    font-size: var(--fs-lead);
     line-height: 1.2;
     margin: 0 0 4px;
     font-weight: 600;
@@ -1183,7 +1179,7 @@
   }
   .scan-bullets p {
     margin: 0;
-    font-size: var(--text-sm);
+    font-size: var(--fs-sm);
     line-height: 1.45;
     color: var(--text-muted);
     max-width: 38ch;
@@ -1206,7 +1202,7 @@
   }
   .shift-side .lab {
     font-family: var(--font-display);
-    font-size: var(--text-sm);
+    font-size: var(--fs-meta);
     letter-spacing: 0.28em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.65);
@@ -1235,7 +1231,7 @@
     gap: 14px;
   }
   .shift-side ul li {
-    font-size: clamp(17px, 1.5vw, 22px);
+    font-size: var(--fs-lead);
     color: rgba(255,255,255,0.92);
     line-height: 1.45;
     padding-left: 20px;
@@ -1290,7 +1286,7 @@
   }
   .nav-text .lead {
     font-family: var(--font-display);
-    font-size: clamp(22px, 2vw, 38px);
+    font-size: var(--fs-md);
     line-height: 1.2;
     color: var(--text);
     font-weight: 600;
@@ -1307,10 +1303,10 @@
   }
   .nav-text .nav-bullets li {
     font-family: var(--font-body);
-    font-size: clamp(14px, 1.05vw, 17px);
-    line-height: 1.5;
+    font-size: var(--fs-lead);
+    line-height: 1.45;
     color: var(--text);
-    padding-left: 20px;
+    padding-left: 24px;
     position: relative;
     max-width: 44ch;
   }
@@ -1327,7 +1323,7 @@
     border-left: 2px solid var(--accent);
     padding: 6px 0 6px 16px;
     font-family: var(--font-display);
-    font-size: clamp(15px, 1.3vw, 19px);
+    font-size: var(--fs-base);
     line-height: 1.35;
     color: var(--text);
     font-weight: 500;
@@ -1339,7 +1335,7 @@
     margin-top: 6px;
     font-style: normal;
     font-family: var(--font-display);
-    font-size: var(--text-2xs);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -1372,7 +1368,7 @@
     background: var(--accent);
     color: #fff;
     font-family: var(--font-display);
-    font-size: var(--text-2xs);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     padding: 4px 10px;
@@ -1454,7 +1450,7 @@
   }
   .process-hint .ph-fallback .ph-name {
     font-family: var(--font-display);
-    font-size: var(--text-2xs);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.06em;
     color: var(--text-muted);
     font-weight: 600;
@@ -1479,7 +1475,7 @@
   }
   .demo-notes .row .lab {
     font-family: var(--font-display);
-    font-size: var(--text-sm);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -1487,7 +1483,7 @@
     margin-bottom: 6px;
   }
   .demo-notes .row .txt {
-    font-size: var(--text-base);
+    font-size: var(--fs-base);
     line-height: 1.5;
     color: var(--text);
     max-width: 38ch;
@@ -1496,7 +1492,7 @@
   .demo-notes .row .txt em {
     display: block;
     margin-top: 6px;
-    font-size: var(--text-sm);
+    font-size: var(--fs-meta);
     color: var(--text-muted);
     font-style: italic;
   }
@@ -1510,7 +1506,7 @@
     color: var(--accent);
     font-family: var(--font-display);
     font-weight: 600;
-    font-size: clamp(16px, 1.45vw, 22px);
+    font-size: var(--fs-base);
     line-height: 1.25;
   }
 
@@ -1594,7 +1590,7 @@
   .impact-card b {
     display: block;
     font-family: var(--font-display);
-    font-size: clamp(24px, 2.2vw, 34px);
+    font-size: var(--fs-md);
     font-weight: 600;
     color: #fff;
     line-height: 1.12;
@@ -1603,7 +1599,7 @@
   }
   .impact-card p {
     margin: 0;
-    font-size: clamp(15px, 1.25vw, 18px);
+    font-size: var(--fs-base);
     line-height: 1.5;
     color: rgba(255,255,255,0.85);
     max-width: 34ch;
@@ -1646,13 +1642,13 @@
     display: grid;
     place-items: center;
     font-family: var(--font-display);
-    font-size: 18px;
+    font-size: var(--fs-base);
     font-weight: 700;
     letter-spacing: 0.02em;
   }
   .final-mark .org {
     font-family: var(--font-display);
-    font-size: var(--text-sm);
+    font-size: var(--fs-meta);
     letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -1673,7 +1669,7 @@
     margin: 18px 0 0;
     font-family: var(--font-display);
     font-weight: 500;
-    font-size: clamp(20px, 2vw, 30px);
+    font-size: var(--fs-md);
     line-height: 1.25;
     color: var(--text-muted);
     max-width: 30ch;
@@ -1687,7 +1683,7 @@
     justify-content: space-between;
     align-items: baseline;
     font-family: var(--font-display);
-    font-size: var(--text-xs);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -1705,7 +1701,7 @@
     background: var(--text);
     color: #fff;
     font-family: var(--font-display);
-    font-size: var(--text-sm);
+    font-size: var(--fs-eyebrow);
     letter-spacing: 0.18em;
     font-weight: 600;
     padding: 8px 12px;
@@ -1802,13 +1798,13 @@
     .deck-counter {
       bottom: 12px; right: 12px;
       padding: 6px 8px;
-      font-size: var(--text-2xs);
+      font-size: var(--fs-eyebrow);
     }
     .cover-text-half { padding: 40px 22px; }
     .cover-text-half .title-stack {
       font-size: clamp(48px, 14vw, 96px);
     }
-    .title-team { gap: 3px 14px; font-size: var(--text-sm); margin-top: 10px; }
+    .title-team { gap: 3px 14px; font-size: var(--fs-meta); margin-top: 10px; }
     .scan-bullets .row {
       grid-template-columns: 1fr;
       gap: 4px;
