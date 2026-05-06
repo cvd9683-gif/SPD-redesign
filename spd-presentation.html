@@ -34,6 +34,26 @@
     --font-display: "Oswald", "Archivo Narrow", "Archivo", sans-serif;
     --font-body: "Archivo", -apple-system, sans-serif;
     --font-serif: "DM Serif Display", "Times New Roman", serif;
+
+    /* Responsive type scale — scales up for projector / large displays */
+    --text-2xs: clamp(10px, 0.5vw, 13px);
+    --text-xs:  clamp(11px, 0.55vw, 15px);
+    --text-sm:  clamp(13px, 0.9vw, 18px);
+    --text-base: clamp(15px, 1.1vw, 22px);
+    --text-md:  clamp(18px, 1.4vw, 28px);
+    --text-bullet: clamp(20px, 1.6vw, 34px);
+    --text-lg:  clamp(28px, 2.4vw, 56px);
+    --text-xl:  clamp(48px, 5vw, 120px);
+
+    --slide-pad-x: 88px;
+    --slide-pad-y: 56px;
+  }
+
+  @media (min-width: 1600px) {
+    :root {
+      --slide-pad-x: clamp(72px, 4vw, 128px);
+      --slide-pad-y: clamp(56px, 3vw, 96px);
+    }
   }
 
   html {
@@ -49,6 +69,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.5;
+    font-size: var(--text-base);
   }
   ::selection { background: var(--accent); color: #fff; }
 
@@ -91,7 +112,7 @@
     scroll-snap-stop: always;
     position: relative;
     overflow: hidden;
-    padding: 56px 88px;
+    padding: var(--slide-pad-y) var(--slide-pad-x);
     display: grid;
     grid-template-rows: auto 1fr auto;
   }
@@ -114,7 +135,7 @@
     align-items: center;
     gap: 14px;
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-sm);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     font-weight: 600;
@@ -125,7 +146,7 @@
     color: #fff;
     display: grid;
     place-items: center;
-    font-size: 11px;
+    font-size: var(--text-sm);
     font-weight: 700;
     letter-spacing: 0;
   }
@@ -136,7 +157,7 @@
 
   .slide-step {
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-sm);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     font-weight: 700;
@@ -152,7 +173,7 @@
     padding-top: 16px;
     border-top: 1px solid var(--border);
     font-family: var(--font-display);
-    font-size: 10px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--text-faint);
@@ -177,7 +198,7 @@
     align-items: center;
     gap: 12px;
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-sm);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -201,9 +222,9 @@
     letter-spacing: -0.01em;
     margin: 0;
   }
-  .display.xl { font-size: clamp(56px, 7.4vw, 124px); }
-  .display.lg { font-size: clamp(40px, 5.4vw, 88px); }
-  .display.md { font-size: clamp(30px, 3.8vw, 56px); }
+  .display.xl { font-size: clamp(48px, 6vw, 124px); }
+  .display.lg { font-size: clamp(44px, 5vw, 112px); }
+  .display.md { font-size: clamp(32px, 3.6vw, 72px); }
   .display em { font-style: normal; color: var(--accent); }
   .slide.bleed .display em,
   .slide.dark .display em { color: var(--accent); }
@@ -241,7 +262,7 @@
   }
   .media-box .placeholder .tag {
     font-family: var(--font-display);
-    font-size: 9.5px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -252,20 +273,20 @@
   }
   .media-box .placeholder .name {
     font-family: var(--font-display);
-    font-size: 11.5px;
+    font-size: var(--text-xs);
     letter-spacing: 0.06em;
     color: var(--text-muted);
     font-weight: 500;
   }
   .media-box .placeholder .path {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: 10px;
+    font-size: var(--text-2xs);
     color: var(--text-faint);
   }
   .media-box .placeholder .hint {
     margin-top: 4px;
     font-family: var(--font-display);
-    font-size: 9.5px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--text-faint);
@@ -321,7 +342,7 @@
   }
   .figma-frame .frame-label .tag {
     font-family: var(--font-display);
-    font-size: 9.5px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--accent);
@@ -332,14 +353,14 @@
   }
   .figma-frame .frame-label .name {
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-sm);
     letter-spacing: 0.06em;
     color: var(--text-muted);
     font-weight: 500;
   }
   .figma-frame .frame-label .path {
     font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: 10px;
+    font-size: var(--text-2xs);
     color: var(--text-faint);
   }
   .figma-screen {
@@ -357,7 +378,7 @@
   .title-mark {
     color: rgba(255,255,255,0.85);
     font-family: var(--font-display);
-    font-size: 12px;
+    font-size: var(--text-sm);
     letter-spacing: 0.3em;
     text-transform: uppercase;
     font-weight: 600;
@@ -484,7 +505,7 @@
   .problem-statement em { font-style: normal; color: var(--accent); }
   .problem-lede {
     margin-top: 28px;
-    font-size: clamp(17px, 1.4vw, 22px);
+    font-size: clamp(18px, 1.55vw, 30px);
     line-height: 1.5;
     color: var(--text-muted);
     max-width: 56ch;
@@ -520,7 +541,7 @@
   .did-text .row:last-child { border-bottom: none; }
   .did-text .num {
     font-family: var(--font-display);
-    font-size: clamp(20px, 1.8vw, 28px);
+    font-size: clamp(20px, 1.7vw, 34px);
     color: var(--accent);
     font-weight: 700;
     line-height: 1;
@@ -528,7 +549,7 @@
   }
   .did-text .lab {
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-sm);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -536,14 +557,14 @@
     margin-bottom: 6px;
   }
   .did-text .body {
-    font-size: clamp(17px, 1.55vw, 22px);
+    font-size: clamp(18px, 1.55vw, 30px);
     line-height: 1.55;
     color: var(--text);
     max-width: 42ch;
   }
   .did-text .body strong { font-weight: 600; }
   .did-text .lab {
-    font-size: 12px;
+    font-size: var(--text-sm);
   }
 
   .did-video {
@@ -585,7 +606,7 @@
   }
   .ins-list .row .num {
     font-family: var(--font-display);
-    font-size: clamp(18px, 1.5vw, 24px);
+    font-size: clamp(20px, 1.7vw, 32px);
     color: var(--accent);
     font-weight: 700;
     line-height: 1;
@@ -593,7 +614,7 @@
   }
   .ins-list .row h4 {
     font-family: var(--font-display);
-    font-size: clamp(22px, 2vw, 30px);
+    font-size: clamp(22px, 2vw, 38px);
     line-height: 1.18;
     color: #fff;
     font-weight: 600;
@@ -603,7 +624,7 @@
   }
   .ins-list .row p {
     margin: 0;
-    font-size: 16.5px;
+    font-size: var(--text-base);
     line-height: 1.45;
     color: rgba(255,255,255,0.72);
     font-style: italic;
@@ -623,14 +644,14 @@
   .ins-quote blockquote {
     margin: 0 0 12px;
     font-family: var(--font-display);
-    font-size: clamp(20px, 1.85vw, 28px);
+    font-size: clamp(20px, 1.85vw, 34px);
     line-height: 1.2;
     color: #fff;
     font-weight: 500;
   }
   .ins-quote cite {
     font-family: var(--font-display);
-    font-size: 10px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.65);
@@ -655,7 +676,7 @@
   }
   .persona-slot .label {
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-sm);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -677,7 +698,7 @@
   }
   .persona-text .p-name {
     font-family: var(--font-display);
-    font-size: clamp(18px, 1.55vw, 22px);
+    font-size: clamp(18px, 1.55vw, 30px);
     line-height: 1.05;
     color: var(--text);
     font-weight: 700;
@@ -685,7 +706,7 @@
   }
   .persona-text .p-desc {
     font-family: var(--font-body);
-    font-size: 11.5px;
+    font-size: var(--text-xs);
     line-height: 1.35;
     color: var(--text-muted);
     font-weight: 500;
@@ -693,14 +714,14 @@
   }
   .persona-text .p-who {
     font-family: var(--font-body);
-    font-size: 12.5px;
+    font-size: var(--text-sm);
     line-height: 1.45;
     color: var(--text);
     margin-top: 4px;
   }
   .persona-text .p-goal {
     font-family: var(--font-body);
-    font-size: 12.5px;
+    font-size: var(--text-sm);
     line-height: 1.45;
     color: var(--text);
   }
@@ -709,7 +730,7 @@
     color: var(--accent);
     letter-spacing: 0.04em;
     text-transform: uppercase;
-    font-size: 10px;
+    font-size: var(--text-2xs);
     display: inline-block;
     margin-right: 6px;
     transform: translateY(-1px);
@@ -724,7 +745,7 @@
   }
   .persona-text .p-needs li {
     font-family: var(--font-body);
-    font-size: 12px;
+    font-size: var(--text-sm);
     line-height: 1.4;
     color: var(--text);
     padding-left: 14px;
@@ -757,14 +778,14 @@
   }
   .persona-card .name {
     font-family: var(--font-display);
-    font-size: clamp(22px, 1.95vw, 28px);
+    font-size: clamp(22px, 2vw, 36px);
     line-height: 1;
     color: var(--text);
     font-weight: 700;
   }
   .persona-card .age {
     font-family: var(--font-display);
-    font-size: 11.5px;
+    font-size: var(--text-xs);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--accent);
@@ -772,7 +793,7 @@
   }
   .persona-card .role {
     font-family: var(--font-display);
-    font-size: 13px;
+    font-size: var(--text-sm);
     letter-spacing: 0.06em;
     color: var(--text-muted);
     font-weight: 500;
@@ -787,7 +808,7 @@
   .persona-card .row:first-of-type { border-top: none; padding-top: 0; }
   .persona-card .row .lab {
     font-family: var(--font-display);
-    font-size: 10.5px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -795,7 +816,7 @@
     margin-bottom: 5px;
   }
   .persona-card .row .txt {
-    font-size: 15px;
+    font-size: var(--text-base);
     line-height: 1.5;
     color: var(--text);
   }
@@ -804,7 +825,7 @@
     padding-top: 14px;
     border-top: 1px solid var(--border);
     font-family: var(--font-display);
-    font-size: 15.5px;
+    font-size: var(--text-base);
     line-height: 1.3;
     color: var(--accent);
     font-weight: 600;
@@ -849,7 +870,7 @@
   }
   .story-row .meta .flow {
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-sm);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -981,14 +1002,14 @@
   }
   .flows-table .persona b {
     font-family: var(--font-display);
-    font-size: clamp(22px, 1.95vw, 28px);
+    font-size: clamp(22px, 2vw, 36px);
     font-weight: 700;
     color: var(--text);
     line-height: 1;
   }
   .flows-table .persona small {
     font-family: var(--font-display);
-    font-size: 11.5px;
+    font-size: var(--text-xs);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -1010,7 +1031,7 @@
     text-transform: uppercase;
   }
   .flows-table .why {
-    font-size: 16.5px;
+    font-size: var(--text-base);
     color: var(--text-muted);
     line-height: 1.5;
     max-width: 40ch;
@@ -1031,7 +1052,7 @@
     color: #fff;
     padding: 8px 14px;
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-sm);
     letter-spacing: 0.16em;
     text-transform: uppercase;
     font-weight: 700;
@@ -1060,7 +1081,7 @@
     border: 1.5px solid var(--text);
     padding: 7px 8px;
     font-family: var(--font-display);
-    font-size: 10.5px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.06em;
     text-transform: uppercase;
     font-weight: 600;
@@ -1094,7 +1115,7 @@
     padding-top: 12px;
     border-top: 1px solid var(--border);
     font-family: var(--font-display);
-    font-size: 10px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -1143,7 +1164,7 @@
   .scan-bullets .row:last-child { border-bottom: none; }
   .scan-bullets .lab {
     font-family: var(--font-display);
-    font-size: 10px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -1153,7 +1174,7 @@
   .scan-bullets .row.strength .lab { color: var(--accent); }
   .scan-bullets h4 {
     font-family: var(--font-display);
-    font-size: clamp(18px, 1.55vw, 22px);
+    font-size: clamp(18px, 1.55vw, 30px);
     line-height: 1.2;
     margin: 0 0 4px;
     font-weight: 600;
@@ -1162,7 +1183,7 @@
   }
   .scan-bullets p {
     margin: 0;
-    font-size: 13.5px;
+    font-size: var(--text-sm);
     line-height: 1.45;
     color: var(--text-muted);
     max-width: 38ch;
@@ -1185,7 +1206,7 @@
   }
   .shift-side .lab {
     font-family: var(--font-display);
-    font-size: 13px;
+    font-size: var(--text-sm);
     letter-spacing: 0.28em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.65);
@@ -1269,7 +1290,7 @@
   }
   .nav-text .lead {
     font-family: var(--font-display);
-    font-size: clamp(22px, 2vw, 30px);
+    font-size: clamp(22px, 2vw, 38px);
     line-height: 1.2;
     color: var(--text);
     font-weight: 600;
@@ -1318,7 +1339,7 @@
     margin-top: 6px;
     font-style: normal;
     font-family: var(--font-display);
-    font-size: 10px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -1351,7 +1372,7 @@
     background: var(--accent);
     color: #fff;
     font-family: var(--font-display);
-    font-size: 10px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     padding: 4px 10px;
@@ -1433,7 +1454,7 @@
   }
   .process-hint .ph-fallback .ph-name {
     font-family: var(--font-display);
-    font-size: 9.5px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.06em;
     color: var(--text-muted);
     font-weight: 600;
@@ -1458,7 +1479,7 @@
   }
   .demo-notes .row .lab {
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-sm);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -1466,7 +1487,7 @@
     margin-bottom: 6px;
   }
   .demo-notes .row .txt {
-    font-size: 16px;
+    font-size: var(--text-base);
     line-height: 1.5;
     color: var(--text);
     max-width: 38ch;
@@ -1475,7 +1496,7 @@
   .demo-notes .row .txt em {
     display: block;
     margin-top: 6px;
-    font-size: 13px;
+    font-size: var(--text-sm);
     color: var(--text-muted);
     font-style: italic;
   }
@@ -1631,7 +1652,7 @@
   }
   .final-mark .org {
     font-family: var(--font-display);
-    font-size: 12px;
+    font-size: var(--text-sm);
     letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -1666,7 +1687,7 @@
     justify-content: space-between;
     align-items: baseline;
     font-family: var(--font-display);
-    font-size: 11.5px;
+    font-size: var(--text-xs);
     letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -1684,7 +1705,7 @@
     background: var(--text);
     color: #fff;
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-sm);
     letter-spacing: 0.18em;
     font-weight: 600;
     padding: 8px 12px;
@@ -1781,13 +1802,13 @@
     .deck-counter {
       bottom: 12px; right: 12px;
       padding: 6px 8px;
-      font-size: 9.5px;
+      font-size: var(--text-2xs);
     }
     .cover-text-half { padding: 40px 22px; }
     .cover-text-half .title-stack {
       font-size: clamp(48px, 14vw, 96px);
     }
-    .title-team { gap: 3px 14px; font-size: 12px; margin-top: 10px; }
+    .title-team { gap: 3px 14px; font-size: var(--text-sm); margin-top: 10px; }
     .scan-bullets .row {
       grid-template-columns: 1fr;
       gap: 4px;

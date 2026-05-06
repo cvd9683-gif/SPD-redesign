@@ -43,6 +43,24 @@
     --max-narrow: 760px;
     --gutter: 56px;
     --gutter-tight: 28px;
+
+    /* Responsive type scale — scales up on large monitors */
+    --text-2xs: clamp(10px, 0.5vw, 13px);
+    --text-xs:  clamp(11px, 0.55vw, 15px);
+    --text-sm:  clamp(13px, 0.75vw, 18px);
+    --text-base: clamp(15px, 0.9vw, 21px);
+    --text-body: clamp(16px, 0.9vw, 22px);
+    --text-md:  clamp(18px, 1.15vw, 28px);
+    --text-lg:  clamp(28px, 2.4vw, 56px);
+    --text-xl:  clamp(48px, 5vw, 120px);
+  }
+
+  @media (min-width: 1600px) {
+    :root {
+      --gutter: 72px;
+      --max: 1500px;
+      --max-wide: 1680px;
+    }
   }
 
   html { scroll-behavior: smooth; }
@@ -52,7 +70,7 @@
     color: var(--text-mid);
     background: var(--bg);
     line-height: 1.55;
-    font-size: 16px;
+    font-size: var(--text-body);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -100,12 +118,12 @@
     place-items: center;
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: 12px;
+    font-size: var(--text-xs);
     letter-spacing: 0.04em;
   }
   .nav-mark {
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -115,7 +133,7 @@
   .nav-spacer { flex: 1; }
   .nav-link {
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -172,7 +190,7 @@
     bottom: 22px;
     left: 56px;
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-xs);
     letter-spacing: 0.28em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.95);
@@ -219,7 +237,7 @@
   .hero-text + section { border-top: 1px solid var(--border); }
   .hero-eyebrow {
     font-family: var(--font-display);
-    font-size: 12px;
+    font-size: var(--text-xs);
     letter-spacing: 0.28em;
     text-transform: uppercase;
     color: var(--accent);
@@ -229,7 +247,7 @@
   .hero-title {
     font-family: var(--font-display);
     font-weight: 700;
-    font-size: clamp(56px, 6.6vw, 116px);
+    font-size: clamp(60px, 7vw, 150px);
     line-height: 0.96;
     letter-spacing: -0.014em;
     margin: 0 0 28px;
@@ -238,7 +256,7 @@
   }
   .hero-title em { font-style: normal; color: var(--accent); }
   .hero-blurb {
-    font-size: clamp(17px, 1.4vw, 22px);
+    font-size: var(--text-md);
     line-height: 1.55;
     color: var(--text-muted);
     max-width: 60ch;
@@ -249,7 +267,7 @@
   .hero-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 48px; }
   .tag {
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-xs);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--text-mid);
@@ -271,7 +289,7 @@
   .hero-meta .cell { min-width: 0; }
   .hero-meta .cell .label {
     font-family: var(--font-display);
-    font-size: 10.5px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.26em;
     text-transform: uppercase;
     color: var(--text-faint);
@@ -280,7 +298,7 @@
     display: block;
   }
   .hero-meta .cell .value {
-    font-size: 14.5px;
+    font-size: var(--text-base);
     line-height: 1.55;
     color: var(--text);
     margin: 0;
@@ -294,7 +312,7 @@
   }
   .hero-meta .method-list li {
     font-family: var(--font-body);
-    font-size: 14px;
+    font-size: var(--text-sm);
     line-height: 1.4;
     color: var(--text);
     padding-left: 14px;
@@ -318,7 +336,7 @@
     align-items: center;
     gap: 12px;
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-xs);
     letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--accent);
@@ -339,12 +357,12 @@
   }
   .display em { font-style: normal; color: var(--accent); }
   section.bleed .display, section.dark .display { color: #fff; }
-  .display.lg { font-size: clamp(40px, 4.8vw, 80px); }
-  .display.md { font-size: clamp(30px, 3.2vw, 52px); }
-  .display.sm { font-size: clamp(22px, 2vw, 32px); }
+  .display.lg { font-size: clamp(42px, 4.5vw, 96px); }
+  .display.md { font-size: clamp(30px, 3.2vw, 60px); }
+  .display.sm { font-size: clamp(22px, 2vw, 36px); }
 
   .body-text {
-    font-size: 16px;
+    font-size: var(--text-body);
     line-height: 1.65;
     color: var(--text-mid);
     max-width: 68ch;
@@ -369,7 +387,7 @@
   .section-head .num small {
     display: block;
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-xs);
     letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -378,7 +396,7 @@
   }
   .section-head h2 { margin: 0 0 14px; }
   .section-head .kicker {
-    font-size: clamp(15px, 1.2vw, 18px);
+    font-size: clamp(15px, 1.1vw, 22px);
     line-height: 1.6;
     color: var(--text-muted);
     max-width: 60ch;
@@ -412,7 +430,7 @@
   }
   .overview-card .label {
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -420,7 +438,7 @@
   }
   .overview-card h3 {
     font-family: var(--font-display);
-    font-size: clamp(22px, 1.95vw, 28px);
+    font-size: clamp(22px, 2vw, 36px);
     line-height: 1.2;
     margin: 0;
     color: var(--text);
@@ -428,7 +446,7 @@
   }
   .overview-card p {
     margin: 0;
-    font-size: 14.5px;
+    font-size: var(--text-base);
     line-height: 1.6;
     color: var(--text-muted);
   }
@@ -450,7 +468,7 @@
   .audit-meta { display: flex; flex-direction: column; gap: 8px; max-width: 44ch; }
   .audit-meta .lab {
     font-family: var(--font-display);
-    font-size: 10px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--accent);
@@ -467,7 +485,7 @@
   }
   .audit-meta p {
     margin: 0;
-    font-size: clamp(15px, 1.15vw, 17px);
+    font-size: clamp(15px, 0.85vw, 20px);
     line-height: 1.5;
     color: var(--text-muted);
   }
@@ -482,7 +500,7 @@
   }
   .audit-insight .ai-lab {
     font-family: var(--font-display);
-    font-size: 10px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -492,7 +510,7 @@
   .audit-insight .ai-lab:first-child { margin-top: 0; }
   .audit-insight p {
     margin: 0;
-    font-size: 14px;
+    font-size: var(--text-sm);
     line-height: 1.55;
     color: var(--text-mid);
   }
@@ -532,7 +550,7 @@
     background: rgba(20,20,22,0.78);
     color: #fff;
     font-family: var(--font-display);
-    font-size: 9.5px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     padding: 5px 10px;
@@ -570,7 +588,7 @@
     background: rgba(20,20,22,0.78);
     color: #fff;
     font-family: var(--font-display);
-    font-size: 9.5px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     padding: 5px 10px;
@@ -600,7 +618,7 @@
     display: block;
     margin-top: 18px;
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -654,14 +672,14 @@
   .method-card .m-icon .fill { fill: currentColor; }
   .method-card .num {
     font-family: var(--font-display);
-    font-size: 10.5px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.22em;
     color: var(--text-muted);
     font-weight: 700;
   }
   .method-card h4 {
     font-family: var(--font-display);
-    font-size: clamp(17px, 1.4vw, 21px);
+    font-size: clamp(17px, 1.4vw, 26px);
     line-height: 1.2;
     margin: 0;
     color: var(--text);
@@ -669,14 +687,14 @@
   }
   .method-card .summary {
     margin: 0;
-    font-size: 13px;
+    font-size: var(--text-sm);
     line-height: 1.5;
     color: var(--text-muted);
   }
   .method-card .more {
     margin-top: auto;
     font-family: var(--font-display);
-    font-size: 10px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--text-faint);
@@ -714,7 +732,7 @@
   }
   .insight .ix {
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-xs);
     letter-spacing: 0.22em;
     color: var(--accent);
     font-weight: 700;
@@ -722,7 +740,7 @@
   }
   .insight q {
     font-family: var(--font-display);
-    font-size: clamp(20px, 1.7vw, 26px);
+    font-size: clamp(20px, 1.7vw, 32px);
     line-height: 1.22;
     color: #fff;
     font-weight: 600;
@@ -732,7 +750,7 @@
   .insight q::after { content: close-quote; color: var(--accent); }
   .insight .sub {
     margin-top: 18px;
-    font-size: 13.5px;
+    font-size: var(--text-sm);
     line-height: 1.55;
     color: rgba(255,255,255,0.72);
   }
@@ -751,7 +769,7 @@
   .insights-quotes .q blockquote {
     margin: 0;
     font-family: var(--font-display);
-    font-size: clamp(20px, 1.85vw, 28px);
+    font-size: clamp(20px, 1.85vw, 34px);
     line-height: 1.25;
     color: #fff;
     font-weight: 500;
@@ -760,7 +778,7 @@
     display: block;
     margin-top: 14px;
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.7);
@@ -820,7 +838,7 @@
     background: rgba(20,20,22,0.78);
     color: #fff;
     font-family: var(--font-display);
-    font-size: 9.5px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     padding: 5px 10px;
@@ -835,13 +853,13 @@
   .persona .head { display: flex; justify-content: space-between; align-items: baseline; gap: 14px; }
   .persona .name {
     font-family: var(--font-display);
-    font-size: clamp(22px, 1.9vw, 28px);
+    font-size: clamp(22px, 1.95vw, 34px);
     color: var(--text);
     font-weight: 700;
   }
   .persona .age {
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-xs);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--accent);
@@ -849,7 +867,7 @@
   }
   .persona .role {
     font-family: var(--font-display);
-    font-size: 12px;
+    font-size: var(--text-xs);
     letter-spacing: 0.04em;
     color: var(--text-muted);
     font-weight: 500;
@@ -858,7 +876,7 @@
   }
   .persona .needs .lab {
     font-family: var(--font-display);
-    font-size: 10px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -867,7 +885,7 @@
   }
   .persona .needs p {
     margin: 0;
-    font-size: 14.5px;
+    font-size: var(--text-base);
     line-height: 1.5;
     color: var(--text);
   }
@@ -876,7 +894,7 @@
     padding-top: 14px;
     border-top: 1px solid var(--border);
     font-family: var(--font-display);
-    font-size: 14.5px;
+    font-size: var(--text-base);
     line-height: 1.35;
     color: var(--accent);
     font-weight: 600;
@@ -908,14 +926,14 @@
   .funnel .stage:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
   .funnel .stage .ix {
     font-family: var(--font-display);
-    font-size: 10px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.22em;
     color: var(--accent);
     font-weight: 700;
   }
   .funnel .stage h4 {
     font-family: var(--font-display);
-    font-size: clamp(18px, 1.5vw, 22px);
+    font-size: clamp(18px, 1.5vw, 28px);
     margin: 0 0 6px;
     line-height: 1.2;
     font-weight: 600;
@@ -923,7 +941,7 @@
   }
   .funnel .stage p {
     margin: 0;
-    font-size: 13px;
+    font-size: var(--text-sm);
     line-height: 1.5;
     color: var(--text-muted);
   }
@@ -957,7 +975,7 @@
   }
   .story .who b {
     font-family: var(--font-display);
-    font-size: clamp(18px, 1.5vw, 22px);
+    font-size: clamp(18px, 1.5vw, 28px);
     color: var(--text);
     font-weight: 700;
     line-height: 1;
@@ -965,7 +983,7 @@
   }
   .story .who small {
     font-family: var(--font-display);
-    font-size: 10px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -975,7 +993,7 @@
   }
   .story .quote {
     font-family: var(--font-display);
-    font-size: clamp(17px, 1.45vw, 22px);
+    font-size: clamp(17px, 1.45vw, 28px);
     line-height: 1.4;
     color: var(--text);
     font-weight: 500;
@@ -983,7 +1001,7 @@
   .story .target {
     text-align: right;
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -995,7 +1013,7 @@
     font-weight: 400;
     text-transform: none;
     letter-spacing: 0;
-    font-size: 12px;
+    font-size: var(--text-xs);
     color: var(--text-muted);
     margin-top: 6px;
   }
@@ -1040,7 +1058,7 @@
     background: rgba(20,20,22,0.7);
     color: #fff;
     font-family: var(--font-display);
-    font-size: 9.5px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     padding: 5px 10px;
@@ -1061,14 +1079,14 @@
   }
   .sketch-tile .cap b {
     font-family: var(--font-display);
-    font-size: 14.5px;
+    font-size: var(--text-base);
     letter-spacing: 0.04em;
     color: var(--text);
     font-weight: 600;
   }
   .sketch-tile .cap small {
     font-family: var(--font-display);
-    font-size: 10px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -1112,7 +1130,7 @@
   }
   .final-stage .canvas .pf-tag {
     font-family: var(--font-display);
-    font-size: 10px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -1123,7 +1141,7 @@
   }
   .final-stage .canvas .pf-name {
     font-family: var(--font-display);
-    font-size: 14px;
+    font-size: var(--text-sm);
     letter-spacing: 0.04em;
     color: var(--text-muted);
     font-weight: 500;
@@ -1139,13 +1157,13 @@
   }
   .final-stage .label-row b {
     font-family: var(--font-display);
-    font-size: 14.5px;
+    font-size: var(--text-base);
     color: var(--text);
     font-weight: 600;
   }
   .final-stage .label-row small {
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--text-muted);
@@ -1242,14 +1260,14 @@
   }
   .final-tile .cap b {
     font-family: var(--font-display);
-    font-size: 14px;
+    font-size: var(--text-sm);
     display: block;
     margin-bottom: 4px;
     color: var(--text);
     font-weight: 600;
   }
   .final-tile .cap small {
-    font-size: 13px;
+    font-size: var(--text-sm);
     color: var(--text-muted);
     line-height: 1.5;
   }
@@ -1280,7 +1298,7 @@
   }
   .design-decisions .dec h4 {
     font-family: var(--font-display);
-    font-size: clamp(18px, 1.6vw, 22px);
+    font-size: clamp(18px, 1.6vw, 28px);
     line-height: 1.25;
     margin: 0 0 8px;
     color: var(--text);
@@ -1288,7 +1306,7 @@
   }
   .design-decisions .dec p {
     margin: 0;
-    font-size: 14.5px;
+    font-size: var(--text-base);
     line-height: 1.55;
     color: var(--text-muted);
   }
@@ -1301,7 +1319,7 @@
     align-items: center;
     gap: 8px;
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-xs);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--accent);
@@ -1313,7 +1331,7 @@
     transition: border-color 220ms, transform 220ms;
     align-self: flex-start;
   }
-  .artifact-link::after { content: "\2197"; font-size: 14px; line-height: 1; }
+  .artifact-link::after { content: "\2197"; font-size: var(--text-sm); line-height: 1; }
   .artifact-link:hover { border-bottom-color: var(--accent); }
   .artifact-link:hover::after { transform: translate(2px, -2px); }
   .artifact-link::after { transition: transform 220ms cubic-bezier(0.16,1,0.3,1); }
@@ -1344,7 +1362,7 @@
     background: var(--accent);
     color: #fff;
     font-family: var(--font-display);
-    font-size: 11.5px;
+    font-size: var(--text-xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     font-weight: 700;
@@ -1367,7 +1385,7 @@
   .result-numbers .stat { padding: 6px 0; }
   .result-numbers .label {
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.7);
@@ -1384,7 +1402,7 @@
   }
   .result-numbers .desc {
     margin-top: 8px;
-    font-size: 13px;
+    font-size: var(--text-sm);
     color: rgba(255,255,255,0.78);
     line-height: 1.5;
   }
@@ -1392,7 +1410,7 @@
     color: rgba(255,255,255,0.92);
     font-family: var(--font-display);
     font-weight: 500;
-    font-size: clamp(22px, 2vw, 30px);
+    font-size: clamp(22px, 2vw, 38px);
     line-height: 1.32;
     max-width: 32ch;
   }
@@ -1416,7 +1434,7 @@
   .reflect:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
   .reflect .label {
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -1425,7 +1443,7 @@
   }
   .reflect h4 {
     font-family: var(--font-display);
-    font-size: clamp(18px, 1.6vw, 22px);
+    font-size: clamp(18px, 1.6vw, 28px);
     line-height: 1.2;
     margin: 0 0 10px;
     color: var(--text);
@@ -1433,7 +1451,7 @@
   }
   .reflect p {
     margin: 0;
-    font-size: 14.5px;
+    font-size: var(--text-base);
     line-height: 1.6;
     color: var(--text-muted);
   }
@@ -1455,7 +1473,7 @@
   .foot h3 em { font-style: normal; color: var(--accent); }
   .foot small {
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.55);
@@ -1463,7 +1481,7 @@
   }
   .foot .credit {
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.7);
@@ -1536,7 +1554,7 @@
   .lightbox.open .lb-video { transform: scale(1); }
   .lb-cap {
     font-family: var(--font-display);
-    font-size: 12px;
+    font-size: var(--text-xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: rgba(255,255,255,0.85);
@@ -1605,7 +1623,7 @@
   }
   .mm-num {
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-xs);
     letter-spacing: 0.22em;
     color: var(--accent);
     font-weight: 700;
@@ -1622,7 +1640,7 @@
   }
   .mm-summary {
     margin: 0;
-    font-size: 16px;
+    font-size: var(--text-body);
     line-height: 1.6;
     color: var(--text-mid);
   }
@@ -1635,7 +1653,7 @@
   }
   .mm-chip {
     font-family: var(--font-display);
-    font-size: 10.5px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--accent);
@@ -1651,7 +1669,7 @@
   }
   .mm-section-label {
     font-family: var(--font-display);
-    font-size: 10px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.22em;
     text-transform: uppercase;
     color: var(--accent);
@@ -1660,7 +1678,7 @@
     display: block;
   }
   .mm-section p {
-    font-size: 14.5px;
+    font-size: var(--text-base);
     line-height: 1.6;
     color: var(--text-mid);
     margin: 0;
@@ -1926,7 +1944,7 @@
   }
   .data-stat .ds-label {
     font-family: var(--font-body);
-    font-size: 14.5px;
+    font-size: var(--text-base);
     line-height: 1.55;
     color: var(--text-mid);
     margin-top: auto;
@@ -1949,7 +1967,7 @@
   }
   .data-chart .dc-eyebrow {
     font-family: var(--font-display);
-    font-size: 10.5px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--accent);
@@ -1957,7 +1975,7 @@
   }
   .data-chart h3 {
     font-family: var(--font-display);
-    font-size: clamp(22px, 2vw, 28px);
+    font-size: clamp(22px, 2vw, 36px);
     line-height: 1.2;
     margin: 0;
     color: var(--text);
@@ -1976,7 +1994,7 @@
   }
   .data-chart .dc-bar-label {
     font-family: var(--font-display);
-    font-size: 14px;
+    font-size: var(--text-sm);
     color: var(--text);
     font-weight: 600;
     line-height: 1.3;
@@ -1998,7 +2016,7 @@
   .data-chart.in-view .dc-bar-fill { width: var(--fill, 0%); }
   .data-chart .dc-bar-meta {
     font-family: var(--font-body);
-    font-size: 12.5px;
+    font-size: var(--text-sm);
     color: var(--text-muted);
     line-height: 1.4;
   }
@@ -2017,7 +2035,7 @@
   .data-insight .di-lab {
     display: block;
     font-family: var(--font-display);
-    font-size: 10.5px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--accent);
@@ -2026,7 +2044,7 @@
   }
   .data-insight p {
     margin: 0;
-    font-size: 14.5px;
+    font-size: var(--text-base);
     line-height: 1.6;
     color: var(--text-mid);
   }
@@ -2056,7 +2074,7 @@
   }
   .nav-side-label {
     font-family: var(--font-display);
-    font-size: 10.5px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--accent);
@@ -2064,7 +2082,7 @@
   }
   .nav-side h4 {
     font-family: var(--font-display);
-    font-size: clamp(20px, 1.7vw, 24px);
+    font-size: clamp(20px, 1.7vw, 30px);
     line-height: 1.2;
     margin: 0;
     color: var(--text);
@@ -2072,7 +2090,7 @@
   }
   .nav-side p {
     margin: 0;
-    font-size: 14.5px;
+    font-size: var(--text-base);
     line-height: 1.55;
     color: var(--text-muted);
   }
@@ -2091,13 +2109,13 @@
     background: var(--bg-soft);
   }
   .nav-pill-row.cluttered span {
-    font-size: 11px;
+    font-size: var(--text-xs);
     letter-spacing: 0.12em;
     text-transform: uppercase;
     opacity: 0.78;
   }
   .nav-pill-row.clean span {
-    font-size: 13px;
+    font-size: var(--text-sm);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     background: var(--accent);
@@ -2110,7 +2128,7 @@
     background: transparent;
     color: var(--accent);
     border-color: var(--accent);
-    font-size: 11.5px;
+    font-size: var(--text-xs);
     padding: 9px 14px;
   }
   .nav-insight {
@@ -2118,11 +2136,11 @@
     padding: 18px 22px;
     background: var(--accent-soft);
     border-left: 3px solid var(--accent);
-    font-size: 14.5px;
+    font-size: var(--text-base);
     line-height: 1.6;
     color: var(--text-mid);
   }
-  .nav-insight b { color: var(--accent); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; font-family: var(--font-display); font-size: 11px; margin-right: 6px; }
+  .nav-insight b { color: var(--accent); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; font-family: var(--font-display); font-size: var(--text-xs); margin-right: 6px; }
   .proc-image {
     aspect-ratio: 16 / 10;
     background: var(--bg-soft);
@@ -2167,7 +2185,7 @@
   }
   .proc-eyebrow {
     font-family: var(--font-display);
-    font-size: 10.5px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--accent);
@@ -2183,7 +2201,7 @@
   }
   .proc p {
     margin: 0;
-    font-size: 14px;
+    font-size: var(--text-sm);
     line-height: 1.55;
     color: var(--text-muted);
   }
@@ -2209,7 +2227,7 @@
   }
   .cs-label {
     font-family: var(--font-display);
-    font-size: 9.5px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--accent);
@@ -2220,7 +2238,7 @@
   }
   .cs-card {
     font-family: var(--font-body);
-    font-size: 11px;
+    font-size: var(--text-xs);
     line-height: 1.3;
     background: var(--bg);
     border: 1px solid var(--border);
@@ -2243,7 +2261,7 @@
     background: var(--accent);
     color: #fff;
     font-family: var(--font-display);
-    font-size: 11px;
+    font-size: var(--text-xs);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     font-weight: 700;
@@ -2265,7 +2283,7 @@
     background: var(--accent-soft);
     color: var(--accent);
     font-family: var(--font-display);
-    font-size: 10.5px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.14em;
     text-transform: uppercase;
     font-weight: 700;
@@ -2278,7 +2296,7 @@
     background: #fff;
     color: var(--text-muted);
     font-family: var(--font-body);
-    font-size: 10.5px;
+    font-size: var(--text-2xs);
     padding: 5px 6px;
     text-align: center;
   }
@@ -2325,7 +2343,7 @@
     background: rgba(20,20,22,0.7);
     color: #fff;
     font-family: var(--font-display);
-    font-size: 10px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.18em;
     text-transform: uppercase;
     padding: 5px 9px;
@@ -2340,14 +2358,14 @@
   }
   .lofi-tile .cap b {
     font-family: var(--font-display);
-    font-size: 14px;
+    font-size: var(--text-sm);
     display: block;
     margin-bottom: 4px;
     color: var(--text);
     font-weight: 600;
   }
   .lofi-tile .cap small {
-    font-size: 13px;
+    font-size: var(--text-sm);
     color: var(--text-muted);
     line-height: 1.5;
   }
@@ -2367,7 +2385,7 @@
     top: 10px;
     right: 12px;
     font-family: var(--font-display);
-    font-size: 9.5px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--text-faint);
@@ -2479,7 +2497,7 @@
   .pres-cta .pres-text { display: flex; flex-direction: column; gap: 8px; }
   .pres-cta .pres-eyebrow {
     font-family: var(--font-display);
-    font-size: 10.5px;
+    font-size: var(--text-2xs);
     letter-spacing: 0.24em;
     text-transform: uppercase;
     color: var(--accent);
@@ -2495,7 +2513,7 @@
   }
   .pres-cta p {
     margin: 0;
-    font-size: 14.5px;
+    font-size: var(--text-base);
     line-height: 1.6;
     color: var(--text-muted);
     max-width: 56ch;
@@ -2509,7 +2527,7 @@
     .container { padding: 0 var(--gutter-tight); }
     .nav-inner { padding: 0 var(--gutter-tight); }
     .case-banner { aspect-ratio: 16 / 6; }
-    .case-banner .banner-mark { left: 28px; bottom: 18px; font-size: 10.5px; }
+    .case-banner .banner-mark { left: 28px; bottom: 18px; font-size: var(--text-2xs); }
     .section-head { grid-template-columns: 1fr; gap: 16px; margin-bottom: 40px; }
     .overview-grid, .persona-grid, .reflection-cols { grid-template-columns: 1fr; }
     .methods-grid, .insights-grid { grid-template-columns: repeat(2, 1fr); }
@@ -3270,14 +3288,14 @@
   </div>
 </section>
 
-<!-- ============ 08 — LOW-FIDELITY PROTOTYPES ============ -->
+<!-- ============ 08 — LOW-FIDELITY WIREFRAMES ============ -->
 <section>
   <div class="container container--wide">
     <div class="section-head">
-      <div class="num">09<small>Low-fidelity prototypes</small></div>
+      <div class="num">09<small>Low-fidelity wireframes</small></div>
       <div>
         <h2 class="display lg">From research to layout experiments.</h2>
-        <p class="kicker">Translating <b>research and early ideas</b> into actual layouts before committing to final screens.</p>
+        <p class="kicker">These low-fidelity wireframes helped us <b>test layout hierarchy</b>, simplify navigation pathways, and experiment with how users would move through the system before building the final direction.</p>
       </div>
     </div>
 
