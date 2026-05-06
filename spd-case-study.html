@@ -471,6 +471,32 @@
     line-height: 1.5;
     color: var(--text-muted);
   }
+  .audit-insight {
+    margin-top: 14px;
+    padding: 16px 18px;
+    border-left: 3px solid var(--accent);
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .audit-insight .ai-lab {
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-top: 6px;
+  }
+  .audit-insight .ai-lab:first-child { margin-top: 0; }
+  .audit-insight p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--text-mid);
+  }
+  .audit-insight p b { color: var(--text); font-weight: 600; }
   .audit-meta p b { color: var(--text); font-weight: 700; }
   .audit-figure {
     background: var(--surface);
@@ -1560,10 +1586,10 @@
     background: var(--surface);
     border: 1px solid var(--border);
     border-top: 4px solid var(--accent);
-    max-width: 880px;
+    max-width: 1000px;
     width: 100%;
     display: grid;
-    grid-template-columns: 1.05fr 1fr;
+    grid-template-columns: 1.15fr 1fr;
     overflow: hidden;
     transform: translateY(8px);
     transition: transform 320ms cubic-bezier(0.16,1,0.3,1);
@@ -1662,6 +1688,18 @@
     overflow: hidden;
     min-height: 320px;
   }
+  .mm-visual.has-photo { padding: 0; }
+  .mm-visual .mm-photo {
+    width: 100%;
+    height: 100%;
+    min-height: 320px;
+    max-height: calc(100vh - 200px);
+    object-fit: cover;
+    cursor: zoom-in;
+    display: block;
+    transition: transform 320ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .mm-visual .mm-photo:hover { transform: scale(1.015); }
   .mm-visual svg {
     width: 100%;
     max-width: 280px;
@@ -1850,6 +1888,620 @@
   }
 
   /* ============================================================
+     DATA — "Quantifying the friction" stat cards + bar chart
+     ============================================================ */
+  .data-stat-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+    margin-bottom: 40px;
+  }
+  .data-stat {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 3px solid var(--accent);
+    padding: 28px 26px 26px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    min-height: 200px;
+  }
+  .data-stat .ds-num-row {
+    display: flex;
+    align-items: baseline;
+    gap: 4px;
+    color: var(--accent);
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+  }
+  .data-stat .ds-num {
+    font-size: clamp(56px, 6vw, 88px);
+  }
+  .data-stat .ds-suffix {
+    font-size: clamp(28px, 3vw, 44px);
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .data-stat .ds-label {
+    font-family: var(--font-body);
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--text-mid);
+    margin-top: auto;
+  }
+  .data-stat .ds-label b { color: var(--text); font-weight: 600; }
+
+  .data-chart {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 36px 36px 32px;
+    margin-bottom: 32px;
+  }
+  .data-chart .dc-head {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 26px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+  }
+  .data-chart .dc-eyebrow {
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .data-chart h3 {
+    font-family: var(--font-display);
+    font-size: clamp(22px, 2vw, 28px);
+    line-height: 1.2;
+    margin: 0;
+    color: var(--text);
+    font-weight: 700;
+  }
+  .data-chart .dc-bars {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .data-chart .dc-bar {
+    display: grid;
+    grid-template-columns: minmax(180px, 0.9fr) minmax(0, 2fr) minmax(140px, 0.8fr);
+    align-items: center;
+    gap: 18px;
+  }
+  .data-chart .dc-bar-label {
+    font-family: var(--font-display);
+    font-size: 14px;
+    color: var(--text);
+    font-weight: 600;
+    line-height: 1.3;
+  }
+  .data-chart .dc-bar-track {
+    height: 14px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    position: relative;
+  }
+  .data-chart .dc-bar-fill {
+    height: 100%;
+    background: var(--accent);
+    width: 0;
+    transition: width 900ms cubic-bezier(0.16,1,0.3,1);
+    transform-origin: left center;
+  }
+  .data-chart.in-view .dc-bar-fill { width: var(--fill, 0%); }
+  .data-chart .dc-bar-meta {
+    font-family: var(--font-body);
+    font-size: 12.5px;
+    color: var(--text-muted);
+    line-height: 1.4;
+  }
+
+  .data-insight {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 8px;
+  }
+  .data-insight .di-block {
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    padding: 18px 22px;
+  }
+  .data-insight .di-lab {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+  .data-insight p {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--text-mid);
+  }
+  .data-insight p b { color: var(--text); font-weight: 600; }
+
+  @media (prefers-reduced-motion: reduce) {
+    .data-chart .dc-bar-fill { transition: none; }
+  }
+
+  /* ============================================================
+     PROCESS — NAV BEFORE/AFTER + ARTIFACTS
+     ============================================================ */
+  .nav-compare {
+    display: grid;
+    grid-template-columns: 1fr 40px 1fr;
+    gap: 24px;
+    align-items: stretch;
+    margin-top: 8px;
+  }
+  .nav-side {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px 28px 32px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .nav-side-label {
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .nav-side h4 {
+    font-family: var(--font-display);
+    font-size: clamp(20px, 1.7vw, 24px);
+    line-height: 1.2;
+    margin: 0;
+    color: var(--text);
+    font-weight: 700;
+  }
+  .nav-side p {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--text-muted);
+  }
+  .nav-pill-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 8px;
+  }
+  .nav-pill-row span {
+    font-family: var(--font-display);
+    font-weight: 700;
+    border: 1px solid var(--border-strong);
+    color: var(--text-mid);
+    padding: 8px 12px;
+    background: var(--bg-soft);
+  }
+  .nav-pill-row.cluttered span {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    opacity: 0.78;
+  }
+  .nav-pill-row.clean span {
+    font-size: 13px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    padding: 12px 18px;
+  }
+  .nav-pill-row.nav-actions { margin-top: 4px; }
+  .nav-pill-row.nav-actions span.action {
+    background: transparent;
+    color: var(--accent);
+    border-color: var(--accent);
+    font-size: 11.5px;
+    padding: 9px 14px;
+  }
+  .nav-insight {
+    margin: 24px 0 0;
+    padding: 18px 22px;
+    background: var(--accent-soft);
+    border-left: 3px solid var(--accent);
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--text-mid);
+  }
+  .nav-insight b { color: var(--accent); font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; font-family: var(--font-display); font-size: 11px; margin-right: 6px; }
+  .proc-image {
+    aspect-ratio: 16 / 10;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    cursor: zoom-in;
+    margin: 4px 0;
+    position: relative;
+  }
+  .proc-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    transition: transform 360ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .proc-image:hover img { transform: scale(1.02); }
+  .nav-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-size: 32px;
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .process-artifacts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 32px;
+  }
+  .proc {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 28px 28px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .proc-eyebrow {
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .proc h4 {
+    font-family: var(--font-display);
+    font-size: clamp(19px, 1.6vw, 22px);
+    line-height: 1.25;
+    margin: 0;
+    color: var(--text);
+    font-weight: 700;
+  }
+  .proc p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--text-muted);
+  }
+  .proc .artifact-link { margin-top: auto; }
+
+  /* Card sort mini visual */
+  .cardsort-mini {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 8px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    padding: 14px;
+    margin: 6px 0 4px;
+  }
+  .cs-bucket {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    background: #fff;
+    border: 1px solid var(--border);
+    padding: 8px 8px 10px;
+  }
+  .cs-label {
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 5px;
+    margin-bottom: 2px;
+  }
+  .cs-card {
+    font-family: var(--font-body);
+    font-size: 11px;
+    line-height: 1.3;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 6px 7px;
+    color: var(--text-mid);
+  }
+
+  /* Sitemap mini visual */
+  .sitemap-mini {
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+    padding: 18px 14px;
+    margin: 6px 0 4px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+  }
+  .sm-root {
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 7px 16px;
+  }
+  .sm-trunk {
+    width: 1.5px;
+    height: 14px;
+    background: var(--border-strong);
+  }
+  .sm-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
+    width: 100%;
+  }
+  .sm-node {
+    border: 1.5px solid var(--accent);
+    background: var(--accent-soft);
+    color: var(--accent);
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 7px 6px;
+    text-align: center;
+  }
+  .sm-row.leaves { margin-top: 4px; }
+  .sm-leaf {
+    border: 1px solid var(--border-strong);
+    background: #fff;
+    color: var(--text-muted);
+    font-family: var(--font-body);
+    font-size: 10.5px;
+    padding: 5px 6px;
+    text-align: center;
+  }
+
+  /* ============================================================
+     LOW-FI PROTOTYPES
+     ============================================================ */
+  .lofi-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+  }
+  .lofi-tile {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    overflow: hidden;
+    transition: transform 280ms cubic-bezier(0.16,1,0.3,1), box-shadow 280ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .lofi-tile:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); }
+  .lofi-tile .frame {
+    aspect-ratio: 4 / 3;
+    background: var(--bg-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-in;
+    position: relative;
+    overflow: hidden;
+  }
+  .lofi-tile .frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center;
+    display: block;
+    transition: transform 360ms cubic-bezier(0.16,1,0.3,1);
+  }
+  .lofi-tile .frame:hover img { transform: scale(1.02); }
+  .lofi-tile .frame::after {
+    content: "Click to enlarge";
+    position: absolute;
+    bottom: 12px;
+    right: 12px;
+    background: rgba(20,20,22,0.7);
+    color: #fff;
+    font-family: var(--font-display);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 5px 9px;
+    opacity: 0;
+    transition: opacity 200ms;
+    pointer-events: none;
+  }
+  .lofi-tile .frame:hover::after { opacity: 1; }
+  .lofi-tile .cap {
+    padding: 16px 20px;
+    border-top: 1px solid var(--border);
+  }
+  .lofi-tile .cap b {
+    font-family: var(--font-display);
+    font-size: 14px;
+    display: block;
+    margin-bottom: 4px;
+    color: var(--text);
+    font-weight: 600;
+  }
+  .lofi-tile .cap small {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+  .lofi-stub {
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    border: 1px solid var(--border-strong);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    padding: 16px;
+    position: relative;
+  }
+  .lofi-stub .label {
+    position: absolute;
+    top: 10px;
+    right: 12px;
+    font-family: var(--font-display);
+    font-size: 9.5px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-faint);
+    font-weight: 700;
+  }
+  .lofi-stub .topbar {
+    display: flex;
+    gap: 5px;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 9px;
+  }
+  .lofi-stub .topbar span {
+    background: var(--accent);
+    height: 8px;
+    flex: 1;
+    max-width: 48px;
+  }
+  .lofi-stub .topbar span:nth-child(n+2) { background: var(--bg-deep); }
+  .lofi-stub .hero { background: var(--bg-deep); flex: 1.4; min-height: 60px; }
+  .lofi-stub .row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 6px;
+    flex: 1;
+  }
+  .lofi-stub .row > div { background: var(--bg-soft); border: 1px solid var(--border); }
+  .lofi-stub .bar {
+    height: 9px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+  }
+  .lofi-stub .bar.short { width: 60%; }
+  .lofi-stub .bar.tall { height: 14px; }
+  .lofi-stub .col-pair {
+    display: grid;
+    grid-template-columns: 1.2fr 1fr;
+    gap: 8px;
+    flex: 1;
+  }
+  .lofi-stub .col-pair > div { background: var(--bg-soft); border: 1px solid var(--border); }
+  .lofi-stub .col-pair > div:first-child { display: flex; flex-direction: column; gap: 4px; padding: 6px; background: #fff; }
+  .lofi-stub .col-pair > div:first-child .bar { width: 100%; }
+  .lofi-stub .filter-row {
+    display: flex;
+    gap: 5px;
+  }
+  .lofi-stub .filter-row span {
+    height: 14px;
+    flex: 1;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+  }
+  .lofi-stub .list-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 0;
+    border-top: 1px solid var(--border);
+  }
+  .lofi-stub .list-row:first-of-type { border-top: 0; }
+  .lofi-stub .list-row .dot {
+    width: 16px;
+    height: 16px;
+    background: var(--bg-deep);
+    flex: 0 0 16px;
+  }
+  .lofi-stub .list-row .lines {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    flex: 1;
+  }
+  .lofi-stub .list-row .lines span {
+    height: 6px;
+    background: var(--bg-soft);
+  }
+  .lofi-stub .list-row .lines span:last-child { width: 60%; }
+  .lofi-stub .nav-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 1;
+    justify-content: center;
+  }
+  .lofi-stub .nav-stack span {
+    height: 18px;
+    background: var(--bg-soft);
+    border: 1px solid var(--border);
+  }
+  .lofi-stub .nav-stack span.active {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  /* ============================================================
+     PRESENTATION CTA — small polished section
+     ============================================================ */
+  .pres-cta {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-top: 4px solid var(--accent);
+    padding: 36px 40px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 24px;
+    align-items: center;
+    margin-top: 8px;
+  }
+  .pres-cta .pres-text { display: flex; flex-direction: column; gap: 8px; }
+  .pres-cta .pres-eyebrow {
+    font-family: var(--font-display);
+    font-size: 10.5px;
+    letter-spacing: 0.24em;
+    text-transform: uppercase;
+    color: var(--accent);
+    font-weight: 700;
+  }
+  .pres-cta h4 {
+    font-family: var(--font-display);
+    font-size: clamp(20px, 1.8vw, 26px);
+    line-height: 1.2;
+    margin: 0;
+    color: var(--text);
+    font-weight: 700;
+  }
+  .pres-cta p {
+    margin: 0;
+    font-size: 14.5px;
+    line-height: 1.6;
+    color: var(--text-muted);
+    max-width: 56ch;
+  }
+
+  /* ============================================================
      RESPONSIVE
      ============================================================ */
   @media (max-width: 1080px) {
@@ -1862,6 +2514,15 @@
     .overview-grid, .persona-grid, .reflection-cols { grid-template-columns: 1fr; }
     .methods-grid, .insights-grid { grid-template-columns: repeat(2, 1fr); }
     .insights-quotes, .result-grid, .design-decisions, .final-grid, .video-row { grid-template-columns: 1fr; }
+    .nav-compare { grid-template-columns: 1fr; }
+    .nav-arrow { transform: rotate(90deg); padding: 6px 0; }
+    .process-artifacts { grid-template-columns: 1fr; }
+    .lofi-grid { grid-template-columns: 1fr; }
+    .pres-cta { grid-template-columns: 1fr; }
+    .data-stat-grid { grid-template-columns: 1fr; }
+    .data-insight { grid-template-columns: 1fr; }
+    .data-chart .dc-bar { grid-template-columns: 1fr; gap: 6px; }
+    .data-chart { padding: 24px 22px 22px; }
     .audit-row { grid-template-columns: 1fr; gap: 22px; }
     .funnel { grid-template-columns: 1fr; }
     .funnel .arrow { display: none; }
@@ -2000,6 +2661,12 @@
           <span class="lab">Audit &middot; 01</span>
           <h3>Heuristic Evaluation</h3>
           <p>Nielsen's ten heuristics, applied to web and mobile. <b>Ten recurring violations &mdash; system-level, not polish.</b></p>
+          <div class="audit-insight">
+            <span class="ai-lab">What it told us</span>
+            <p>Issues clustered around <b>navigation clarity, consistency, and recognition over recall</b> — the same structural problem in different places.</p>
+            <span class="ai-lab">Why it mattered</span>
+            <p>It proved the redesign needed to focus on <b>information architecture</b>, not visual polish.</p>
+          </div>
           <div class="link-row">
             <a class="artifact-link" href="https://www.figma.com/design/vOhpNxr88HkSkgHrqL3BvH/Vedang-Heuristic-Evaluation-SPD?node-id=7-266" target="_blank" rel="noopener">View full artifact</a>
           </div>
@@ -2017,6 +2684,12 @@
           <span class="lab">Audit &middot; 02</span>
           <h3>SWOT Analysis</h3>
           <p>Audit findings, translated into risks and opportunities. <b>Strong content, weakened by confusing navigation.</b></p>
+          <div class="audit-insight">
+            <span class="ai-lab">What it told us</span>
+            <p>SPD's biggest strength is <b>credibility and content</b>; its biggest risk is that visitors can't reach that value.</p>
+            <span class="ai-lab">Why it mattered</span>
+            <p>It reframed the project from "fixing a website" to <b>surfacing SPD's existing value</b>.</p>
+          </div>
           <div class="link-row">
             <a class="artifact-link" href="https://www.figma.com/board/syjPzmoIXO2orZCNHb5wet/SPD-SWOT-Analysis" target="_blank" rel="noopener">View full artifact</a>
           </div>
@@ -2033,7 +2706,13 @@
         <div class="audit-meta">
           <span class="lab">Audit &middot; 03</span>
           <h3>Competitor Analysis</h3>
-          <p>How peer organizations structure design content. <b>Usable peers lead with action, not categories.</b></p>
+          <p>SPD compared with AIGA NY, TDC, and D&amp;AD. <b>Usable peers lead with action, not categories.</b></p>
+          <div class="audit-insight">
+            <span class="ai-lab">What it told us</span>
+            <p>Peer sites made <b>major user actions easier to identify</b> — the path to membership, jobs, or events was visible from the homepage.</p>
+            <span class="ai-lab">Why it mattered</span>
+            <p>SPD was the outlier: it buried key actions and gave too many categories <b>equal weight</b>. That set the bar for what the redesign had to fix.</p>
+          </div>
           <div class="link-row">
             <a class="artifact-link" href="https://www.figma.com/design/cr2QtLCQwgEnbAYpzcfx8Z/SPD-Competitor-analysis?node-id=0-1&t=293fwlZO9Eu8DaTc-1" target="_blank" rel="noopener">View full competitor analysis</a>
           </div>
@@ -2060,7 +2739,7 @@
       <div class="num">03<small>Methods</small></div>
       <div>
         <h2 class="display lg">Triangulating the problem.</h2>
-        <p class="kicker">Three angles on the same site. <b>Click any card for details.</b></p>
+        <p class="kicker">Three angles on the same site. We <b>paired user interviews with task analysis</b> so we could compare what users <em>said</em> against what they actually <em>did</em>. <b>Click any card for details.</b></p>
       </div>
     </div>
 
@@ -2069,10 +2748,11 @@
         data-method-num="Method 01"
         data-method-title="Stakeholder interviews"
         data-method-visual="stakeholder"
-        data-method-summary="We spoke with people inside the SPD team to understand <b>how the site is read internally</b>, which content is non-negotiable, and what the organization needs visitors to understand quickly."
+        data-method-summary="We spoke with people inside the SPD team to understand <b>how the site is read internally</b>, which content is non-negotiable, and how SPD itself thinks about its archive, community, competitions, and membership."
         data-method-stats="Internal team | Editorial priorities | Content lineage"
-        data-method-shaped="Surfaced the gap between SPD's internal mental model (the site as a record of past work) and visitors' (the site as a tool). The redesign aims to do both, but lead with tool."
-        data-method-links="View interview script||assets/interview-script.docx">
+        data-method-learned="The team treats the site as a <b>record of past work</b>. Visitors arrive expecting it to function as a <b>tool</b> — to find a job, enter a competition, or evaluate membership. The two mental models had drifted apart."
+        data-method-shaped="The redesign keeps the editorial archive intact but leads with the tool: action-led nav, surfaced destinations for jobs and membership, and a homepage that orients first-time visitors before pulling them into archive content."
+        data-method-links="View interview recording||assets/stakeholder-interview.mov">
         <svg class="m-icon" viewBox="0 0 56 56" aria-hidden="true">
           <circle class="stroke" cx="20" cy="22" r="6"/>
           <circle class="stroke" cx="36" cy="22" r="6"/>
@@ -2088,9 +2768,10 @@
         data-method-num="Method 02"
         data-method-title="User interviews"
         data-method-visual="user"
-        data-method-summary="Four designers across career stages walked through the existing site live, completing real tasks while thinking aloud."
+        data-method-summary="Four designers across career stages walked through the existing site live, completing real tasks while thinking aloud. <b>We paired this with task analysis</b> so we could compare what users said with what they actually did."
         data-method-stats="4 participants | Student designer | Junior brand designer | Digital marketing lead | Senior CTO"
-        data-method-shaped="Recurring frictions surfaced across all four sessions: nav was overwhelming, content types were unclear, membership value wasn't explained, and key actions sat behind too many clicks. Those became the redesign priorities."
+        data-method-learned="No interviewee could articulate what SPD does within the first few seconds. One participant counted <b>11+ top-level nav categories</b>. Membership value was <b>invisible</b> — users couldn't explain what they'd get for $50/year. Insider labels (\"First Love,\" \"Credits,\" \"Spreads of the Day\") required prior knowledge to decode."
+        data-method-shaped="Four redesign priorities came directly out of the interviews: <b>simplify the nav</b>, <b>name the content honestly</b>, <b>make membership value visible on the page</b>, and <b>shorten the path to the actions visitors actually came to do</b>."
         data-method-links="View interview recording||assets/interview.mov">
         <svg class="m-icon" viewBox="0 0 56 56" aria-hidden="true">
           <rect class="stroke" x="10" y="12" width="36" height="26" rx="2.5"/>
@@ -2109,10 +2790,11 @@
         data-method-num="Method 03"
         data-method-title="Task analysis"
         data-method-visual="task"
-        data-method-summary="We watched people try real tasks against the existing site, tracking <b>hesitation, backtracking, dead ends, and 'I don't know' moments</b>."
+        data-method-summary="We gave users key tasks — <b>find a job, understand membership, locate competitions, explain what SPD is</b> — and watched them complete each one while thinking aloud."
         data-method-stats="4 core tasks | Find a job | Join membership | Find a competition | Explain SPD"
-        data-method-shaped="Most tasks took at least three more clicks than they should have. Several ended in dead ends. The friction points mapped directly onto the three flows we prototyped end-to-end.">
-
+        data-method-learned="Users often entered the right area but <b>lost confidence</b> because labels and page hierarchy didn't confirm they were on the right path. The problem wasn't preference — it was real usability friction. Most tasks took at least <b>three more clicks than they should have</b>, and several ended in dead ends."
+        data-method-shaped="We made key actions <b>more visible</b> and <b>reduced the number of decisions</b> users had to make before reaching a destination. The friction points mapped directly onto the three flows we prototyped end-to-end."
+        data-method-links="View task analysis recording||assets/task-analysis.mov">
         <svg class="m-icon" viewBox="0 0 56 56" aria-hidden="true">
           <circle class="fill" cx="10" cy="30" r="2.5" fill="currentColor"/>
           <circle class="fill" cx="22" cy="20" r="2.5" fill="currentColor"/>
@@ -2133,7 +2815,8 @@
         data-method-visual="heuristic"
         data-method-summary="A structured walkthrough of the site against <b>Nielsen's ten heuristics</b> on both web and mobile, tagged by severity."
         data-method-stats="Web + Mobile | Nielsen's 10 | Severity tagged | Navigation clarity | Recognition over recall"
-        data-method-shaped="Surfaced ten recurring violations, mostly structural: visibility of system status, consistency, recognition over recall, error prevention. Confirmed that visual polish wasn't the issue."
+        data-method-learned="The issues were <b>recurring structural problems</b>, especially around navigation clarity, consistency, and recognition over recall. The same root cause kept showing up in different places — not isolated bugs."
+        data-method-shaped="It proved the redesign needed to focus on <b>information architecture</b>, not visual polish. The site already looked editorial; what it needed was a shape that supported visitor goals."
         data-method-links="View web evaluation||https://www.figma.com/design/vOhpNxr88HkSkgHrqL3BvH/Vedang-Heuristic-Evaluation-SPD?node-id=7-266 ;; View mobile evaluation||https://www.figma.com/design/vOhpNxr88HkSkgHrqL3BvH/Vedang-Heuristic-Evaluation-SPD?node-id=150-129">
         <svg class="m-icon" viewBox="0 0 56 56" aria-hidden="true">
           <rect class="stroke" x="12" y="14" width="6" height="6"/>
@@ -2155,9 +2838,10 @@
         data-method-num="Method 05"
         data-method-title="Competitor analysis"
         data-method-visual="competitor"
-        data-method-summary="We compared SPD against three peer design organizations across navigation, content, competitions, events, opportunities, membership, and overall structure."
+        data-method-summary="We compared SPD against three peer organizations — <b>AIGA NY, TDC, and D&amp;AD</b> — across navigation, content, competitions, events, opportunities, membership, and overall structure."
         data-method-stats="4 sites | SPD | AIGA NY | TDC | D&amp;AD"
-        data-method-shaped="The most usable peer sites lead with action verbs and a single clear entry per user type. SPD's eight broad nav entries were the outlier. The new top-level lifted directly from this finding."
+        data-method-learned="Peer sites made <b>major user actions easier to identify</b> — submitting work, joining, browsing events were visible from the homepage. SPD's nav was the outlier: too many categories with <b>equal weight</b>, and the most important destinations buried inside generic ones."
+        data-method-shaped="The new top-level pulled directly from this finding: <b>five primary destinations</b> with persistent <b>Join SPD</b> and <b>Login</b> on the right, instead of a long category list."
         data-method-links="View full competitor analysis||https://www.figma.com/design/cr2QtLCQwgEnbAYpzcfx8Z/SPD-Competitor-analysis?node-id=0-1&t=293fwlZO9Eu8DaTc-1">
         <svg class="m-icon" viewBox="0 0 56 56" aria-hidden="true">
           <rect class="stroke" x="10" y="10" width="16" height="16"/>
@@ -2175,10 +2859,11 @@
         data-method-num="Method 06"
         data-method-title="Card sorting"
         data-method-visual="cardsort"
-        data-method-summary="An internal exercise grouping existing SPD pages <b>by what users were trying to do</b>, not by SPD's internal categories."
-        data-method-stats="30+ pages grouped | Task-based sorting | 4 buckets emerged | Enter, Join, Browse, About"
-        data-method-shaped="The same four buckets formed every time across the team: Enter, Join, Browse, About. That became the new top-level navigation directly."
-        data-method-links="View card sorting||https://www.figma.com/board/gsUammh4HLr82XctdbWQRr/SPD-Card-Sorting-Exercise">
+        data-method-summary="An internal exercise grouping existing SPD pages <b>by what users were trying to do</b>, not by SPD's internal departments."
+        data-method-stats="30+ pages grouped | Task-based sorting | Action-led clusters | Recurring patterns"
+        data-method-learned="Pages naturally clustered around <b>actions</b> — entering work, joining the community, browsing events and jobs, learning about SPD. Pages that the team had treated as separate categories kept landing in the same pile."
+        data-method-shaped="It gave us the basis for the simplified navigation. <b>About, Events, Job Board, SPD-U, and Submit Work</b> became the primary destinations because that's how users grouped the pages — not how the team had labeled them."
+        data-method-links="View card sorting||https://www.figma.com/board/gsUammh4HLr82XctdbWQRr/SPD-Card-Sorting-Exercise-%E2%80%94-Group-2--Copy-?node-id=0-1&t=WByF1XnmwkTdcSt3-1">
         <svg class="m-icon" viewBox="0 0 56 56" aria-hidden="true">
           <rect class="stroke" x="8" y="14" width="22" height="14" rx="2" fill="white" fill-opacity="0.001"/>
           <rect class="stroke" x="18" y="22" width="22" height="14" rx="2" fill="white"/>
@@ -2197,9 +2882,10 @@
         data-method-title="Sitemap audit"
         data-method-visual="sitemap"
         data-method-summary="We compared the existing SPD sitemap against the proposed sitemap, looking at <b>top-level categories, duplicate paths, buried pages, unclear labels, and content hierarchy</b>."
-        data-method-stats="8 top-level branches | Duplicate paths | Buried pages | Unclear labels"
-        data-method-shaped="Year-by-year and category-by-category content was forcing redundant top-level entries. We moved them one click in as filters, which collapsed the structure significantly."
-        data-method-links="View full sitemap||https://www.figma.com/board/KbBnQuLFLPtad9LeRa3otr/SPD-Sitemap">
+        data-method-stats="11+ top-level branches | Duplicate paths | Buried pages | Unclear labels"
+        data-method-learned="The current structure had <b>too many overlapping paths</b> and <b>buried important pages</b>. Year-by-year and category-by-category content was forcing redundant top-level entries that only made sense to people who already knew the archive."
+        data-method-shaped="It justified <b>reducing the top nav</b> and <b>moving detailed content one layer deeper</b> — accessed as filters and sub-pages instead of competing for nav real estate."
+        data-method-links="View full sitemap||https://www.figma.com/board/KbBnQuLFLPtad9LeRa3otr/SPD-Sitemap?t=1iBjzjcMGHF68bgm-1">
         <svg class="m-icon" viewBox="0 0 56 56" aria-hidden="true">
           <rect class="stroke" x="22" y="10" width="12" height="8" rx="1"/>
           <rect class="stroke" x="6" y="36" width="12" height="8" rx="1"/>
@@ -2219,7 +2905,8 @@
         data-method-visual="swot"
         data-method-summary="A 4-part synthesis to translate research findings into <b>product risks and opportunities</b>, instead of a checklist of usability complaints."
         data-method-stats="Strengths | Weaknesses | Opportunities | Threats"
-        data-method-shaped="Reframed the conversation from 'what's wrong' to 'what's the opportunity for SPD.' That made the redesign decisions easier to defend."
+        data-method-learned="SPD's biggest strength is <b>credibility and content</b>; its biggest risk is that visitors can't access that value easily. The site was actively undermining the thing the organization is best at."
+        data-method-shaped="It reframed the project from <b>&quot;fixing a website&quot;</b> to <b>&quot;surfacing SPD's existing value.&quot;</b> That reframe made downstream decisions — what to keep, what to move, what to cut — easier to defend."
         data-method-links="View SWOT board||https://www.figma.com/board/syjPzmoIXO2orZCNHb5wet/SPD-SWOT-Analysis">
         <svg class="m-icon" viewBox="0 0 56 56" aria-hidden="true">
           <rect class="stroke" x="8" y="8" width="40" height="40"/>
@@ -2237,11 +2924,99 @@
   </div>
 </section>
 
-<!-- ============ 04 — INSIGHTS ============ -->
+<!-- ============ 04 — PATTERNS / DATA SYNTHESIS ============ -->
+<section class="soft">
+  <div class="container">
+    <div class="section-head">
+      <div class="num">04<small>Patterns</small></div>
+      <div>
+        <h2 class="display lg">Quantifying the friction.</h2>
+        <p class="kicker">We used <b>survey and data synthesis</b> to check whether the issues we heard in interviews were showing up more broadly. The patterns lined up — the friction was structural, not anecdotal.</p>
+      </div>
+    </div>
+
+    <!-- 3 stat cards — real interview-takeaway numbers -->
+    <div class="data-stat-grid">
+      <div class="data-stat reveal">
+        <div class="ds-num-row">
+          <span class="ds-num" data-count="11">0</span>
+          <span class="ds-suffix">+</span>
+        </div>
+        <div class="ds-label"><b>Top-level nav categories</b> one participant counted on the existing site &mdash; before counting sub-items.</div>
+      </div>
+      <div class="data-stat reveal delay-1">
+        <div class="ds-num-row">
+          <span class="ds-num" data-count="4">0</span>
+          <span class="ds-suffix">/4</span>
+        </div>
+        <div class="ds-label"><b>Interviewees</b> couldn't articulate what SPD does within the first few seconds of landing on the homepage.</div>
+      </div>
+      <div class="data-stat reveal delay-2">
+        <div class="ds-num-row">
+          <span class="ds-num" data-count="3">0</span>
+          <span class="ds-suffix">+</span>
+        </div>
+        <div class="ds-label"><b>Extra clicks</b> needed on average for users to complete the four core tasks against the existing site.</div>
+      </div>
+    </div>
+
+    <!-- Larger chart — friction themes by frequency across research sources -->
+    <div class="data-chart reveal">
+      <div class="dc-head">
+        <span class="dc-eyebrow">Friction themes &middot; how often each surfaced across sources</span>
+        <h3>Where the breakdowns clustered.</h3>
+      </div>
+      <div class="dc-bars">
+        <div class="dc-bar" style="--fill: 100%;">
+          <div class="dc-bar-label">Overwhelming navigation</div>
+          <div class="dc-bar-track"><div class="dc-bar-fill"></div></div>
+          <div class="dc-bar-meta">Every source flagged it.</div>
+        </div>
+        <div class="dc-bar" style="--fill: 92%;">
+          <div class="dc-bar-label">Homepage doesn't orient</div>
+          <div class="dc-bar-track"><div class="dc-bar-fill"></div></div>
+          <div class="dc-bar-meta">Reads as a feed, not a homepage.</div>
+        </div>
+        <div class="dc-bar" style="--fill: 78%;">
+          <div class="dc-bar-label">Membership value invisible</div>
+          <div class="dc-bar-track"><div class="dc-bar-fill"></div></div>
+          <div class="dc-bar-meta">Couldn't explain what $50/yr buys.</div>
+        </div>
+        <div class="dc-bar" style="--fill: 64%;">
+          <div class="dc-bar-label">Insider labels confuse</div>
+          <div class="dc-bar-track"><div class="dc-bar-fill"></div></div>
+          <div class="dc-bar-meta">"First Love," "Credits," "Spreads of the Day."</div>
+        </div>
+        <div class="dc-bar" style="--fill: 52%;">
+          <div class="dc-bar-label">Audience feels narrow</div>
+          <div class="dc-bar-track"><div class="dc-bar-fill"></div></div>
+          <div class="dc-bar-meta">Skews print-only, alienates adjacent creatives.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="data-insight reveal">
+      <div class="di-block">
+        <span class="di-lab">What this showed us</span>
+        <p>The confusion we heard in interviews wasn't isolated. <b>Users consistently struggled with orientation, navigation, and understanding SPD's value</b> — across roles, career stages, and sessions.</p>
+      </div>
+      <div class="di-block">
+        <span class="di-lab">Why it mattered</span>
+        <p>It gave us confidence to focus the redesign on <b>structure and discoverability</b>, not visual polish. Every top-level decision in the new nav traces back to a pattern above.</p>
+      </div>
+    </div>
+
+    <div class="cta-row reveal">
+      <a class="btn secondary" href="https://canva.link/7kut8l0jqvs7u00" target="_blank" rel="noopener">View full data synthesis &#8599;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 05 — INSIGHTS ============ -->
 <section class="dark">
   <div class="container">
     <div class="section-head">
-      <div class="num" style="color: #fff;">04<small style="color: rgba(255,255,255,0.55);">Insights</small></div>
+      <div class="num" style="color: #fff;">05<small style="color: rgba(255,255,255,0.55);">Insights</small></div>
       <div>
         <h2 class="display lg">What we kept hearing.</h2>
         <p class="kicker" style="color: rgba(255,255,255,0.78);">Five frictions surfaced across interviews and task analysis. <b style="color: #fff;">Not about polish. About people not understanding what SPD is, where to go, or what they could do once they got there.</b></p>
@@ -2288,7 +3063,7 @@
 <section>
   <div class="container container--wide">
     <div class="section-head">
-      <div class="num">05<small>Personas</small></div>
+      <div class="num">06<small>Personas</small></div>
       <div>
         <h2 class="display lg">Three real visitor types.</h2>
         <p class="kicker"><b>Each one pointed to a different page that wasn't doing its job.</b></p>
@@ -2348,43 +3123,86 @@
   </div>
 </section>
 
-<!-- ============ 06 — PRIORITIZATION ============ -->
+<!-- ============ 06 — PROCESS / NAVIGATION SIMPLIFICATION ============ -->
 <section id="design">
   <div class="container">
     <div class="section-head">
-      <div class="num">06<small>Prioritization</small></div>
+      <div class="num">07<small>Process</small></div>
       <div>
-        <h2 class="display lg">From research to three flows.</h2>
-        <p class="kicker"><b>Three user stories carried into prototype.</b></p>
+        <h2 class="display lg">From cluttered navigation to clearer paths.</h2>
+        <p class="kicker">The navigation problem wasn't visual clutter — it was <b>unclear prioritization</b>. Card sorting showed which pages users expected to see together; the sitemap showed where important actions were buried. Together, they reshaped the top nav.</p>
       </div>
     </div>
 
-    <div class="funnel">
-      <div class="stage reveal">
-        <div class="ix">Step 01</div>
-        <h4>Research</h4>
-        <p>Audit, interviews, task analysis, card sort, SWOT, competitor scan.</p>
+    <!-- Before / After navigation -->
+    <div class="nav-compare">
+      <div class="nav-side reveal">
+        <div class="nav-side-label">Before</div>
+        <h4>11+ top-level categories.</h4>
+        <p>One interview counted eleven labels in the existing nav. Items used insider jargon — "Grids," "First Love," "Credits," "Spreads of the Day" — that only readers of SPD already knew.</p>
+        <div class="nav-pill-row cluttered">
+          <span>Magazine</span>
+          <span>Awards</span>
+          <span>Competitions</span>
+          <span>Spreads of the Day</span>
+          <span>Grids</span>
+          <span>First Love</span>
+          <span>Credits</span>
+          <span>Events</span>
+          <span>Job Board</span>
+          <span>Membership</span>
+          <span>About</span>
+        </div>
       </div>
-      <div class="arrow">→</div>
-      <div class="stage reveal delay-1">
-        <div class="ix">Step 02</div>
-        <h4>Personas</h4>
-        <p>Three visitor types: newcomer, mid-career creative, student.</p>
-      </div>
-      <div class="arrow">→</div>
-      <div class="stage reveal delay-2">
-        <div class="ix">Step 03</div>
-        <h4>User stories</h4>
-        <p>Three prioritized stories that map to navigation and discoverability.</p>
-      </div>
-      <div class="arrow">→</div>
-      <div class="stage reveal delay-3">
-        <div class="ix">Step 04</div>
-        <h4>Prototype</h4>
-        <p>Wireframes, lo-fi, hi-fi screens for the three flows.</p>
+      <div class="nav-arrow" aria-hidden="true">→</div>
+      <div class="nav-side reveal delay-1">
+        <div class="nav-side-label">After</div>
+        <h4>Five primary destinations + two persistent actions.</h4>
+        <p>Five labels that map to what visitors are trying to do, with <b>Join SPD</b> and <b>Login</b> pulled out as persistent actions on the right.</p>
+        <div class="nav-pill-row clean">
+          <span>About</span>
+          <span>Events</span>
+          <span>Job Board</span>
+          <span>SPD-U</span>
+          <span>Submit Work</span>
+        </div>
+        <div class="nav-pill-row clean nav-actions">
+          <span class="action">Join SPD</span>
+          <span class="action">Login</span>
+        </div>
       </div>
     </div>
 
+    <p class="nav-insight reveal">
+      <b>What this told us:</b> the existing nav forced visitors to translate SPD's internal language before they could act. The simpler set above came directly out of the card sort — pages that users grouped together became sections that live together.
+    </p>
+
+    <!-- Real navigation prototype frames -->
+    <div class="process-artifacts">
+      <div class="proc reveal">
+        <div class="proc-eyebrow">Final navigation — desktop</div>
+        <h4>Five destinations across the top.</h4>
+        <p>Job Board surfaces as a primary destination instead of a buried link, with persistent <b>Join SPD</b> and <b>Login</b> on the right.</p>
+        <div class="proc-image" data-lightbox data-full="assets/final-nav-desktop.png" data-cap="Final navigation — desktop. Five primary destinations plus persistent Join SPD / Login.">
+          <img src="assets/final-nav-desktop.png" alt="Final navigation on desktop">
+        </div>
+      </div>
+      <div class="proc reveal delay-1">
+        <div class="proc-eyebrow">Final navigation — mobile</div>
+        <h4>Same paths, hierarchy preserved.</h4>
+        <p>The mobile menu mirrors the desktop nav and exposes the About sub-menu (Membership, Meet the Board, Society Activities, Herb Lubalin Award, Contact) one level down.</p>
+        <div class="proc-image" data-lightbox data-full="assets/final-nav-mobile.png" data-cap="Final navigation — mobile. Primary nav with About sub-menu visible.">
+          <img src="assets/final-nav-mobile.png" alt="Final navigation on mobile">
+        </div>
+      </div>
+    </div>
+
+    <div class="link-row reveal">
+      <a class="artifact-link" href="https://www.figma.com/board/gsUammh4HLr82XctdbWQRr/SPD-Card-Sorting-Exercise-%E2%80%94-Group-2--Copy-?node-id=0-1&t=WByF1XnmwkTdcSt3-1" target="_blank" rel="noopener">View card sorting</a>
+      <a class="artifact-link" href="https://www.figma.com/board/KbBnQuLFLPtad9LeRa3otr/SPD-Sitemap?t=1iBjzjcMGHF68bgm-1" target="_blank" rel="noopener">View sitemap process</a>
+    </div>
+
+    <!-- User stories — research turned into prioritized flows -->
     <div class="stories">
       <div class="story reveal">
         <span class="num">01</span>
@@ -2402,12 +3220,8 @@
         <span class="num">03</span>
         <div class="who"><b>Maya Chen</b><small>Active designer</small></div>
         <p class="quote">"As an active designer, I want to find roles quickly, so I can see whether SPD is useful before committing to membership."</p>
-        <div class="target">Job board<small>Filterable, not buried</small></div>
+        <div class="target">Job Board<small>Filterable, not buried</small></div>
       </div>
-    </div>
-
-    <div class="section-link-row reveal">
-      <a class="artifact-link" href="https://www.figma.com/design/vOhpNxr88HkSkgHrqL3BvH/Vedang-Heuristic-Evaluation-SPD?node-id=157-330" target="_blank" rel="noopener">View full artifact</a>
     </div>
   </div>
 </section>
@@ -2416,7 +3230,7 @@
 <section class="soft">
   <div class="container">
     <div class="section-head">
-      <div class="num">07<small>Sketching</small></div>
+      <div class="num">08<small>Sketching</small></div>
       <div>
         <h2 class="display lg">We drew before we designed.</h2>
         <p class="kicker"><b>Throwing out compositions on paper, before committing.</b></p>
@@ -2456,11 +3270,70 @@
   </div>
 </section>
 
-<!-- ============ 08 — FINAL DESIGN ============ -->
+<!-- ============ 08 — LOW-FIDELITY PROTOTYPES ============ -->
+<section>
+  <div class="container container--wide">
+    <div class="section-head">
+      <div class="num">09<small>Low-fidelity prototypes</small></div>
+      <div>
+        <h2 class="display lg">From research to layout experiments.</h2>
+        <p class="kicker">Translating <b>research and early ideas</b> into actual layouts before committing to final screens.</p>
+      </div>
+    </div>
+
+    <div class="lofi-grid">
+      <div class="lofi-tile reveal">
+        <div class="frame" data-lightbox data-full="assets/lofi-homepage.png" data-cap="Low-fi homepage — clear hero plus three task-led entry points.">
+          <img src="assets/lofi-homepage.png" alt="Low-fi homepage prototype">
+        </div>
+        <div class="cap">
+          <b>Homepage</b>
+          <small>Orienting visitors with a clear hero and three entry points instead of a flat content feed.</small>
+        </div>
+      </div>
+
+      <div class="lofi-tile reveal delay-1">
+        <div class="frame" data-lightbox data-full="assets/lofi-navigation.png" data-cap="Low-fi mobile navigation — primary nav on the left, About sub-menu on the right.">
+          <img src="assets/lofi-navigation.png" alt="Low-fi navigation menu prototype">
+        </div>
+        <div class="cap">
+          <b>Navigation</b>
+          <small>Mobile menu showing the simplified primary nav and the About sub-menu hierarchy.</small>
+        </div>
+      </div>
+
+      <div class="lofi-tile reveal delay-2">
+        <div class="frame" data-lightbox data-full="assets/lofi-jobboard.png" data-cap="Low-fi Job Board — filterable list with persistent right-side filters.">
+          <img src="assets/lofi-jobboard.png" alt="Low-fi Job Board prototype">
+        </div>
+        <div class="cap">
+          <b>Job Board</b>
+          <small>Surfaced as a first-class destination with filters by date, position, company, and location.</small>
+        </div>
+      </div>
+
+      <div class="lofi-tile reveal delay-3">
+        <div class="frame" data-lightbox data-full="assets/lofi-joinspd.png" data-cap="Low-fi Join SPD — membership tiers explained on the page where the action happens.">
+          <img src="assets/lofi-joinspd.png" alt="Low-fi Join SPD membership prototype">
+        </div>
+        <div class="cap">
+          <b>Join SPD</b>
+          <small>Membership tiers given a real page so the value is visible before the ask.</small>
+        </div>
+      </div>
+    </div>
+
+    <div class="cta-row reveal">
+      <a class="btn secondary" href="https://www.figma.com/design/hnxSP8rfhvff55FkieY5uT/Low-Fidelity-Prototypes?node-id=0-1&t=1iBjzjcMGHF68bgm-1" target="_blank" rel="noopener">View low-fi prototypes &#8599;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 09 — FINAL DIRECTION ============ -->
 <section id="prototype">
   <div class="container container--wide">
     <div class="section-head">
-      <div class="num">08<small>Final direction</small></div>
+      <div class="num">10<small>Final direction</small></div>
       <div>
         <h2 class="display lg">A clearer homepage. A simpler nav. Real entry points.</h2>
         <p class="kicker"><b>Same identity. Tighter structure underneath.</b></p>
@@ -2543,17 +3416,38 @@
     </div>
 
     <div class="cta-row reveal">
-      <a class="btn" href="https://www.figma.com/design/Acqoug51ao6QYXwl2ZrQmH/mobile-spd?node-id=0-1" target="_blank" rel="noopener">View final prototype</a>
+      <a class="btn" href="https://www.figma.com/design/Acqoug51ao6QYXwl2ZrQmH/SPD-Prototypes?node-id=0-1&t=BBu2D1nV3VCOOCLh-1" target="_blank" rel="noopener">View clickable prototype &#8599;</a>
       <a class="btn secondary" href="https://www.figma.com/design/vOhpNxr88HkSkgHrqL3BvH/Vedang-Heuristic-Evaluation-SPD?node-id=269-126" target="_blank" rel="noopener">View style tile</a>
     </div>
   </div>
 </section>
 
-<!-- ============ 09 — RESULT ============ -->
+<!-- ============ 10 — FINAL PRESENTATION ============ -->
+<section class="soft">
+  <div class="container">
+    <div class="section-head">
+      <div class="num">11<small>Final presentation</small></div>
+      <div>
+        <h2 class="display lg">A higher-level walkthrough.</h2>
+      </div>
+    </div>
+
+    <div class="pres-cta reveal">
+      <div class="pres-text">
+        <span class="pres-eyebrow">Client / demo deck</span>
+        <h4>Final outcomes, in presentation form.</h4>
+        <p>For a higher-level client/demo walkthrough of the redesign, we also created a presentation version focused on the final outcomes.</p>
+      </div>
+      <a class="btn" href="https://cvd9683-gif.github.io/SPD-redesign/spd-presentation.html" target="_blank" rel="noopener">View presentation &#8599;</a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 11 — RESULT ============ -->
 <section class="bleed">
   <div class="container">
     <div class="section-head">
-      <div class="num" style="color: #fff;">09<small style="color: rgba(255,255,255,0.6);">Result</small></div>
+      <div class="num" style="color: #fff;">12<small style="color: rgba(255,255,255,0.6);">Result</small></div>
       <div>
         <h2 class="display lg" style="color: #fff;">A dense ecosystem, made navigable.</h2>
       </div>
@@ -2589,11 +3483,11 @@
   </div>
 </section>
 
-<!-- ============ 10 — REFLECTION ============ -->
+<!-- ============ 12 — REFLECTION ============ -->
 <section>
   <div class="container">
     <div class="section-head">
-      <div class="num">10<small>Reflection</small></div>
+      <div class="num">13<small>Reflection</small></div>
       <div>
         <h2 class="display lg">What we learned, what we'd do next.</h2>
         <p class="kicker">As a student project, this stops at the prototype. <b>The lessons hold.</b></p>
@@ -2658,6 +3552,10 @@
       <h3 id="mm-title"></h3>
       <p class="mm-summary" id="mm-summary"></p>
       <div class="mm-stats" id="mm-stats"></div>
+      <div class="mm-section" id="mm-learned-section" hidden>
+        <span class="mm-section-label">What we learned</span>
+        <p id="mm-learned"></p>
+      </div>
       <div class="mm-section">
         <span class="mm-section-label">How it shaped the redesign</span>
         <p id="mm-shaped"></p>
@@ -2926,6 +3824,19 @@
   }, { threshold: 0.5 });
   counters.forEach(c => counterObs.observe(c));
 
+  // ---------- Bar-chart fill on scroll ----------
+  document.querySelectorAll('.data-chart').forEach(chart => {
+    const obs = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          chart.classList.add('in-view');
+          obs.unobserve(chart);
+        }
+      });
+    }, { threshold: 0.35 });
+    obs.observe(chart);
+  });
+
   // ---------- Lightbox (image + iframe + video) ----------
   const lb = document.getElementById('lightbox');
   const lbImg = document.getElementById('lb-img');
@@ -3016,6 +3927,8 @@
   const mmSummary = document.getElementById('mm-summary');
   const mmStats = document.getElementById('mm-stats');
   const mmShaped = document.getElementById('mm-shaped');
+  const mmLearned = document.getElementById('mm-learned');
+  const mmLearnedSection = document.getElementById('mm-learned-section');
   const mmVisual = document.getElementById('mm-visual');
   const mmLinkRow = document.getElementById('mm-link-row');
   const mmClose = document.getElementById('mm-close');
@@ -3025,6 +3938,14 @@
     mmTitle.textContent = card.dataset.methodTitle || '';
     mmSummary.innerHTML = card.dataset.methodSummary || '';
     mmShaped.innerHTML = card.dataset.methodShaped || '';
+    const learned = (card.dataset.methodLearned || '').trim();
+    if (learned) {
+      mmLearned.innerHTML = learned;
+      mmLearnedSection.hidden = false;
+    } else {
+      mmLearned.innerHTML = '';
+      mmLearnedSection.hidden = true;
+    }
 
     // Stats: pipe-separated string
     const stats = (card.dataset.methodStats || '').split('|').map(s => s.trim()).filter(Boolean);
@@ -3045,12 +3966,25 @@
       mmLinkRow.hidden = true;
     }
 
-    // Visual: clone matching template
+    // Visual: photo (if provided) takes precedence over the SVG template
     mmVisual.innerHTML = '';
-    const visualKey = card.dataset.methodVisual;
-    if (visualKey) {
-      const tpl = document.getElementById(`visual-${visualKey}`);
-      if (tpl) mmVisual.appendChild(tpl.content.cloneNode(true));
+    mmVisual.classList.remove('has-photo');
+    const photoSrc = card.dataset.methodImage;
+    if (photoSrc) {
+      const photoCap = card.dataset.methodImageCap || card.dataset.methodTitle || '';
+      const img = document.createElement('img');
+      img.className = 'mm-photo';
+      img.src = photoSrc;
+      img.alt = photoCap;
+      img.addEventListener('click', () => openImage(photoSrc, photoCap));
+      mmVisual.classList.add('has-photo');
+      mmVisual.appendChild(img);
+    } else {
+      const visualKey = card.dataset.methodVisual;
+      if (visualKey) {
+        const tpl = document.getElementById(`visual-${visualKey}`);
+        if (tpl) mmVisual.appendChild(tpl.content.cloneNode(true));
+      }
     }
 
     mm.removeAttribute('hidden');
@@ -3062,6 +3996,7 @@
     setTimeout(() => {
       mm.setAttribute('hidden', '');
       mmVisual.innerHTML = '';
+      mmVisual.classList.remove('has-photo');
       mmLinkRow.innerHTML = '';
       mmLinkRow.hidden = true;
       document.body.style.overflow = '';
